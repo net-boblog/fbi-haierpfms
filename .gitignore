@@ -1,4 +1,22 @@
+*.ipr
+*.iws
+*.iml
+.idea/
+
+out/
+doc/
+docs/
+db/
+lib/
+tmp/
+temp/
+ref/
+libs
+
 *.class
+
+*.tmp
+*.bak
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
