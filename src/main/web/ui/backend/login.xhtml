@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+    </f:facet>
+    <title>积分管理平台</title>
+    <h:outputScript name="js/layout.js" library="spark-layout"/>
+
+    <h:outputText value="&lt;!--[if gte IE 9]&gt;" escape="false"/>
+    <style type="text/css">
+        /* styles for IE 9 */
+    </style>
+    <h:outputText value="&lt;![endif]--&gt;" escape="false"/>
+
+    <style type="text/css">
+        body {
+            margin: 0px;
+
+        }
+
+        .div-left {
+            position: absolute;
+            top: 50%;
+            left: 30%;
+            width: 460px;
+            height: 400px;
+            margin-left: -230px;
+            margin-top: -200px;
+
+            background-image: url("#{resource['project-layout:images/login-left-02.svg']}");
+            background-image: url("#{resource['project-layout:images/login-left-02.png']}") \9;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: 100%;
+
+        }
+
+        .div-center {
+            position: absolute;
+            top: 50%;
+            left: 70%;
+            width: 460px;
+            height: 400px;
+            margin-left: -230px;
+            margin-top: -200px;
+        }
+
+        .top-bar {
+            font-family: "Microsoft Yahei UI", "Microsoft Yahei", Verdana, Simsun, "Segoe UI", "Segoe UI Web Regular", "Segoe UI Symbol", "Helvetica Neue", "BBAlpha Sans", "S60 Sans", Arial, sans-serif;
+            background-color: rgb(0, 114, 198);
+            height: 50px;
+            line-height: 20px;
+            overflow: hidden;
+            position: relative;
+            white-space: nowrap;
+            width: 100%;
+            z-index: 2500000;
+        }
+    </style>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(":input:first").focus();
+        });
+
+    </script>
+
+    <ui:insert name="head"/>
+</h:head>
+
+<h:body style="background-color:#ffffff">
+    <div class="ShadowGray top-bar">
+        <div>
+            <div class="Container20"><i class="fa fa-list Fs30 white Fleft" style="margin-left: 5%;margin-top: 10px"></i></div>
+        </div>
+    </div>
+
+    <div>
+        <div class="div-left  Container30 Responsive50 MarAuto Fnone TexAlCenter MarTop10">
+        </div>
+    </div>
+    <div id="layout-portlets-cover">
+        <div id="login-content"
+             class="div-center other-pages-box Container30 Responsive50 MarAuto Fnone TexAlCenter ShadowGray MarTop10">
+            <h:form id="form">
+                <div id="formdiv" class="Container70 Fnone MarAuto TexAlCenter">
+                    <p:focus for="username"/>
+                    <p:growl id="msgs" showDetail="true" life="3000"/>
+                    <h:inputHidden id="browserinfo" value="aa"/>
+
+                    <div class="EmptyBox50"></div>
+                    <div class="EmptyBox20"></div>
+                    <p:inputText id="username" value="#{loginView.operId}" placeholder="用户名"
+                                 onkeypress="if (event.keyCode == 13) {this.form.elements['form:password'].focus(); return false; }"
+                                 styleClass="Container80 Fnone MarAuto Fs16"/>
+                    <p:spacer/>
+                    <p:message for="username"/>
+
+                    <div class="EmptyBox10"></div>
+                    <p:password id="password" value="#{loginView.operPasswd}" placeholder="密码"
+                                styleClass="Container80 Fnone MarAuto Fs16" feedback="false"/>
+                    <p:spacer/>
+                    <p:message for="password"/>
+
+                    <div class="EmptyBox50"></div>
+                    <!--
+                                        <div class="Container85 Fnone MarAuto softgray">
+                                            <div class="EmptyBox5"></div>
+                                            <p:selectBooleanCheckbox value="同意" itemLabel="十天内免登录"/>
+                                        </div>
+                    -->
+                    <div class="EmptyBox30"></div>
+                    <p:commandButton value="登录系统" styleClass="Fs16" style="width:180px"
+                                     action="#{loginView.onLogin}"
+                                     update="msgs"/>
+
+                    <div class="EmptyBox10"></div>
+                    <div class="Seperator"></div>
+                    <div class="EmptyBox10"></div>
+                    <p:button value="忘记密码 ?" styleClass="Fs16 RedButton" style="width: 150px"
+                              href="#"></p:button>
+                    <p:button value="联系管理员 ?" styleClass="Fs16 OrangeButton" style="width: 150px"
+                              href="#"></p:button>
+
+                    <div class="EmptyBox50"></div>
+                </div>
+            </h:form>
+        </div>
+    </div>
+
+    <h:outputStylesheet name="css/core-layout.css" library="spark-layout"/>
+    <h:outputStylesheet name="css/font-awesome.css" library="spark-layout"/>
+    <h:outputStylesheet name="css/animate.css" library="spark-layout"/>
+    <h:outputStylesheet name="css/spark-layout-blue.css" library="spark-layout"/>
+    <h:outputStylesheet name="css/pams.css" library="project-layout"/>
+</h:body>
+
+</html>

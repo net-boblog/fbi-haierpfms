@@ -1,0 +1,140 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="../templates/ui.xhtml" >
+    <ui:define name="head">
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form prependId="false" id="form" enctype="multipart/form-data">
+            <div class="layout-portlets-box">
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <p:growl id="msgs" showDetail="true" />
+                        <h:panelGrid columns="2" cellspacing="5">
+                            <h:panelGrid columns="8">
+                                <h:outputLabel value="所属机构:"/>
+                                <p:selectOneMenu id="teamQry" value="#{operRoleMgmtView.ptoperQry.deptid}" style="min-width: 140px">
+                                    <f:selectItem itemLabel="--全部--" itemValue=""/>
+                                    <f:selectItems value="#{deptMgmtView.deptQrys}"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel value="用户ID(或姓名):" for="deptId"/>
+                                <p:inputText id="deptId" value="#{operRoleMgmtView.ptoperQry.operid}">
+                                    <p:watermark for="deptId" value="---模糊查询---" id="watermark" />
+                                </p:inputText>
+                                <p:outputLabel value="是否可用：" for="operEnabled"/>
+                                <p:selectOneMenu id="operEnabled" value="#{operRoleMgmtView.ptoperQry.operenabled}" style="min-width: 100px">
+                                    <f:selectItem itemLabel="是" itemValue="1"/>
+                                    <f:selectItem itemLabel="否" itemValue="0"/>
+                                    <f:selectItem itemLabel="--全部--" itemValue=""/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:commandButton id="qrybtn"  value="查询"
+                                                 style="width:120px;"
+                                                 styleClass="GreenButton Fright"
+                                                 action="#{operRoleMgmtView.onQuery}"
+                                                 update="pdt">
+                                </p:commandButton>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layout-portlets-box">
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <p:dataTable id="pdt"
+                                     tableStyle="min-width:80%; width: auto"
+                                     value="#{operRoleMgmtView.operList}" var="record"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+                                     currentPageReportTemplate="{startRecord}-{endRecord} 共{totalRecords}笔"
+                                     paginator="true" rows="20"
+                                     paginatorPosition="bottom"
+                                     rowsPerPageTemplate="500,100,50,20,15"
+                                     emptyMessage="数据记录为空...">
+                            <p:column headerText="操作" style="min-width:95px; width:100px;text-align: center;">
+                                <h:panelGrid columns="8">
+                                    <p:commandLink  value="授权" style="color: #055A78"
+                                                    title="用户授权"
+                                                    action="#{operRoleMgmtView.selectRecordAction(record)}"
+                                                    update=":form:pgRecordForRole,:form:pdt"
+                                                    onclick="PF('wVDlgRecordForRole').show()">
+                                    </p:commandLink>
+                                </h:panelGrid>
+                            </p:column>
+                            <p:column style="text-align:center; width: 250px">
+                                <f:facet name="header">
+                                    用户ID
+                                </f:facet>
+                                <h:outputText value="#{record.operid}"/>
+                            </p:column>
+                            <p:column style="text-align:center; width: 250px">
+                                <f:facet name="header">
+                                    姓名
+                                </f:facet>
+                                <h:outputText value="#{record.opername}"/>
+                            </p:column>
+                            <p:column style="text-align:center; width: 250px">
+                                <f:facet name="header">
+                                    所属部门
+                                </f:facet>
+                                <h:outputText value="#{record.deptid}"/>
+                            </p:column>
+                            <p:column style="text-align:center; width: 250px" >
+                                <f:facet name="header">
+                                    是否领导
+                                </f:facet>
+                                <h:outputText value="#{record.issuper.replace('0','否').replace('1','是')}"/>
+                            </p:column>
+                            <p:column style="text-align:center; width: 250px" >
+                                <f:facet name="header">
+                                    性别
+                                </f:facet>
+                                <h:outputText value="#{record.sex.replace('0','女').replace('1','男')}"/>
+                            </p:column>
+                            <p:column style="text-align:center; width: 250px" >
+                                <f:facet name="header">
+                                    用户类型
+                                </f:facet>
+                                <h:outputText value="#{record.opertype}"/>
+                            </p:column>
+                            <p:column style="text-align:center; width: 250px" >
+                                <f:facet name="header">
+                                    是否可用
+                                </f:facet>
+                                <h:outputText value="#{record.operenabled.replace('0','否').replace('1','是')}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+            <p:dialog id="dlgRecordForRole" header="用户授权" widgetVar="wVDlgRecordForRole"
+                      resizable="false" modal="true"
+                      showEffect="clip" hideEffect="fold">
+                <h:panelGrid id="pgRecordForRole">
+                    <p:tree id="tree2" value="#{operRoleMgmtView.root1}" var="node" selectionMode="checkbox" selection="#{operRoleMgmtView.selectedNode2}"
+                            dynamic="true">
+                        <p:treeNode>
+                            <h:outputText value="#{node}"/>
+                        </p:treeNode>
+                    </p:tree>
+                </h:panelGrid>
+                <f:facet name="footer">
+                    <h:panelGrid id="pgOperBtnRecordForRole">
+                        <p:commandButton id="submitBtnRecordForRole"
+                                         value="提交（授权）"
+                                         action="#{operRoleMgmtView.submitThisRecordAction('')}"
+                                         update=":form:pgRecordForRole,:form:pdt"
+                                         oncomplete="PF('wVDlgRecordForRole').hide()">
+                        </p:commandButton>
+                    </h:panelGrid>
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

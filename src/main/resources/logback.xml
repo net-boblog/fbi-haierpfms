@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="false" scanPeriod="100 seconds">
+
+    <!--<property name="logbase.dir" value="${user.dir}/../log"/>-->
+    <property name="logbase.dir" value="d:/haierpfms/log"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>===%d{MM-dd HH:mm:ss.SSS} [%thread:%relative] %-5level %logger - %n%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE-ALL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logbase.dir:-../log}/main.log</file>
+        <encoder>
+            <pattern>===[%d{MM-dd HH:mm:ss.SSS}][%thread:%relative] %-5level %logger - %n%msg%n </pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logbase.dir:-../log}/history/%d{yyyy-MM-dd}.main.log</fileNamePattern>
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+    </appender>
+    <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${logbase.dir:-../log}/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>${logbase.dir:-../log}/error.%i.log</FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>5</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>20MB</MaxFileSize>
+        </triggeringPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>===[%d{MM-dd HH:mm:ss.SSS}][%thread:%relative] %-5level %logger - %n%msg%n </pattern>
+        </layout>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE-ALL"/>
+        <appender-ref ref="FILE-ERROR"/>
+    </root>
+</configuration>
+

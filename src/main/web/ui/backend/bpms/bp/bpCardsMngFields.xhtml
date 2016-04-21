@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:outputLabel value="卡号:"/>
+    <p:inputText value="#{bpCardMngAction.bpCards.cardNo}" readonly="true"
+                 style="background-color:gainsboro"/>
+    <p:outputLabel value="客户代码:"/>
+    <p:inputText value="#{bpCardMngAction.bpCards.custNo}"/>
+    <p:outputLabel value="客户名称:"/>
+    <p:inputText value="#{bpCardMngAction.bpCards.custName}"/>
+    <p:outputLabel value="发卡机构:"/>
+    <p:inputText value="#{bpCardMngAction.bpCards.inst}"/>
+    <p:outputLabel value="发卡日期:"/>
+    <p:inputText value="#{bpCardMngAction.bpCards.txndate}"
+                 onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"  />
+    <!--<p:outputLabel value="卡状态:"/>
+    <h:selectOneMenu value="#{bpCardMngAction.bpCards.cardState}" style="width: 100px;height: 30px;">
+        <f:selectItems value="#{bpCardMngAction.cardStatSelectItemList}" />
+    </h:selectOneMenu>-->
+    <p:outputLabel value="备注:"/>
+    <p:inputText value="#{bpCardMngAction.bpCards.remark}" />
+
+</ui:composition>

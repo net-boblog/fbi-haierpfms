@@ -1,0 +1,47 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ps="http://primefaces.org/spark"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+    <h:form id="layoutMenu">
+        <ps:menu id="topMenu">
+
+            <f:facet name="options">
+                <p:commandButton type="button" icon="fa fa-search Fs18 white" styleClass="Fright"/>
+                <p:inputText placeholder="搜索" styleClass="Fright"/>
+            </f:facet>
+
+            <p:menuitem value="工作台" icon="fa fa-paint-brush" outcome="/ui/backend/dashboard"/>
+
+            <!--
+                        <c:forEach items="#{loginManager.topMenuListForCurrModule}" var="node">
+                            <p:separator/>
+                            <p:submenu label="#{node.menulabel}" icon="fa #{node.menuicon}">
+                                <c:forEach items="#{loginManager.getMenuItemList(node.menuid)}" var="item">
+                                    <p:menuitem value="#{item.menulabel}"   actionListener="#{loginManager.onClickMenuItem(item)}"/>
+                                    &lt;!&ndash;<p:menuitem value="#{item.menulabel}"   action="#{loginManager.onClickMenuItemForward(item)}"/>&ndash;&gt;
+                                </c:forEach>
+                            </p:submenu>
+                        </c:forEach>
+            -->
+            <c:forEach items="#{uiTemplateView.topLevelMenuList}" var="node">
+                <p:separator/>
+                <c:choose>
+                    <c:when test="#{node.isleaf == 1}">
+                        <p:menuitem value="#{node.menulabel}" actionListener="#{uiTemplateView.onClickMenuItem(node)}" />
+                    </c:when>
+                    <c:otherwise>
+                        <p:submenu label="#{node.menulabel}" icon="fa #{node.menuicon}">
+                            <c:forEach items="#{uiTemplateView.secondLevelMenuMap[node.menuid]}" var="item">
+                                <p:menuitem value="#{item.menulabel}" actionListener="#{uiTemplateView.onClickMenuItem(item)}" />
+                            </c:forEach>
+                        </p:submenu>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </ps:menu>
+    </h:form>
+</ui:composition>

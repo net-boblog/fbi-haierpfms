@@ -1,0 +1,274 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="../templates/ui.xhtml">
+    <ui:define name="head">
+
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <div style="margin:5px;">
+                        <h:form id="form">
+
+                            <p:layout style="min-width:400px;height:700px">
+                                <p:layoutUnit position="west" style="height: 570px">
+                                    <p:growl id="msgs" showDetail="true" />
+                                    <f:facet name="header">枚举类型</f:facet>
+                                    <h:panelGrid columns="2">
+                                        <p:tree id="tree1" value="#{enumMgmtView.root1}" var="node" selectionMode="single" selection="#{enumMgmtView.selectedNode}"
+                                                dynamic="true">
+                                            <p:ajax event="select" listener="#{enumMgmtView.onQuery}" update=":form:pdt" />
+                                            <p:treeNode>
+                                                <h:outputText value="#{node}" />
+                                            </p:treeNode>
+                                        </p:tree>
+                                        <p:contextMenu for="tree1">
+                                            <p:menuitem value="添加枚举类型" update="pgViewForTreeAdd" onclick="PF('wVDlgViewForTreeAdd').show()" icon="ui-icon-add" actionListener="#{enumMgmtView.treeMenuAction('treeAdd')}"/>
+                                            <p:menuitem value="修改枚举类型" update=":form:pgViewForTreeUpd,:form:pdt" actionListener="#{enumMgmtView.treeMenuAction('treeUpd')}"
+                                                        onclick="PF('wVDlgViewForTreeUpd').show()" icon="ui-icon-arrowrefresh-1-w" />
+                                            <p:menuitem value="删除枚举类型" update=":form:pgViewForTreeDel,:form:pdt" actionListener="#{enumMgmtView.treeMenuAction('treeDel')}" onclick="PF('wVDlgViewForTreeDel').show()" icon="ui-icon-close"/>
+                                            <p:menuitem value="添加枚举元素" update=":form:pgRecordForAdd" actionListener="#{enumMgmtView.selectRecordAction('enuItemAdd','')}"
+                                                        onclick="PF('wVDlgRecordForAdd').show()" icon="ui-icon-add"/>
+                                        </p:contextMenu>
+                                    </h:panelGrid>
+
+                                </p:layoutUnit>
+                                <p:layoutUnit position="center">
+                                    <f:facet name="header">枚举元素</f:facet>
+                                    <p:dataTable id="pdt"
+                                                 tableStyle="width: auto"
+                                                 value="#{enumMgmtView.enudetailList}" var="record"
+                                                 emptyMessage="数据记录为空...">
+                                        <p:column headerText="操作" style="min-width:70px; width:80px;text-align: center;">
+                                            <h:panelGrid columns="8">
+                                                <p:commandLink  styleClass="ui-icon ui-icon-arrowrefresh-1-w"
+                                                                style="height:18px;width:20px"
+                                                                title="修改枚举元素"
+                                                                action="#{enumMgmtView.selectRecordAction('enuItemUpd',record)}"
+                                                                update=":form:pgRecordForUpd,:form:pdt"
+                                                                onclick="PF('wVDlgRecordForUpd').show()"
+                                                        >
+                                                </p:commandLink>
+                                                <p:commandLink  styleClass="ui-icon ui-icon-trash"
+                                                                style="height:18px;width:20px"
+                                                                title="删除枚举元素"
+                                                                action="#{enumMgmtView.selectRecordAction('enuItemDel',record)}"
+                                                                update=":form:pgRecordForDel,:form:pdt"
+                                                                onclick="PF('wVDlgRecordForDel').show()"
+                                                        >
+                                                </p:commandLink>
+                                            </h:panelGrid>
+                                        </p:column>
+                                        <p:column style="text-align:center; width: 250px" >
+                                            <f:facet name="header">
+                                                枚举元素ID
+                                            </f:facet>
+                                            <h:outputText value="#{record.enuitemvalue}"/>
+                                        </p:column>
+                                        <p:column style="text-align:center; width: 250px" >
+                                            <f:facet name="header">
+                                                枚举元素
+                                            </f:facet>
+                                            <h:outputText value="#{record.enuitemlabel}"/>
+                                        </p:column>
+                                        <p:column style="text-align:center; width: 250px" >
+                                            <f:facet name="header">
+                                                枚举描述
+                                            </f:facet>
+                                            <h:outputText value="#{record.enuitemdesc}"/>
+                                        </p:column>
+                                        <p:column style="text-align:center; width: 250px" >
+                                            <f:facet name="header">
+                                                排列顺序
+                                            </f:facet>
+                                            <h:outputText value="#{record.dispno}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:layoutUnit>
+                            </p:layout>
+                            <!--主菜单删除-->
+                            <p:dialog id="dlgViewForTreeDel" header="枚举类型删除信息" widgetVar="wVDlgViewForTreeDel"
+                                      resizable="false" modal="true"
+                                      showEffect="clip" hideEffect="fold"
+                                      width="380" height="150"
+                                    >
+                                <h:panelGrid id="pgViewForTreeDel">
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel value="枚举类型代码：" for="treeMenuIdDelete"/>
+                                        <p:inputText id="treeMenuIdDelete" value="#{enumMgmtView.ptenumainDel.enutype}"  readonly="true"/>
+                                        <p:outputLabel value="枚举类型名称：" for="treeMenuNameDelete"/>
+                                        <p:inputText id="treeMenuNameDelete" value="#{enumMgmtView.ptenumainDel.enuname}" readonly="true"/>
+                                    </h:panelGrid>
+                                    <h:panelGrid id="pgOperBtnForTreeDel" columns="4">
+                                        <p:commandButton id="submitBtnForTreeDel"
+                                                         value="提交（删除）"
+                                                         action="#{enumMgmtView.addTreeMenuAction('treeDel')}"
+                                                         update=":form:tree1,msgs"
+                                                         oncomplete="PF('wVDlgViewForTreeDel').hide()">
+                                        </p:commandButton>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </p:dialog>
+
+                            <!--主菜单新增-->
+                            <p:dialog id="dlgViewForTreeAdd" header="枚举类型新增信息" widgetVar="wVDlgViewForTreeAdd"
+                                      resizable="false" modal="true"
+                                      showEffect="clip" hideEffect="fold"
+                                      width="380" height="150">
+                                <h:panelGrid id="pgViewForTreeAdd">
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel value="枚举类型代码：" for="treeMenuIdAdd"/>
+                                        <p:inputText id="treeMenuIdAdd" value="#{enumMgmtView.ptenumainAdd.enutype}"/>
+                                        <p:outputLabel value="枚举类型名称：" for="treeMenuNameAdd"/>
+                                        <p:inputText id="treeMenuNameAdd" value="#{enumMgmtView.ptenumainAdd.enuname}"/>
+                                    </h:panelGrid>
+                                    <h:panelGrid id="pgOperBtnForTreeAdd" columns="4">
+                                        <p:commandButton id="submitBtnForTreeAdd"
+                                                         value="提交（新增）"
+                                                         action="#{enumMgmtView.addTreeMenuAction('treeAdd')}"
+                                                         update=":form:tree1,msgs"
+                                                         validateClient="true">
+                                        </p:commandButton>
+                                        <p:commandButton id="resetBtnForTreeAdd" value="重置"
+                                                         type="reset"
+                                                         update="pgViewForTreeAdd">
+                                        </p:commandButton>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </p:dialog>
+                            <!--主菜单修改-->
+                            <p:dialog id="dlgViewForTreeUpd" header="枚举类型更新信息" widgetVar="wVDlgViewForTreeUpd"
+                                      resizable="false" modal="true"
+                                      showEffect="clip" hideEffect="fold"
+                                      width="380" height="150">
+                                <h:panelGrid id="pgViewForTreeUpd">
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel value="枚举类型代码：" for="treeMenuIdUpd"/>
+                                        <p:inputText id="treeMenuIdUpd" value="#{enumMgmtView.ptenumainUpd.enutype}" readonly="true"/>
+                                        <p:outputLabel value="菜单枚举类型名称：" for="treeMenuNameUpd"/>
+                                        <p:inputText id="treeMenuNameUpd" value="#{enumMgmtView.ptenumainUpd.enuname}"/>
+                                    </h:panelGrid>
+                                    <h:panelGrid id="pgOperBtnForTreeUpd" columns="4">
+                                        <p:commandButton id="submitBtnForTreeUpd"
+                                                         value="提交（更新）"
+                                                         action="#{enumMgmtView.addTreeMenuAction('treeUpd')}"
+                                                         update=":form:tree1,msgs"
+                                                         validateClient="true"
+                                                         oncomplete="PF('wVDlgViewForTreeUpd').hide()">
+                                        </p:commandButton>
+                                        <p:commandButton id="resetBtnForTreeUpd" value="重置"
+                                                         type="reset"
+                                                         update="pgViewForTreeUpd">
+                                        </p:commandButton>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </p:dialog>
+                            <!--枚举元素删除-->
+                            <p:dialog id="dlgRecordForDel" header="枚举元素删除信息" widgetVar="wVDlgRecordForDel"
+                                      resizable="false" modal="true"
+                                      showEffect="clip" hideEffect="fold"
+                                      width="350" height="250">
+                                <h:panelGrid id="pgRecordForDel">
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel for="enuTypeDel" value="枚举类型：" />
+                                        <p:selectOneMenu id="enuTypeDel" value="#{enumMgmtView.ptenudetailDel.enutype}" disabled="true"
+                                                style="min-width: 100px">
+                                            <f:selectItems value="#{enumMgmtView.treeEnus}"/>
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="枚举元素ID：" for="enuitemValueDel"/>
+                                        <p:inputText id="enuitemValueDel" value="#{enumMgmtView.ptenudetailDel.enuitemvalue}" readonly="true"/>
+                                        <p:outputLabel value="枚举元素：" for="enuitemDel"/>
+                                        <p:inputText id="enuitemDel" value="#{enumMgmtView.ptenudetailDel.enuitemlabel}" readonly="true"/>
+                                        <p:outputLabel value="元素描述：" for="enuitemdescDel"/>
+                                        <p:inputText id="enuitemdescDel" value="#{enumMgmtView.ptenudetailDel.enuitemdesc}" readonly="true"/>
+                                    </h:panelGrid>
+
+                                    <h:panelGrid id="pgOperBtnRecordForDel">
+                                        <p:commandButton id="submitBtnRecordForDel"
+                                                         value="提交（删除）"
+                                                         action="#{enumMgmtView.submitThisRecordAction}"
+                                                         update=":form:pgRecordForDel,:form:pdt,msgs"
+                                                         oncomplete="PF('wVDlgRecordForDel').hide()">
+                                        </p:commandButton>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </p:dialog>
+                            <!--枚举元素修改-->
+                            <p:dialog id="dlgRecordForUpd" header="修改用户" widgetVar="wVDlgRecordForUpd"
+                                      resizable="false" modal="true"
+                                      showEffect="clip" hideEffect="fold"
+                                      width="350" height="210">
+                                <h:panelGrid id="pgRecordForUpd">
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel for="enuTypeUpd" value="枚举类型：" />
+                                        <p:selectOneMenu id="enuTypeUpd" value="#{enumMgmtView.ptenudetailUpd.enutype}" disabled="true"
+                                                style="min-width: 120px">
+                                            <f:selectItems value="#{enumMgmtView.treeEnus}"/>
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="枚举元素ID：" for="enuitemValueUpd"/>
+                                        <p:inputText id="enuitemValueUpd" value="#{enumMgmtView.ptenudetailUpd.enuitemvalue}" readonly="true"/>
+                                        <p:outputLabel value="枚举元素：" for="enuitemUpd"/>
+                                        <p:inputText id="enuitemUpd" value="#{enumMgmtView.ptenudetailUpd.enuitemlabel}" />
+                                        <p:outputLabel value="元素描述：" for="enuitemdescUpd"/>
+                                        <p:inputText id="enuitemdescUpd" value="#{enumMgmtView.ptenudetailUpd.enuitemdesc}"/>
+                                        <p:outputLabel value="排序顺序：" for="dispnoUpd"/>
+                                        <p:inputText id="dispnoUpd" value="#{enumMgmtView.ptenudetailUpd.dispno}"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                                <f:facet name="footer">
+                                    <h:panelGrid id="pgOperBtnRecordForUpd">
+                                        <p:commandButton id="submitBtnRecordForUpd"
+                                                         value="提交（枚举元素修改）"
+                                                         action="#{enumMgmtView.submitThisRecordAction}"
+                                                         update=":form:pgRecordForUpd,:form:pdt,msgs"
+                                                         oncomplete="PF('wVDlgRecordForUpd').hide()">
+                                        </p:commandButton>
+                                    </h:panelGrid>
+                                </f:facet>
+                            </p:dialog>
+                            <!--新增枚举元素-->
+                            <p:dialog id="dlgRecordForAdd" header="新增枚举元素" widgetVar="wVDlgRecordForAdd"
+                                      resizable="false" modal="true"
+                                      showEffect="clip" hideEffect="fold"
+                                      width="350" height="210">
+                                <h:panelGrid id="pgRecordForAdd">
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel for="enuTypeAdd" value="枚举类型：" />
+                                        <p:selectOneMenu id="enuTypeAdd" value="#{enumMgmtView.ptenudetailAdd.enutype}"
+                                                style="min-width: 130px">
+                                            <f:selectItems value="#{enumMgmtView.treeEnus}"/>
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="枚举元素ID：" for="enuitemValueAdd"/>
+                                        <p:inputText id="enuitemValueAdd" value="#{enumMgmtView.ptenudetailAdd.enuitemvalue}"/>
+                                        <p:outputLabel value="枚举元素：" for="enuitemAdd"/>
+                                        <p:inputText id="enuitemAdd" value="#{enumMgmtView.ptenudetailAdd.enuitemlabel}"/>
+                                        <p:outputLabel value="元素描述：" for="enuitemdescAdd"/>
+                                        <p:inputText id="enuitemdescAdd" value="#{enumMgmtView.ptenudetailAdd.enuitemdesc}"/>
+                                        <p:outputLabel value="排序顺序：" for="dispnoAdd"/>
+                                        <p:inputText id="dispnoAdd" value="#{enumMgmtView.ptenudetailAdd.dispno}"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                                <f:facet name="footer">
+                                    <h:panelGrid id="pgOperBtnRecordForAdd">
+                                        <p:commandButton id="submitBtnRecordForAdd"
+                                                         value="提交（枚举元素）"
+                                                         action="#{enumMgmtView.submitThisRecordAction()}"
+                                                         update=":form:pgRecordForAdd,:form:pdt,msgs">
+                                        </p:commandButton>
+                                    </h:panelGrid>
+                                </f:facet>
+
+                            </p:dialog>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,17 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:outputLabel value="客户代码:"/>
+    <p:inputText value="#{bpCustMngAction.bpCustsUpd.custNo}" size="30"
+                 readonly="true"
+                 style="background-color:gainsboro" />
+    <p:outputLabel value="客户名称:"/>
+    <p:inputText value="#{bpCustMngAction.bpCustsUpd.custName}" size="30"/>
+    <p:outputLabel value="手机号码:"/>
+    <p:inputText value="#{bpCustMngAction.bpCustsUpd.tel}"  size="30"/>
+    <p:outputLabel value="备注:"/>
+    <p:inputText value="#{bpCustMngAction.bpCustsUpd.remark}" size="30"/>
+</ui:composition>

@@ -1,0 +1,139 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="../../templates/ui.xhtml">
+
+    <ui:define name="head">
+        <style type="text/css">
+            .col-label {
+                width: 100px;
+                text-align: right;
+            }
+
+            .col-input {
+                width: 200px;
+                text-align: left;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <p:messages id="msgs" showDetail="false" life="1500"/>
+            <div class="layout-portlets-box">
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <div>
+                            <div id="header">
+                                <p:panel>
+                                    <h:panelGrid>
+                                        <h:panelGrid columns="6" cellspacing="5">
+                                            <h:outputLabel value="数据日期："/>
+                                            <p:inputText id="prodDate"
+                                                         value="#{bpRedPointsAction.biRedPointsShowQry.txndate}"
+                                                         onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+                                            <h:outputLabel value="客户代码："/>
+                                            <p:inputText id="custNo"
+                                                         maxlength="10"
+                                                         value="#{bpRedPointsAction.biRedPointsShowQry.custNo}"/>
+                                             <h:outputLabel value="兑换礼品ID："/>
+                                            <p:inputText id="goodsId"
+                                                         maxlength="10"
+                                                         value="#{bpRedPointsAction.biRedPointsShowQry.goodsId}"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="6" cellspacing="5">
+                                            <h:outputLabel/>
+                                            <p:commandButton id="addbtn" value="查询"
+                                                             style="width:120px;"
+                                                             styleClass="GreenButton Fright"
+                                                             action="#{bpRedPointsAction.onQry()}"
+                                                             update="pdt,msgs">
+                                            </p:commandButton>
+                                            <p:commandButton id="resetbtn" value="重置" style="width:120px;"
+                                                             type="reset"
+                                                             update="header">
+                                            </p:commandButton>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layout-portlets-box">
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <p:dataTable id="pdt"
+                                     tableStyle="width:100%"
+                                     value="#{bpRedPointsAction.bpRedPointsShowList}" var="record"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+                                     currentPageReportTemplate="{startRecord}-{endRecord} 共{totalRecords}笔"
+                                     paginator="true" rows="15"
+                                     paginatorPosition="bottom"
+                                     rowsPerPageTemplate="1000,100,50,30,15"
+                                     emptyMessage="数据记录为空...">
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    数据日期
+                                </f:facet>
+                                <h:outputText value="#{record.txndate}"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    客户代码
+                                </f:facet>
+                                <h:outputText value="#{record.custNo}"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    客户名称
+                                </f:facet>
+                                <h:outputText value="#{record.custName}"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    减少积分
+                                </f:facet>
+                                <h:outputText value="#{record.points}" style="float: right">
+                                    <f:convertNumber type="number" pattern="#,###,###,###,##0.00"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    兑换礼品ID
+                                </f:facet>
+                                <h:outputText value="#{record.goodsId}"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    兑换礼品名
+                                </f:facet>
+                                <h:outputText value="#{record.goodsName}"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    兑换礼品数
+                                </f:facet>
+                                <h:outputText value="#{record.goodsQty}" style="float: right">
+                                    <f:convertNumber type="number" pattern="#,###,###,###,##0"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    捐赠来源
+                                </f:facet>
+                                <h:outputText value="#{record.origin eq '0'? '线下捐赠':'线上捐赠'}"
+                                              style="text-align:center">
+                                </h:outputText>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

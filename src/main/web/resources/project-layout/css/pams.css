@@ -1,0 +1,486 @@
+.layout-portlets-box66 {
+    width: 66%;
+    padding: 1% 1.5%;
+    margin: 8px auto;
+    float: left;
+    background-color: #F6FAFC /*#F1F6F9*/;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-box-shadow: 0px 1px 0px 0px rgba(159, 172, 183, 0.7);
+    -moz-box-shadow: 0px 1px 0px 0px rgba(159, 172, 183, 0.7);
+    box-shadow: 0px 1px 0px 0px rgba(159, 172, 183, 0.7);
+}
+
+.layout-portlets-box27 {
+    width: 27%;
+    padding: 1% 1.5%;
+    margin: 8px auto;
+    float: right;
+    background-color: #F6FAFC /*#F1F6F9*/;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-box-shadow: 0px 1px 0px 0px rgba(159, 172, 183, 0.7);
+    -moz-box-shadow: 0px 1px 0px 0px rgba(159, 172, 183, 0.7);
+    box-shadow: 0px 1px 0px 0px rgba(159, 172, 183, 0.7);
+}
+
+.ui-breadcrumb {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.BigTopic {
+    font-size: 22px;
+    color: #3B3D3F;
+    /*font-family: 'ralewaymedium';*/
+    font-family: 'Hiragino Sans GB', Helvetica, Arial, 'Microsoft Yahei';
+    display: block;
+    width: 100%;
+    border-bottom: solid 1px #C3CCD5;
+    padding: 10px 0px;
+    margin-bottom: 10px !important;
+    overflow: hidden;
+    /*font-weight: bold;*/
+}
+
+#layout-topbar {
+    border-top: solid 6px #0066B3;
+}
+
+/*
+#layout-menu {
+    background-color: #0066B3;
+}
+
+#layout-menu .ui-inputfield {
+    background-color: #0066B3;
+}
+
+#layout-menu .ui-button .ui-button-text {
+    background-color: #0066B3;
+}
+*/
+
+.ui-datatable .ui-paginator .ui-paginator-first .ui-icon {
+    background-image: url("#{resource['primefaces-spark:images/left-double-arrow-for-data.svg']}");
+    background-position: center !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/left-double-arrow-for-data.png']}", sizingMethod=scale) \9;
+}
+
+.ui-datatable .ui-paginator .ui-paginator-last .ui-icon {
+    background-image: url("#{resource['primefaces-spark:images/right-double-arrow-for-data.svg']}");
+    background-position: center !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/right-double-arrow-for-data.png']}", sizingMethod=scale) \9;
+}
+
+.ui-datatable .ui-paginator .ui-paginator-prev .ui-icon {
+    background-image: url("#{resource['primefaces-spark:images/left-one-arrow-for-data.svg']}");
+    background-position: center !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/left-one-arrow-for-data.png']}", sizingMethod=scale) \9;
+}
+
+.ui-datatable .ui-paginator .ui-paginator-next .ui-icon {
+    background-image: url("#{resource['primefaces-spark:images/right-one-arrow-for-data.svg']}");
+    background-position: center !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/right-one-arrow-for-data.png']}", sizingMethod=scale) \9;
+}
+
+.ui-selectonemenu-trigger .ui-icon-triangle-1-s, .ui-selectcheckboxmenu-trigger .ui-icon-triangle-1-s {
+    background-image: url("#{resource['primefaces-spark:images/downarrow.svg']}");
+    margin-top: 10px !important;
+    background-size: 100%;
+    background-position: center;
+
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/downarrow.png']}", sizingMethod=scale) \9;
+}
+
+/*Style For UploadButton --------------------------------------------------------------------------------------*/
+.ui-fileupload-choose .ui-icon-plusthick,
+.ui-fileupload-simple .ui-icon-plusthick {
+    background-image: url("#{resource['primefaces-spark:images/plus-sign.svg']}");
+    background-position: center !important;
+    background-size: 100% !important;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/plus-sign.png']}", sizingMethod=scale) \9;
+}
+
+.ui-fileupload-upload .ui-icon-arrowreturnthick-1-n {
+    background-image: url("#{resource['primefaces-spark:images/upload.svg']}");
+    background-position: center !important;
+    background-size: 100% !important;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/upload.png']}", sizingMethod=scale) \9;
+}
+
+.ui-fileupload-cancel .ui-icon-cancel {
+    background-image: url("#{resource['primefaces-spark:images/delete.svg']}");
+    background-position: center !important;
+    background-size: 100% !important;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/delete.png']}", sizingMethod=scale) \9;
+}
+
+.ui-fileupload-content .ui-fileupload-cancel .ui-icon-close {
+    background-image: url("#{resource['primefaces-spark:images/delete.svg']}");
+    background-position: center !important;
+    background-size: 100% !important;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/delete.png']}", sizingMethod=scale) \9;
+}
+
+.ui-fileupload-content .ui-messages-error .ui-icon-close {
+    background-image: url("#{resource['primefaces-spark:images/delete-pink.svg']}");
+    background-position: center !important;
+    background-size: 100% !important;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/delete-pink.png']}", sizingMethod=scale) \9;
+}
+
+/*Style For Breadcrumb ------------------------------------------------------------------------------------- */
+.ui-breadcrumb .ui-icon-home {
+    background-image: url("#{resource['primefaces-spark:images/breadcrumb-home.svg']}");
+    background-position: center 5px !important;
+    background-size: 100% !important;
+    height: 30px;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/breadcrumb-home.png']}", sizingMethod=scale) \9;
+}
+
+.ui-breadcrumb-chevron {
+    height: 20px !important;
+    background-image: url("#{resource['primefaces-spark:images/breadcrumb-arrow.svg']}");
+    background-position: center !important;
+    background-size: 60% !important;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/breadcrumb-arrow.png']}", sizingMethod=scale) \9;
+}
+
+/*Style For Tree --------------------------------------------------------------------------------------*/
+
+.ui-tree .ui-treenode .ui-icon-grip-dotted-vertical {
+    background-image: url("#{resource['primefaces-spark:images/treenode-dots-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/treenode-dots-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-tree .ui-treenode-content .ui-chkbox-box .ui-icon-minus {
+    background-image: url("#{resource['primefaces-spark:images/minus-sign-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/minus-sign-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-tree .ui-icon-triangle-1-e {
+    background-image: url("#{resource['primefaces-spark:images/rightarrow-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 120%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/rightarrow-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-tree .ui-icon-triangle-1-s {
+    background-image: url("#{resource['primefaces-spark:images/downarrow-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 130%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/downarrow-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-tree .ui-icon-triangle-1-w {
+    background-image: url("#{resource['primefaces-spark:images/leftarrow-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 120%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/leftarrow-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-tree .ui-icon-folder-collapsed {
+    background-image: url("#{resource['primefaces-spark:images/folder-close-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 140%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/folder-close-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-tree .ui-icon-folder-open {
+    background-image: url("#{resource['primefaces-spark:images/folder-open-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 160%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/folder-open-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-tree .ui-icon-document {
+    background-image: url("#{resource['primefaces-spark:images/document-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 160%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/document-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-tree .ui-icon-note {
+    background-image: url("#{resource['primefaces-spark:images/note-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 150%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/note-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-tree .ui-icon-image {
+    background-image: url("#{resource['primefaces-spark:images/image-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 150%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/image-gray.png']}", sizingMethod=scale) \9;
+}
+
+/*Style For UI Dialog, Overlay Panel And Lightbox ------------------------------------------------------------------------------------- */
+.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon-closethick {
+    background-image: url("#{resource['primefaces-spark:images/delete-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/delete-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon-minus {
+    background-image: url("#{resource['primefaces-spark:images/minus-sign-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/minus-sign-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-dialog-docking-zone .ui-icon-plus {
+    background-image: url("#{resource['primefaces-spark:images/plus-sign-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 90%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/plus-sign-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon-extlink {
+    background-image: url("#{resource['primefaces-spark:images/external-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/external-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-dialog .ui-dialog-titlebar .ui-icon-newwin {
+    background-image: url("#{resource['primefaces-spark:images/external-gray-revert.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/external-gray-revert.png']}", sizingMethod=scale) \9;
+}
+
+
+.ui-dialog .ui-dialog-content .ui-icon-alert {
+    background-image: url("#{resource['primefaces-spark:images/warn-red.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 140%;
+    margin: 4px 10px 0px 0px;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/warn-red.png']}", sizingMethod=scale) \9;
+}
+
+
+.ui-dialog .ui-resizable-se {
+    background-image: url("#{resource['primefaces-spark:images/handle-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/handle-gray.png']}", sizingMethod=scale) \9;
+}
+
+
+.ui-overlaypanel .ui-overlaypanel-close .ui-icon-closethick {
+    background-image: url("#{resource['primefaces-spark:images/delete.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 90%;
+    width: 20px;
+    height: 20px;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/delete.png']}", sizingMethod=scale) \9;
+}
+
+.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-left .ui-icon {
+    background-image: url("#{resource['primefaces-spark:images/left-arrow.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 130%;
+    width: 40px;
+    height: 40px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/left-arrow.png']}", sizingMethod=scale) \9;
+}
+
+
+.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-right .ui-icon {
+    background-image: url("#{resource['primefaces-spark:images/right-arrow.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 130%;
+    width: 40px;
+    height: 40px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/right-arrow.png']}", sizingMethod=scale) \9;
+}
+
+
+.ui-lightbox .ui-lightbox-caption .ui-lightbox-close .ui-icon {
+    background-image: url("#{resource['primefaces-spark:images/delete-gray.svg']}");
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/delete-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-datepicker-header .ui-datepicker-prev .ui-icon{
+    background-image:url("#{resource['primefaces-spark:images/left-arrow.svg']}");
+    background-position: center !important;
+    background-size:100% !important;
+    top:50%;
+    left:48%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/left-arrow.png']}", sizingMethod=scale) \9;
+
+}
+.ui-datepicker-header .ui-datepicker-next .ui-icon{
+    background-image:url("#{resource['primefaces-spark:images/right-arrow.svg']}");
+    background-position: center !important;
+    background-size:100% !important;
+    top:50%;
+    left:51%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/right-arrow.png']}", sizingMethod=scale) \9;
+}
+
+.ui-datatable  table tbody tr td .ui-row-toggler.ui-icon-circle-triangle-e{
+    background-image:url("#{resource['primefaces-spark:images/rightarrow-gray.svg']}");
+    background-position:center !important;
+    background-size:110%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/rightarrow-gray.png']}", sizingMethod=scale) \9;
+}
+.ui-datatable  table tbody tr td .ui-row-toggler.ui-icon-circle-triangle-s{
+    background-image:url("#{resource['primefaces-spark:images/downarrow-gray.svg']}");
+    background-position:center !important;
+    background-size:110%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/downarrow-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-pencil{
+    background-image:url("#{resource['primefaces-spark:images/pen-gray.svg']}");
+    background-position:center !important;
+    background-size:120%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/pen-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-check{
+    background-image:url("#{resource['primefaces-spark:images/check-gray.svg']}");
+    background-position:center !important;
+    background-size:120%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/check-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-close{
+    background-image:url("#{resource['primefaces-spark:images/delete-gray.svg']}");
+    background-position:center !important;
+    background-size:120%;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/delete-gray.png']}", sizingMethod=scale) \9;
+}
+
+.ui-chkbox-box .ui-icon-check{
+    border-radius: 0px;
+    background-image:url("#{resource['primefaces-spark:images/check.svg']}") !important;
+    background-size: 100%;
+    background-position: center;
+    background-color: #71CC8D;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    background-image: none \9;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="#{resource['primefaces-spark:images/check.png']}", sizingMethod=scale) \9;
+}
+
+/*调整字体显示*/
+.ui-datatable table tbody tr td{
+    color:#778D9B;
+    border: solid 1px #D9E3E8;
+    font-size: 14px;
+    /*font-family: 'ralewayregular';*/
+    font-family:'Calibri';
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.ui-inputfield{
+    color:#778D9B;
+    font-size:14px;
+    /*font-family: 'ralewaymedium' !important; */
+    font-family: 'Calibri' !important;
+    padding:9px !important;
+    border:solid 1px #C6D6DF;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    background-color: #EDF3F6;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+}

@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:outputLabel value="名称:"/>
+    <p:inputText value="#{scheduleJobAction.scheduleJobTemplate.jobName}" size="30"
+                 disabled="#{'OPERATE_UPD' eq scheduleJobAction.enumOperateType.code?'true':scheduleJobAction.isDisabled}"/>
+    <p:outputLabel value="分组:"/>
+    <p:inputText value="#{scheduleJobAction.scheduleJobTemplate.jobGroup}" size="30"
+                 disabled="#{'OPERATE_UPD' eq scheduleJobAction.enumOperateType.code?'true':scheduleJobAction.isDisabled}"/>
+    <p:outputLabel value="cron时间表达式:"/>
+    <p:inputText value="#{scheduleJobAction.scheduleJobTemplate.cronExpression}"
+                 size="30" disabled="#{scheduleJobAction.isDisabled}"/>
+    <p:outputLabel value="springId:"/>
+    <p:selectOneMenu value="#{scheduleJobAction.scheduleJobTemplate.springId}">
+        <f:selectItems value="#{scheduleJobAction.initSpringIdData()}"
+                       var="springId"
+                       itemLabel="#{springId}"
+                       itemValue="#{springId}"/>
+    </p:selectOneMenu>
+    <!--<p:inputText value="#{scheduleJobAction.scheduleJobTemplate.springId}" size="30"
+                 disabled="#{scheduleJobAction.isDisabled}"/>-->
+    <!--<p:outputLabel value="动作类:"/>
+    <p:inputText value="#{scheduleJobAction.scheduleJobTemplate.jobAction}" size="30"
+                 disabled="#{scheduleJobAction.isDisabled}"/>-->
+    <p:outputLabel value="动作函数:"/>
+    <p:inputText value="#{scheduleJobAction.scheduleJobTemplate.jobMethod}"
+                 size="30"
+                 disabled="#{scheduleJobAction.isDisabled}"/>
+    <!--<p:outputLabel value="动作参数:"/>
+    <p:inputText value="#{scheduleJobAction.scheduleJobTemplate.jobParam}"
+                 size="30"
+                 disabled="#{scheduleJobAction.isDisabled}"/>-->
+    <!--<p:outputLabel value="是否异步:"/>
+    <p:inputText value="#{scheduleJobAction.scheduleJobTemplate.isSync}" size="30"
+                 disabled="#{scheduleJobAction.isDisabled}"/>-->
+    <p:outputLabel value="描述:"/>
+    <p:inputText value="#{scheduleJobAction.scheduleJobTemplate.description}"
+                 size="30"
+                 disabled="#{scheduleJobAction.isDisabled}"/>
+</ui:composition>

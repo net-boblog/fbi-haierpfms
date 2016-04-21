@@ -1,0 +1,325 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="../../templates/ui.xhtml">
+
+    <ui:define name="head">
+        <style type="text/css">
+            .ui-dialog {
+                /*background-image: url("#{request.contextPath}/images/chrome.png")!important;*/
+                background-image: url("#{resource['spark-layout:images/background.png']}");
+                background-repeat: repeat;
+                background-position: center;
+                background-color: #C3CCD5;
+                background-attachment: fixed;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <div class="layout-portlets-box">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <p:tabView id="tabview" dynamic="true" cache="false" style="font-weight:normal;font-style:normal">
+                        <p:tab id="tab01Id" title="任务列表">
+                            <div id="table">
+                                <h:form id="form">
+                                    <p:messages id="msgs" showDetail="false"/>
+                                    <p:menubar>
+                                        <p:menuitem type="push" value="添加任务"
+                                                    action="#{scheduleJobAction.addRecordAction()}"
+                                                    oncomplete="PF('wVDlgViewForOperate').show()"
+                                                    update=":tabview:form:wVDlgViewForOperateId,:tabview:form:msgs"
+                                                    icon="ui-icon ui-icon-plus"/>
+                                    </p:menubar>
+
+                                    <p:dataTable id="pdt"
+                                                 dynamic="true"
+                                                 tableStyle="width:100%"
+                                                 style="margin-top: 20px;"
+                                                 value="#{scheduleJobAction.initScheduleJobList()}"
+                                                 var="record"
+                                                 rowKey="#{record.pkid}"
+                                                 selectionMode="single"
+                                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 paginator="true"
+                                                 paginatorPosition="bottom"
+                                                 rows="15"
+                                                 rowIndexVar="row"
+                                                 rowsPerPageTemplate="200,100,50,40,30,20,15"
+                                                 emptyMessage="数据记录为空...">
+                                        <p:column headerText="名称" style="text-align:left">
+                                            <h:outputText value="#{record.jobName}"/>
+                                        </p:column>
+                                        <p:column headerText="分组" style="text-align:left">
+                                            <h:outputText value="#{record.jobGroup}"/>
+                                        </p:column>
+                                        <p:column headerText="状态" style="text-align:left">
+                                            <h:outputText value="#{record.jobStatus}"/>
+                                        </p:column>
+                                        <p:column headerText="cron时间表达式" style="text-align:right">
+                                            <h:outputText value="#{record.cronExpression}"/>
+                                        </p:column>
+                                        <!--<p:column headerText="springId" style="text-align:left">
+                                            <h:outputText value="#{record.springId}"/>
+                                        </p:column>-->
+                                        <!--<p:column headerText="动作类" style="text-align:center">
+                                            <h:outputText value="#{record.jobAction}"/>
+                                        </p:column>-->
+                                        <!--<p:column headerText="动作函数" style="text-align:center">
+                                            <h:outputText value="#{record.jobMethod}"/>
+                                        </p:column>-->
+                                        <!--<p:column headerText="动作参数" style="text-align:center">
+                                            <h:outputText value="#{record.jobParam}" />
+                                        </p:column>-->
+                                        <p:column headerText="描述" style="text-align:left">
+                                            <h:outputText value="#{record.description}"/>
+                                        </p:column>
+                                        <!--<p:column headerText="是否异步" style="text-align:center">
+                                            <h:outputText value="#{record.isSync}"/>
+                                        </p:column>-->
+                                        <p:column headerText="操作" style="width:300px;text-align:center">
+                                            <p:commandLink value="修改"
+                                                           action="#{scheduleJobAction.selectRecordAction('OPERATE_UPD',record)}"
+                                                           oncomplete="PF('wVDlgViewForOperate').show()"
+                                                           update=":tabview:form:wVDlgViewForOperateId,:tabview:form:msgs"
+                                                           style="color: blue;"/>
+                                            <h:outputLabel value=" "/>
+                                            <!--<p:commandLink value="删除创建"
+                                                           action="#{scheduleJobAction.selectRecordAction('OPERATE_DEL_CREATE',record)}"
+                                                           oncomplete="PF('wVDlgViewForOperate').show()"
+                                                           update=":tabview:form:wVDlgViewForOperateId,:tabview:form:msgs"
+                                                           style="color: blue;"/>
+                                            <h:outputLabel value=" "/>-->
+                                            <p:commandLink value="删除"
+                                                           action="#{scheduleJobAction.selectRecordAction('OPERATE_DEL',record)}"
+                                                           oncomplete="PF('wVDlgViewForOperate').show()"
+                                                           update=":tabview:form:wVDlgViewForOperateId,:tabview:form:msgs"
+                                                           style="color: blue;"/>
+                                            <h:outputLabel value=" "/>
+                                            <p:commandLink value="暂停"
+                                                           action="#{scheduleJobAction.selectRecordAction('OPERATE_PAUSE',record)}"
+                                                           oncomplete="PF('wVDlgViewForOperate').show()"
+                                                           update=":tabview:form:wVDlgViewForOperateId,:tabview:form:msgs"
+                                                           style="color: blue;"/>
+                                            <h:outputLabel value=" "/>
+                                            <p:commandLink value="恢复"
+                                                           action="#{scheduleJobAction.selectRecordAction('OPERATE_RESUME',record)}"
+                                                           oncomplete="PF('wVDlgViewForOperate').show()"
+                                                           update=":tabview:form:wVDlgViewForOperateId,:tabview:form:msgs"
+                                                           style="color: blue;"/>
+                                            <h:outputLabel value=" "/>
+                                            <p:commandLink value="立即运行一次"
+                                                           action="#{scheduleJobAction.selectRecordAction('OPERATE_RUN_ONCE',record)}"
+                                                           oncomplete="PF('wVDlgViewForOperate').show()"
+                                                           update=":tabview:form:wVDlgViewForOperateId,:tabview:form:msgs"
+                                                           style="color: blue;"/>
+                                            <h:outputLabel value=" "/>
+                                            <p:commandLink style="color:blue;" value="详细"
+                                                           action="#{scheduleJobAction.doShowLog(record)}"
+                                                           oncomplete="PF('dialogLog').show()"
+                                                           update="dialogLog :tabview:form:msgs">
+                                            </p:commandLink>
+                                            <!--<p:commandLink style="color:blue;" value="详细"
+                                                           action="#{scheduleJobAction.doShowLog(record)}"
+                                                           oncomplete="PF('dialogLog').show()"
+                                                           update="dialogLog :tabview:form:msgs">
+                                            </p:commandLink>-->
+                                        </p:column>
+                                    </p:dataTable>
+                                    <p:dialog id="wVDlgViewForOperateId"
+                                              header="#{scheduleJobAction.strDialogHeader}任务"
+                                              widgetVar="wVDlgViewForOperate"
+                                              resizable="false" modal="true"
+                                              showEffect="clip" hideEffect="fold">
+                                        <p:messages id="msgsDialog" showDetail="false"/>
+                                        <h:panelGrid id="scheduleViewId">
+                                            <h:panelGrid columns="4" cellpadding="2">
+                                                <ui:include src="./common/scheduleFields.xhtml"/>
+                                            </h:panelGrid>
+                                            <p:separator/>
+                                            <h:panelGrid id="pgOperBtnForAdd" columns="3">
+                                                <p:commandButton id="submitBtnForAdd"
+                                                                 value="确认"
+                                                                 action="#{scheduleJobAction.submitThisRecordAction()}"
+                                                                 update=":tabview:form:pdt,msgsDialog,:tabview:form:scheduleViewId">
+                                                </p:commandButton>
+                                                <p:commandButton id="cancelBtnForAdd" value="取消"
+                                                                 oncomplete="PF('wVDlgViewForOperate').hide()">
+                                                <!--<p:commandButton id="cancelBtnForAdd" value="取消"
+                                                                 oncomplete="wVDlgViewForOperate.hide()">-->
+                                                </p:commandButton>
+                                                <p:commandButton id="resetBtnForAdd" value="重置"
+                                                                 type="reset"
+                                                                 rendered="#{scheduleJobAction.isResetBtnRender}"
+                                                                 update="tabview:form:scheduleViewId">
+                                                </p:commandButton>
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                    </p:dialog>
+                                </h:form>
+                            </div>
+                        </p:tab>
+                        <p:tab title="运行中的任务">
+                            <div id="runingtable">
+                                <h:form id="runingform">
+                                    <p:dataTable id="runingpdt"
+                                                 tableStyle="width:100%;"
+                                                 value="#{scheduleJobAction.initExecutingJobList()}"
+                                                 var="record"
+                                                 rowKey="#{record.pkid}"
+                                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 paginator="true"
+                                                 paginatorPosition="bottom"
+                                                 rows="15"
+                                                 rowIndexVar="row"
+                                                 rowsPerPageTemplate="200,100,50,40,30,20,15"
+                                                 emptyMessage="数据记录为空..."
+                                                 scrollable="true">
+                                        <p:column headerText="调度类型" style="text-align:center">
+                                            <h:outputText
+                                                    value="#{record.scheduleType eq 'SCHEDULE_NORMAL'?'正常调度':record.scheduleType eq 'SCHEDULE_RUN_ONCE'?'立即运行一次':record.scheduleType}"/>
+                                        </p:column>
+                                        <p:column headerText="名称" style="text-align:center">
+                                            <h:outputText value="#{record.jobName}"/>
+                                        </p:column>
+                                        <p:column headerText="分组" style="text-align:left">
+                                            <h:outputText value="#{record.jobGroup}"/>
+                                        </p:column>
+                                        <p:column headerText="状态" style="text-align:center">
+                                            <h:outputText value="#{record.jobStatus}"/>
+                                        </p:column>
+                                        <p:column headerText="触发器" style="text-align:center">
+                                            <h:outputText value="#{record.jobTrigger}"/>
+                                        </p:column>
+                                        <p:column headerText="cron时间表达式" style="text-align:center">
+                                            <h:outputText value="#{record.cronExpression}"/>
+                                        </p:column>
+                                        <!--<p:column headerText="springId" style="text-align:center">
+                                            <h:outputText value="#{record.springId}"/>
+                                        </p:column>-->
+                                        <!--<p:column headerText="动作类" style="text-align:center">
+                                            <h:outputText value="#{record.jobAction}"/>
+                                        </p:column>-->
+                                        <!--<p:column headerText="动作函数" style="text-align:center">
+                                            <h:outputText value="#{record.jobMethod}"/>
+                                        </p:column>-->
+                                        <!--<p:column headerText="动作参数" style="text-align:center">
+                                            <h:outputText value="#{record.jobParam}" />
+                                        </p:column>-->
+                                        <p:column headerText="描述" style="text-align:center">
+                                            <h:outputText value="#{record.description}"/>
+                                        </p:column>
+                                        <!--<p:column headerText="是否异步" style="text-align:center">
+                                            <h:outputText value="#{record.isSync}"/>
+                                        </p:column>-->
+                                    </p:dataTable>
+                                </h:form>
+                            </div>
+                        </p:tab>
+                    </p:tabView>
+                </div>
+            </div>
+        </div>
+
+        <p:dialog id="dialogLog"
+                  header="运行日志"
+                  width="80%"
+                  widgetVar="dialogLog"
+                  resizable="false" modal="true">
+            <div class="layout-portlets-box Container80">
+                <h:form id="formLog">
+                    <p:messages autoUpdate="true"/>
+                    <h:panelGrid columns="6" id="pgQry">
+                        <p:outputLabel value="名称:"/>
+                        <p:inputText value="#{scheduleJobAction.selectRecord.jobName}"
+                                     disabled="true"/>
+                        <p:outputLabel value="分组:"/>
+                        <p:inputText value="#{scheduleJobAction.selectRecord.jobGroup}"
+                                     disabled="true"/>
+                        <p:outputLabel value="cron时间表达式:"/>
+                        <p:inputText value="#{scheduleJobAction.selectRecord.cronExpression}"
+                                     disabled="true"/>
+                        <p:outputLabel value="springId:"/>
+                        <p:inputText value="#{scheduleJobAction.selectRecord.springId}"
+                                     disabled="true"/>
+                        <!--<p:outputLabel value="动作类:"/>
+                        <p:inputText value="#{scheduleJobAction.selectRecord.jobAction}"
+                                     disabled="true"/>-->
+                        <p:outputLabel value="动作函数:"/>
+                        <p:inputText value="#{scheduleJobAction.selectRecord.jobMethod}"
+                                     disabled="true"/>
+                        <!--<p:outputLabel value="动作参数:"/>
+                        <p:inputText value="#{scheduleJobAction.selectRecord.jobParam}"
+                                     size="30"
+                                     disabled="true"/>-->
+                        <!--<p:outputLabel value="是否异步:"/>
+                        <p:inputText value="#{scheduleJobAction.selectRecord.isSync}" size="30"
+                                     disabled="true"/>-->
+                        <p:outputLabel value="描述:"/>
+                        <p:inputText value="#{scheduleJobAction.selectRecord.description}"
+                                     disabled="true"/>
+                    </h:panelGrid>
+                    <p:separator/>
+                    <!--<p:outputLabel value="当日未发生过定时任务!" style="color: red;"
+                                   rendered="#{scheduleJobAction.jobLogList.size()>0?'false':'true'}"/>-->
+                    <h:panelGrid columns="4" cellspacing="5">
+                        <p:outputLabel value="启动时间:"/>
+                        <p:inputText value="#{scheduleJobAction.stpScheduleLogQry.jobtime}"/>
+                        <p:commandButton id="qrybtn" value="查询"
+                                         style="width:120px;"
+                                         styleClass="GreenButton Fright"
+                                         action="#{scheduleJobAction.onQuery}"
+                                         update="logpdt">
+                        </p:commandButton>
+                        <p:commandButton id="resetbtn" value="重置"
+                                         style="width:120px;"
+                                         type="reset"
+                                         update="pgQry">
+                        </p:commandButton>
+                    </h:panelGrid>
+                    <p:dataTable id="logpdt"
+                                 dynamic="true"
+                                 tableStyle="width:100%"
+                                 value="#{scheduleJobAction.jobLogList}"
+                                 var="log"
+                                 rowKey="#{log.pkid}"
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 paginator="true"
+                                 paginatorPosition="bottom"
+                                 scrollable="true"
+                                 rows="10"
+                                 rowIndexVar="row"
+                                 rowsPerPageTemplate="200,100,50,40,30,15,10,5"
+                                 emptyMessage="数据记录为空...">
+                        <p:column headerText="序号" style="width:30px">
+                            <h:outputText value="#{row + 1}"/>
+                        </p:column>
+                        <p:column id="jobname" headerText="调度类型" style="width:120px;text-align:left">
+                            <h:outputText
+                                    value="#{log.type eq 'SCHEDULE_NORMAL'?'正常调度':log.type eq 'SCHEDULE_RUN_ONCE'?'立即运行一次':log.type}"/>
+                        </p:column>
+                        <p:column id="jobdesc" headerText="处理日志" style="text-align:left">
+                            <h:outputText value="#{log.jobdesc}"/>
+                        </p:column>
+                        <p:column id="jobusername" headerText="操作人员" style="width:120px;text-align:left">
+                            <h:outputText value="#{log.jobusername}"/>
+                        </p:column>
+                        <!--<p:column id="jobtime" filterBy="#{log.jobtime}" filterMatchMode="contains"
+                                  headerText="操作时间" style="width:120px;text-align:center">-->
+                        <p:column id="jobtime" headerText="操作时间" style="width:120px;text-align:center">
+                            <h:outputText value="#{log.jobtime}">
+                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="GMT+8"/>
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

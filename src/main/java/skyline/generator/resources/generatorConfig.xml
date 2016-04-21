@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry location="C:\WorkSpace\git-cmbc-pfms\lib\ojdbc6.jar"/>
+
+    <!--信息-->
+    <context id="AllInfo" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+                        connectionURL="jdbc:oracle:thin:@localhost:1521:orcl"
+                        userId="pfms"
+                        password="pfms">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="pfms.repository.model" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="pfms.repository.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="pfms.repository.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--<table tableName="ptmenufavo"/>-->
+        <!--<table tableName="ptmenutop"/>
+        <table tableName="BI_CARDS">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <generatedKey column="pkid" sqlStatement="select sys_guid() from dual" identity="false"/>
+        </table>
+        <table tableName="BI_INC_POINTS">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <generatedKey column="pkid" sqlStatement="select sys_guid() from dual" identity="false"/>
+        </table>
+        <table tableName="BI_INC_CUSTS_POINTS">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <generatedKey column="pkid" sqlStatement="select sys_guid() from dual" identity="false"/>
+        </table>
+
+        <table tableName="BI_CUMU_INC_POINTS">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <generatedKey column="pkid" sqlStatement="select sys_guid() from dual" identity="false"/>
+        </table>
+
+        <table tableName="BP_CARDS">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <generatedKey column="pkid" sqlStatement="select sys_guid() from dual" identity="false"/>
+        </table>
+
+        <table tableName="BP_CUSTS">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <generatedKey column="pkid" sqlStatement="select sys_guid() from dual" identity="false"/>
+        </table>
+        <table tableName="BP_POINTS_DTL">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <generatedKey column="pkid" sqlStatement="select sys_guid() from dual" identity="false"/>
+        </table>
+
+        <table tableName="GM_GOODS_DTL">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <generatedKey column="pkid" sqlStatement="select sys_guid() from dual" identity="false"/>
+        </table>
+        <table tableName="GM_GOODS_INFO">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <generatedKey column="pkid" sqlStatement="select sys_guid() from dual" identity="false"/>
+        </table>
+        -->
+        <table tableName="TM_TEAM">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <generatedKey column="pkid" sqlStatement="select sys_guid() from dual" identity="false"/>
+        </table>
+        <table tableName="TM_MEMBER">
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+            <generatedKey column="pkid" sqlStatement="select sys_guid() from dual" identity="false"/>
+        </table>
+    </context>
+
+</generatorConfiguration>

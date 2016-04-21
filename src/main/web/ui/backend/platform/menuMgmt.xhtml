@@ -1,0 +1,362 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="../templates/ui.xhtml">
+<ui:define name="head">
+
+</ui:define>
+
+<ui:define name="content">
+<div class="layout-portlets-box">
+<div class="Container100">
+<div class="ContainerIndent">
+<div style="margin:5px;">
+<h:form id="form">
+
+    <p:layout style="min-width:400px;min-height:570px;">
+        <p:layoutUnit position="west" resizable="true" size="300" minSize="100" maxSize="400">
+            <p:growl id="msgs" showDetail="true" />
+            <f:facet name="header">主菜单列表</f:facet>
+            <h:panelGrid columns="3">
+                <p:tree  id="tree1" value="#{menuMgmtView.root1}" var="node" selectionMode="single" selection="#{menuMgmtView.selectedNode}"
+                         dynamic="true">
+                    <p:ajax event="select" listener="#{menuMgmtView.onQuery}" update=":form:pdt" />
+                    <p:treeNode>
+                        <h:outputText value="#{node}" />
+                    </p:treeNode>
+                </p:tree>
+                <p:contextMenu for="tree1">
+                    <p:menuitem value="添加主菜单" update="pgViewForTreeAdd" onclick="PF('wVDlgViewForTreeAdd').show()" icon="ui-icon-add" actionListener="#{menuMgmtView.treeMenuAction('treeAdd')}"/>
+                    <p:menuitem value="修改主菜单" update=":form:pgViewForTreeUpd,:form:pdt" actionListener="#{menuMgmtView.treeMenuAction('treeUpd')}"
+                                onclick="PF('wVDlgViewForTreeUpd').show()" icon="ui-icon-arrowrefresh-1-w" />
+                    <p:menuitem value="删除主菜单" update=":form:pgViewForTreeDel,:form:pdt" actionListener="#{menuMgmtView.treeMenuAction('treeDel')}" onclick="PF('wVDlgViewForTreeDel').show()" icon="ui-icon-close"/>
+                    <p:menuitem value="新增子菜单" update=":form:pgViewForRecordAdd,:form:pdt" actionListener="#{menuMgmtView.treeMenuAction('menuAdd')}" onclick="PF('wVDlgViewForRecordAdd').show()" icon="ui-icon-add"/>
+                </p:contextMenu>
+            </h:panelGrid>
+        </p:layoutUnit>
+
+        <p:layoutUnit position="center">
+            <f:facet name="header">子菜单列表</f:facet>
+            <p:dataTable id="pdt"
+                         tableStyle="width: auto;min-width: 80%"
+                         value="#{menuMgmtView.menuList}" var="record"
+                         emptyMessage="数据记录为空...">
+                <p:column headerText=" 操作 " style="width:80px;text-align: center; min-width: 70px">
+                    <h:panelGrid columns="8">
+                        <p:commandLink  styleClass="ui-icon ui-icon-arrowrefresh-1-w"
+                                        style="height:18px; width:18px"
+                                        title="编辑子菜单"
+                                        action="#{menuMgmtView.selectRecordAction('menuUpd',record)}"
+                                        update=":form:pgViewForTreeUpd,:form:pgViewForRecordUpd,:form:pdt"
+                                >
+                        </p:commandLink>
+                        <p:commandLink  styleClass="ui-icon ui-icon-trash"
+                                        title="删除子菜单"
+                                        style="height:18px;width:18px"
+                                        action="#{menuMgmtView.selectRecordAction('menuDel',record)}"
+                                        update=":form:pgViewForTreeDel,:form:pgViewForRecordDel,:form:pdt"
+                                >
+                        </p:commandLink>
+                    </h:panelGrid>
+                </p:column>
+                <p:column style="text-align:left">
+                    <f:facet name="header">
+                        菜单名称
+                    </f:facet>
+                    <h:outputText value="#{record.menulabel}"/>
+                </p:column>
+                <p:column style="text-align:left">
+                    <f:facet name="header">
+                        菜单行为
+                    </f:facet>
+                    <h:outputText value="#{record.menuaction}"/>
+                </p:column>
+                <p:column style="text-align:center">
+                    <f:facet name="header">
+                        菜单顺序
+                    </f:facet>
+                    <h:outputText value="#{record.levelidx}"/>
+                </p:column>
+                <p:column style="text-align:left">
+                    <f:facet name="header">
+                        菜单描述
+                    </f:facet>
+                    <h:outputText value="#{record.menudesc}"/>
+                </p:column>
+                <p:column style="text-align:center">
+                    <f:facet name="header">
+                        所属系统
+                    </f:facet>
+                    <h:outputText value="#{record.targetmachine}"/>
+                </p:column>
+            </p:dataTable>
+        </p:layoutUnit>
+    </p:layout>
+
+    <!--子菜单新增-->
+    <p:dialog id="dlgViewForRecordAdd" header="系统菜单新增信息" widgetVar="wVDlgViewForRecordAdd"
+              resizable="false" modal="true"
+              showEffect="clip" hideEffect="fold">
+        <h:panelGrid id="pgViewForRecordAdd">
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            <h:panelGrid columns="4">
+                <p:outputLabel for="pmenuNameAdd" value="上级菜单：" />
+                <p:selectOneMenu id="pmenuNameAdd" value="#{menuMgmtView.ptmenuAdd.parentmenuid}" style="min-width: 143px">
+                    <f:selectItem itemLabel="菜单管理" itemValue="0"/>
+                    <f:selectItems value="#{menuMgmtView.treeMenus}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单名称：" for="menunameAdd"/>
+                <p:inputText id="menunameAdd" value="#{menuMgmtView.ptmenuAdd.menulabel}"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单行为：" for="menuactionForAdd"/>
+                <p:inputText id="menuactionForAdd" value="#{menuMgmtView.ptmenuAdd.menuaction}" style="width: 320px"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单顺序：" for="levelidxForAdd"/>
+                <p:inputText id="levelidxForAdd" value="#{menuMgmtView.ptmenuAdd.levelidx}" label="Number"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单描述：" />
+                <p:inputText id="menudescForAdd" value="#{menuMgmtView.ptmenuAdd.menudesc}" />
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="所属系统：" for="targetmachineAdd"/>
+                <p:inputText id="targetmachineAdd" value="#{menuMgmtView.ptmenuAdd.targetmachine}" />
+            </h:panelGrid>
+            <h:panelGrid id="pgOperBtnForRecordAdd" columns="4">
+                <p:commandButton id="submitBtnForRecordAdd"
+                                 value="提交（新增）"
+                                 action="#{menuMgmtView.submitThisRecordAction}"
+                                 update=":form:pgViewForRecordAdd,:form:pdt"
+                                 validateClient="true">
+                </p:commandButton>
+                <p:commandButton id="resetBtnForRecordAdd" value="重置"
+                                 type="reset"
+                                 update="pgViewForRecordAdd">
+                </p:commandButton>
+            </h:panelGrid>
+        </h:panelGrid>
+    </p:dialog>
+    <!--主菜单删除-->
+    <p:dialog id="dlgViewForTreeDel" header="系统主菜单删除信息" widgetVar="wVDlgViewForTreeDel"
+              resizable="false" modal="true"
+              showEffect="clip" hideEffect="fold">
+        <h:panelGrid id="pgViewForTreeDel">
+            <h:panelGrid columns="4">
+                <p:outputLabel for="pTreeMenuNameDelete" value="上级菜单：" />
+                <p:selectOneMenu id="pTreeMenuNameDelete" value="#{menuMgmtView.pttreeMenuDel.parentmenuid}" style="min-width: 143px" disabled="true">
+                    <f:selectItem itemLabel="菜单管理" itemValue="0"/>
+                    <f:selectItems value="#{menuMgmtView.treeMenus}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单名称：" for="treeMenuNameDelete"/>
+                <p:inputText id="treeMenuNameDelete" value="#{menuMgmtView.pttreeMenuDel.menulabel}"  readonly="true"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单顺序：" for="treeMenuLevelidxForDelete"/>
+                <p:inputText id="treeMenuLevelidxForDelete" value="#{menuMgmtView.pttreeMenuDel.levelidx}" readonly="true"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单描述：" />
+                <p:inputText id="treeMenuDescForDelete" value="#{menuMgmtView.pttreeMenuDel.menudesc}" readonly="true"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="所属系统：" for="treeMenuTargetmachineDelete"/>
+                <p:inputText id="treeMenuTargetmachineDelete" value="#{menuMgmtView.pttreeMenuDel.targetmachine}" readonly="true"/>
+            </h:panelGrid>
+            <h:panelGrid id="pgOperBtnForTreeDel" columns="4">
+                <p:commandButton id="submitBtnForTreeDel"
+                                 value="提交（删除）"
+                                 action="#{menuMgmtView.addTreeMenuAction('treeDel')}"
+                                 update=":form:tree1,:form:msgs,:form:pdt">
+                </p:commandButton>
+            </h:panelGrid>
+        </h:panelGrid>
+    </p:dialog>
+
+    <!--主菜单新增-->
+    <p:dialog id="dlgViewForTreeAdd" header="系统主菜单新增信息" widgetVar="wVDlgViewForTreeAdd"
+              resizable="false" modal="true"
+              showEffect="clip" hideEffect="fold">
+        <h:panelGrid id="pgViewForTreeAdd">
+            <h:panelGrid columns="4">
+                <p:outputLabel for="pTreeMenuNameAdd" value="上级菜单：" />
+                <p:selectOneMenu id="pTreeMenuNameAdd" value="#{menuMgmtView.pttreeMenuAdd.parentmenuid}" style="min-width: 143px">
+                    <f:selectItem itemLabel="菜单管理" itemValue="0"/>
+                    <f:selectItems value="#{menuMgmtView.treeMenus}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单名称：" for="treeMenuNameAdd"/>
+                <p:inputText id="treeMenuNameAdd" value="#{menuMgmtView.pttreeMenuAdd.menulabel}"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单顺序：" for="treeMenuLevelidxForAdd"/>
+                <p:inputText id="treeMenuLevelidxForAdd" value="#{menuMgmtView.pttreeMenuAdd.levelidx}" label="Number"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单描述：" />
+                <p:inputText id="treeMenuDescForAdd" value="#{menuMgmtView.pttreeMenuAdd.menudesc}" />
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="所属系统：" for="treeMenuTargetmachineAdd"/>
+                <p:inputText id="treeMenuTargetmachineAdd" value="#{menuMgmtView.pttreeMenuAdd.targetmachine}" />
+            </h:panelGrid>
+            <h:panelGrid id="pgOperBtnForTreeAdd" columns="4">
+                <p:commandButton id="submitBtnForTreeAdd"
+                                 value="提交（新增）"
+                                 action="#{menuMgmtView.addTreeMenuAction('treeAdd')}"
+                                 update=":form:tree1,:form:msgs"
+                                 validateClient="true">
+                </p:commandButton>
+                <p:commandButton id="resetBtnForTreeAdd" value="重置"
+                                 type="reset"
+                                 update="pgViewForTreeAdd">
+                </p:commandButton>
+            </h:panelGrid>
+        </h:panelGrid>
+    </p:dialog>
+<!--主菜单修改-->
+    <p:dialog id="dlgViewForTreeUpd" header="系统主菜单更新信息" widgetVar="wVDlgViewForTreeUpd"
+              resizable="false" modal="true"
+              showEffect="clip" hideEffect="fold">
+        <p:messages autoUpdate="true"/>
+        <h:panelGrid id="pgViewForTreeUpd">
+            <h:panelGrid columns="4">
+                <p:outputLabel for="pTreeMenuNameUpd" value="上级菜单：" />
+                <p:selectOneMenu id="pTreeMenuNameUpd" value="#{menuMgmtView.pttreeMenuUpd.parentmenuid}" style="min-width: 143px">
+                    <f:selectItem itemLabel="菜单管理" itemValue="0"/>
+                    <f:selectItems value="#{menuMgmtView.treeMenus}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单名称：" for="treeMenuNameUpd"/>
+                <p:inputText id="treeMenuNameUpd" value="#{menuMgmtView.pttreeMenuUpd.menulabel}"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单顺序：" for="treeMenuLevelidxForUpd"/>
+                <p:inputText id="treeMenuLevelidxForUpd" value="#{menuMgmtView.pttreeMenuUpd.levelidx}" label="Number"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单描述：" />
+                <p:inputText id="treeMenuDescForUpd" value="#{menuMgmtView.pttreeMenuUpd.menudesc}" />
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="所属系统：" for="treeMenuTargetmachineUpd"/>
+                <p:inputText id="treeMenuTargetmachineUpd" value="#{menuMgmtView.pttreeMenuUpd.targetmachine}" />
+            </h:panelGrid>
+            <h:panelGrid id="pgOperBtnForTreeUpd" columns="4">
+                <p:commandButton id="submitBtnForTreeUpd"
+                                 value="提交（更新）"
+                                 action="#{menuMgmtView.addTreeMenuAction('treeUpd')}"
+                                 update=":form:pgViewForTreeUpd,:form:tree1,:form:msgs,:form:pdt"
+                                 validateClient="true">
+                </p:commandButton>
+                <p:commandButton id="resetBtnForTreeUpd" value="重置"
+                                 type="reset"
+                                 update="pgViewForTreeUpd">
+                </p:commandButton>
+            </h:panelGrid>
+        </h:panelGrid>
+    </p:dialog>
+    <!--子菜单修改-->
+    <p:dialog id="dlgViewForRecordUpd" header="系统菜单更新信息" widgetVar="wVDlgViewForRecordUpd"
+              resizable="false" modal="true"
+              showEffect="clip" hideEffect="fold">
+        <p:messages autoUpdate="true"/>
+        <h:panelGrid id="pgViewForRecordUpd">
+            <h:panelGrid columns="4">
+                <p:outputLabel for="parentmenunameUpd" value="上级菜单：" />
+                <p:selectOneMenu id="parentmenunameUpd" value="#{menuMgmtView.ptmenuUpd.parentmenuid}" style="min-width: 143px">
+                    <f:selectItem itemLabel="菜单管理" itemValue="0"/>
+                    <f:selectItems value="#{menuMgmtView.treeMenus}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+            <p:outputLabel value="菜单名称：" for="menunameUpd"/>
+            <p:inputText id="menunameUpd" value="#{menuMgmtView.ptmenuUpd.menulabel}"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单行为：" for="menuactionForUpd"/>
+                <p:inputText id="menuactionForUpd" value="#{menuMgmtView.ptmenuUpd.menuaction}"
+                             style="width: 300px"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单顺序：" for="levelidxForUpd"/>
+                <p:inputText id="levelidxForUpd" value="#{menuMgmtView.ptmenuUpd.levelidx}" label="Number"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单描述：" />
+                <p:inputText id="menudescForUpd" value="#{menuMgmtView.ptmenuUpd.menudesc}" />
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="所属系统：" for="targetmachineUpd"/>
+                <p:inputText id="targetmachineUpd" value="#{menuMgmtView.ptmenuUpd.targetmachine}" />
+            </h:panelGrid>
+            <h:panelGrid id="pgOperBtnForRecordUpd" columns="4">
+                <p:commandButton id="submitBtnForRecordUpd"
+                                 value="提交（更新）"
+                                 action="#{menuMgmtView.submitThisRecordAction}"
+                                 update=":form:pgViewForRecordUpd,:form:pdt"
+                                 validateClient="true">
+                </p:commandButton>
+                <p:commandButton id="resetBtnForRecordUpd" value="重置"
+                                 type="reset"
+                                 update="pgViewForRecordUpd">
+                </p:commandButton>
+            </h:panelGrid>
+        </h:panelGrid>
+    </p:dialog>
+    <!--子菜单删除-->
+    <p:dialog id="dlgViewForRecordDel" header="系统菜单删除信息" widgetVar="wVDlgViewForRecordDel"
+              resizable="false" modal="true"
+              showEffect="clip" hideEffect="fold">
+        <h:panelGrid id="pgViewForRecordDel">
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单名称：" for="menunameDel"/>
+                <p:inputText id="menunameDel" value="#{menuMgmtView.ptmenuDel.menulabel}" readonly="true" style="min-width: 143px"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单行为：" for="menuactionForDel"/>
+                <p:inputText id="menuactionForDel" value="#{menuMgmtView.ptmenuDel.menuaction}"
+                             readonly="true" style="width: 320px"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单顺序：" for="levelidxForDel"/>
+                <p:inputText id="levelidxForDel" value="#{menuMgmtView.ptmenuDel.levelidx}"
+                             readonly="true"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="菜单描述：" for="menudescForDel"/>
+                <p:inputText id="menudescForDel" value="#{menuMgmtView.ptmenuDel.menudesc}"
+                             readonly="true"/>
+            </h:panelGrid>
+            <h:panelGrid columns="4">
+                <p:outputLabel value="所属系统：" for="targetmachineDel"/>
+                <p:inputText id="targetmachineDel" value="#{menuMgmtView.ptmenuDel.targetmachine}"
+                             readonly="true"/>
+            </h:panelGrid>
+            <h:panelGrid id="pgOperBtnForRecordDel">
+                <p:commandButton id="submitBtnForRecordDel"
+                                 value="提交（删除）"
+                                 action="#{menuMgmtView.submitThisRecordAction()}"
+                                 update=":form:pgViewForRecordDel,:form:pdt"
+                                 oncomplete="PF('wVDlgViewForRecordDel').hide()">
+                </p:commandButton>
+            </h:panelGrid>
+        </h:panelGrid>
+    </p:dialog>
+</h:form>
+</div>
+</div>
+</div>
+</div>
+</ui:define>
+</ui:composition>

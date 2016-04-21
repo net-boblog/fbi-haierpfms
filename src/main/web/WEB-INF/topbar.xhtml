@@ -1,0 +1,108 @@
+<ui:composition
+
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+
+
+    <div id="layout-topbar" class="ShadowGray">
+        <div id="layout-topbar-indent">
+            <a href="#{request.contextPath}/ui/backend/dashboard.xhtml">
+                <!--<h:graphicImage name="images/LOGO-CEB-CMS-01.svg" styleClass="Fleft" library="project-layout" id="logo"/>-->
+                <h:graphicImage name="images/logo-01.png" styleClass="Fleft" library="project-layout" id="logo"/>
+            </a>
+            <a href="#" id="mobile-menu-button" class="BordRad3 white ShowOnMobile"><i class="fa fa-bars"></i> 主菜单</a>
+            <a href="#" id="mobile-menu-button-gray" class="BordRad3 white ShowOnMobile"><i
+                    class="fa fa-caret-down"></i> 选项</a>
+
+            <ul id="layout-topbar-menu">
+                <li>
+                    <a href="#{request.contextPath}/ui/backend/logout.xhtml" class="Animated05"><i class="fa fa-sign-out"></i>退出
+                        <!--<f:actionListener type="skyline.view.login.LogoutListener"></f:actionListener>-->
+                    </a>
+                </li>
+                <li class="fa fa-ellipsis-v menu-separator"></li>
+                <li>
+                    <!--<a href="#" class="Animated05"><i class="fa fa-gear fa-spin"></i>设置</a>-->
+                    <a class="Animated05 CursPointer"  onclick="PF('operPassword').show();"><i class="fa fa-gear fa-spin"></i>密码修改</a>
+<!--
+                    <ul style="width:150px; margin-left:-30px;" class="Animated03 submenu">
+                        <li><a href="#{request.contextPath}/ui/backend/pages/download.xhtml" class="Animated05"><i class="fa fa-flag red"></i> 浏览器下载</a></li>
+                    </ul>
+-->
+                </li>
+                <li class="fa fa-ellipsis-v menu-separator"></li>
+
+                <li>
+                    <a class="Animated05 CursPointer"><i class="fa fa-bell animated swing infinite red"></i>消息通知
+                        <!--<span class="notification-bubble BordRad3 animated rubberBand">24</span>-->
+                        <i class="fa fa-chevron-down Fs14 Fright ShowOnMobile"></i></a>
+                </li>
+                <li class="fa fa-ellipsis-v menu-separator"></li>
+                <li>
+                    <a class="Animated05 CursPointer"><i class="fa fa-user"></i> #{uiTemplateView.operName} 欢迎！
+                        <i class="fa fa-chevron-down Fs14 Fright ShowOnMobile"></i></a>
+<!--
+                    <ul style="width:175px; margin-left:-10px;" class="Animated03 submenu">
+                        <li>
+                            <a class="Animated05">
+                                <i class="fa fa-user Fs30 Fleft"></i>
+                                <span class="Fright Fs20 TexAlRight">#{loginManager.operName}
+                                    <span class="Fs10 DispBlock">
+                                        <br/>
+                                        <ui:repeat value="#{loginManager.roleNames}" var="role">
+                                            #{role} <br/>
+                                        </ui:repeat>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+
+                        <li><a class="Animated05" onclick="PF('operPassword').show();"><i
+                                class="fa fa-dashboard"></i> 修改密码</a>
+                        </li>
+                    </ul>
+-->
+                </li>
+            </ul>
+        </div>
+        <p:dialog header="用户信息"  widgetVar="operPassword" modal="true" dynamic="true"
+                  width="550px">
+            <div class="layout-portlets-box">
+                <div class="Container100 Responsive50">
+                    <div class="ContainerIndent">
+                        <h:form id="formpwd">
+                            <p:growl id="msgsPwd" showDetail="false"/>
+
+                            <h1 class="BigTopic">登录密码修改</h1>
+                            <h:panelGrid  columns="2" cellpadding="5">
+                                <p:outputLabel value="请输入旧密码:"/>
+                                <p:password value="#{loginView.operPasswd}" required="true" styleClass="Wid90"
+                                            requiredMessage="旧密码必须输入."/>
+
+                                <p:outputLabel value="请输入新密码:"/>
+                                <p:password value="#{loginView.operNewPasswd1}" feedback="true"
+                                            required="true" requiredMessage="密码必须输入."
+                                            promptLabel="密码输入:" goodLabel="口令强度中" weakLabel="口令强度弱"
+                                            strongLabel="口令强度高"/>
+
+                                <p:outputLabel value="新密码确认:"/>
+                                <p:password value="#{loginView.operNewPasswd2}" styleClass="Wid90"
+                                            required="true" requiredMessage="密码必须输入."/>
+                            </h:panelGrid>
+
+                            <div class="Seperator"></div>
+
+                            <p:commandButton value="提交" styleClass="RedButton" update="msgsPwd formpwd"
+                                             style="width: 120px"
+                                             action="#{loginView.onChangePassword}"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </p:dialog>
+    </div>
+
+</ui:composition>

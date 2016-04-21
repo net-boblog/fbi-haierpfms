@@ -1,0 +1,108 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../../templates/ui.xhtml">
+
+    <ui:define name="head">
+        <style type="text/css">
+            .col-label {
+                width: 90px;
+                text-align: right;
+            }
+
+            .col-label2 {
+                padding-left: 90px;
+                width: 90px;
+                text-align: right;
+            }
+
+            .col-input {
+                width: 30px;
+            }
+
+        </style>
+
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="layout-portlets-box">
+        <div class="Container100">
+        <div class="ContainerIndent">
+            <h:form id="form">
+                <p:growl id="msgs" showDetail="false"/>
+                <h:panelGrid columns="6">
+                    <p:outputLabel value="名称:"/>
+                    <p:inputText value="#{scheduleJobAction.selectRecord.jobName}" size="30"
+                                 disabled="true"/>
+                    <p:outputLabel value="分组:"/>
+                    <p:inputText value="#{scheduleJobAction.selectRecord.jobGroup}" size="30"
+                                 disabled="true"/>
+                    <p:outputLabel value="cron时间表达式:"/>
+                    <p:inputText value="#{scheduleJobAction.selectRecord.cronExpression}"
+                                 size="30" disabled="true"/>
+                    <p:outputLabel value="springId:"/>
+                    <p:inputText value="#{scheduleJobAction.selectRecord.springId}" size="30"
+                                 disabled="true"/>
+                    <!--<p:outputLabel value="动作类:"/>
+                    <p:inputText value="#{scheduleJobAction.selectRecord.jobAction}" size="30"
+                                 disabled="true"/>-->
+                    <p:outputLabel value="动作函数:"/>
+                    <p:inputText value="#{scheduleJobAction.selectRecord.jobMethod}"
+                                 size="30"
+                                 disabled="true"/>
+                    <!--<p:outputLabel value="动作参数:"/>
+                    <p:inputText value="#{scheduleJobAction.selectRecord.jobParam}"
+                                 size="30"
+                                 disabled="true"/>-->
+                    <!--<p:outputLabel value="是否异步:"/>
+                    <p:inputText value="#{scheduleJobAction.selectRecord.isSync}" size="30"
+                                 disabled="true"/>-->
+                    <p:outputLabel value="描述:"/>
+                    <p:inputText value="#{scheduleJobAction.selectRecord.description}"
+                                 size="30"
+                                 disabled="true"/>
+                </h:panelGrid>
+                <p:separator/>
+                <p:outputLabel value="当日未发生过定时任务!" style="color: red;" rendered="#{scheduleJobAction.jobLogList.size()>0?'false':'true'}"/>
+                <p:dataTable id="logpdt"
+                             dynamic="true"
+                             scrollWidth="margin-top:5px;100%"
+                             value="#{scheduleJobAction.jobLogList}"
+                             var="log"
+                             rowKey="#{log.pkid}"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks}
+                                                            {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             rows="15"
+                             rowIndexVar="row"
+                             rowsPerPageTemplate="200,100,50,40,30,20,15"
+                             emptyMessage="数据记录为空...">
+                    <p:column headerText="序号" style="width:30px">
+                        <h:outputText value="#{row + 1}"/>
+                    </p:column>
+                    <p:column id="jobname" headerText="调度类型" style="text-align:center">
+                        <h:outputText value="#{log.type eq 'SCHEDULE_NORMAL'?'正常调度':log.type eq 'SCHEDULE_RUN_ONCE'?'立即运行一次':log.type}"/>
+                    </p:column>
+                    <p:column id="jobdesc" headerText="处理日志">
+                        <h:outputText value="#{log.jobdesc}"/>
+                    </p:column>
+                    <p:column id="jobusername" headerText="操作人员" style="text-align:center">
+                        <h:outputText value="#{log.jobusername}"/>
+                    </p:column>
+                    <p:column id="jobtime" headerText="操作时间" style="text-align:center">
+                        <h:outputText value="#{log.jobtime}">
+                            <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="GMT+8"/>
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+
+            </h:form>
+        </div>
+        </div>
+        </div>
+    </ui:define>
+
+</ui:composition>
