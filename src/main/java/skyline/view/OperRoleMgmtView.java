@@ -50,7 +50,7 @@ public class OperRoleMgmtView {
     //    用户列表查询
     public void onQuery(){
         try {
-            Map<String,Object> paramMap = new HashMap<>();
+            Map<String,Object> paramMap = new HashMap<String,Object>();
             paramMap.put("deptid",ptoperQry.getDeptid());
             paramMap.put("operid",ptoperQry.getOperid());
             paramMap.put("operenabled",ptoperQry.getOperenabled());
@@ -79,7 +79,7 @@ public class OperRoleMgmtView {
         try {
             operid = ptoperSelectedPara.getOperid();
             root1 = new DefaultTreeNode("Root", null);
-            Map<String,Object> paramMap = new HashMap<>();
+            Map<String,Object> paramMap = new HashMap<String,Object>();
             paramMap.put("operid",operid);
             //获得该角色权限
             sql = "SELECT t.roleid,t.roledesc,t.status FROM ptoperrole j LEFT JOIN ptrole t  ON j.roleid = t.roleid WHERE t.status ='1' AND j.operid =:operid ORDER BY t.roleid ASC ";
@@ -103,14 +103,14 @@ public class OperRoleMgmtView {
     }
     public  void  submitThisRecordAction(String rrrr){
         try {
-            Map<String, Object> paramMap = new HashMap<>();
+            Map<String, Object> paramMap = new HashMap<String,Object>();
             TreeNode[] nodes = selectedNode2;
             paramMap.put("operid",operid);
             sql = "DELETE ptoperrole j WHERE j.operid =:operid ";
             skylineJdbc.update(sql, paramMap);
             if(nodes != null && nodes.length > 0) {
                 for (TreeNode node : nodes) {
-                    Map<String,Object> paramMapT = new HashMap<>();
+                    Map<String,Object> paramMapT = new HashMap<String,Object>();
                     int subS = node.getData().toString().lastIndexOf("(");
                     int subE = node.getData().toString().lastIndexOf(")");
                     paramMapT.put("operid",operid);

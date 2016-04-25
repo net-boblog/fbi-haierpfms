@@ -1,0 +1,129 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="../../templates/ui.xhtml">
+    <ui:define name="head">
+        <style type="text/css">
+            .col-label {
+                width: 80px;
+                text-align: right;
+            }
+
+            .col-input {
+                width: 120px;
+                text-align: left;
+            }
+        </style>
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="form">
+            <p:messages id="msgs" showDetail="false" life="1500"/>
+            <div class="layout-portlets-box">
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <div style="margin:5px;">
+                            <div id="header">
+                                <p:panel id="formpanel" style="width: 100%;">
+                                    <h:panelGrid>
+                                        <h:panelGrid columns="6" cellspacing="5">
+                                            <p:outputLabel value="客户代码:"/>
+                                            <p:inputText value="#{invZzsCustAction.invZzsCustAdd.khdm}"
+                                                required="true" maxlength="50"
+                                                requiredMessage="客户代码不能为空。" style="width:220px;"/>
+                                            <p:outputLabel value="客户税号:"/>
+                                            <p:inputText value="#{invZzsCustAction.invZzsCustAdd.khswdjh}"
+                                                         required="true" maxlength="20"
+                                                         requiredMessage="客户税号不能为空。" style="width:220px;"/>
+                                            <p:outputLabel value="客户名称:"/>
+                                            <p:inputText value="#{invZzsCustAction.invZzsCustAdd.khmc}"
+                                                         required="true" maxlength="200"
+                                                         requiredMessage="客户名称不能为空。" style="width:220px;"/>
+                                            <p:outputLabel value="客户手机号:"/>
+                                            <p:inputText value="#{invZzsCustAction.invZzsCustAdd.khsj}"
+                                                         maxlength="200" style="width:220px;"/>
+                                            <p:outputLabel value="客户地址:"/>
+                                            <p:inputText value="#{invZzsCustAction.invZzsCustAdd.khdz}"
+                                                         required="true"
+                                                         requiredMessage="客户地址不能为空。"
+                                                         maxlength="200" style="width:220px;"/>
+                                            <p:outputLabel value="开户银行:"/>
+                                            <p:inputText value="#{invZzsCustAction.invZzsCustAdd.khyh}"
+                                                         required="true"
+                                                         requiredMessage="开户银行不能为空。"
+                                                         maxlength="200" style="width:220px;"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="2" cellspacing="5">
+                                            <p:commandButton id="addbtn" style="width:120px;" value="添加信息 "
+                                                             styleClass="GreenButton Fright"
+                                                             action="#{invZzsCustAction.onAdd}"
+                                                             update="pdt,msgs">
+                                            </p:commandButton>
+                                            <p:commandButton id="resetbtn" style="width:120px;" value="重置"
+                                                             type="reset"
+                                                             update=":form:formpanel,:form:msgs" >
+                                            </p:commandButton>
+                                         </h:panelGrid>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layout-portlets-box">
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <p:dataTable id="pdt" style="width:100%;margin-top: 10px;margin-bottom: 10px"
+                                     value="#{invZzsCustAction.invZzsCustList}" var="record"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+                                     currentPageReportTemplate="共#{fn:length(invZzsCustAction.invZzsCustList)}笔明细"
+                                     paginator="true" rows="5"
+                                     paginatorPosition="bottom"
+                                     rowsPerPageTemplate="100,50,30,15,5"
+                                     emptyMessage="数据记录为空...">
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    客户代码
+                                </f:facet>
+                                <h:outputText value="#{record.khdm}"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    客户税号
+                                </f:facet>
+                                <h:outputText value="#{record.khswdjh}" style="float:left"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    客户名称
+                                </f:facet>
+                                <h:outputText value="#{record.khmc}" style="float:left"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    客户手机号
+                                </f:facet>
+                                <h:outputText value="#{record.khsj}" style="float:left"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    客户地址
+                                </f:facet>
+                                <h:outputText value="#{record.khdz}" style="float:left"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    开户银行
+                                </f:facet>
+                                <h:outputText value="#{record.khyh}" style="float:left"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

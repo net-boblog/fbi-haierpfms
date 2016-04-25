@@ -68,7 +68,7 @@ public class OperInfoMgmtView {
     //    用户列表查询
     public void onQuery(){
         try {
-            Map<String,Object> paramMap = new HashMap<>();
+            Map<String,Object> paramMap = new HashMap<String, Object>();
             paramMap.put("deptid",ptoperQry.getDeptid());
             paramMap.put("operid",ptoperQry.getOperid());
             paramMap.put("operenabled",ptoperQry.getOperenabled());
@@ -103,7 +103,7 @@ public class OperInfoMgmtView {
                     addMessage("用户ID已存在!...");
                     return;
                 }
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String, Object>();
                 paramMap.put("deptid", ptoperAdd.getDeptid());
                 paramMap.put("operid", ptoperAdd.getOperid());
                 paramMap.put("opername", ptoperAdd.getOpername());
@@ -126,7 +126,7 @@ public class OperInfoMgmtView {
                     addMessage("用户姓名不能为空!...");
                     return;
                 }
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String, Object>();
                 paramMap.put("deptid", ptoperUpd.getDeptid());
                 paramMap.put("operid", ptoperUpd.getOperid());
                 paramMap.put("opername", ptoperUpd.getOpername());
@@ -183,7 +183,7 @@ public class OperInfoMgmtView {
         return compareFlag;
     }
     public List<String> getOperEqList() {
-        Map<String, Object> paramMap = new HashMap<>();
+        Map<String, Object> paramMap = new HashMap<String, Object>();
         String sql = "SELECT T.OPERID FROM PTOPER T WHERE 1=1 ";
         return skylineJdbc.queryForList(sql, paramMap, String.class);
     }

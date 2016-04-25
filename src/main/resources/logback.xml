@@ -40,7 +40,7 @@
         </layout>
     </appender>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE-ALL"/>
         <appender-ref ref="FILE-ERROR"/>

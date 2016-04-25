@@ -55,7 +55,7 @@ public class PlatformService {
 
     //返回 机构号|机构名称(前面加全角空格)
     public List<String> selectBranchLevelString(String instId) {
-        Map<String, Object> paramMap = new HashMap<>();
+        Map<String, Object> paramMap = new HashMap<String,Object>();
         paramMap.put("instId", instId);
         String sql = "select deptid || '|' || LPad('　', (level - 1) * 2, '　') || deptname" +
                 "  from ptdept" +
@@ -66,7 +66,7 @@ public class PlatformService {
 
     //机构号
     public List<String> selectBranchLevelList(String instId) {
-        Map<String, Object> paramMap = new HashMap<>();
+        Map<String, Object> paramMap = new HashMap<String,Object>();
         paramMap.put("instId", instId);
         String sql = "select deptid " +
                 "  from ptdept" +
@@ -128,7 +128,7 @@ public class PlatformService {
     }
 
     private Ptoper selectPtoper(String operId) {
-        Map<String, Object> paramMap = new HashMap<>();
+        Map<String, Object> paramMap = new HashMap<String,Object>();
         paramMap.put("operId", operId);
         String sql = "select * from PTOPER t where t.operid=:operId";
         List<Ptoper> ptopers = skylineJdbc.query(sql, paramMap, new BeanPropertyRowMapper(Ptoper.class));
@@ -141,7 +141,7 @@ public class PlatformService {
     }
 
     private Ptdept selectPtdept(String deptId) {
-        Map<String, Object> paramMap = new HashMap<>();
+        Map<String, Object> paramMap = new HashMap<String,Object>();
         paramMap.put("deptId", deptId);
         String sql = "select * from PTDEPT t where t.deptid=:deptId";
         List<Ptdept> ptdepts = skylineJdbc.query(sql, paramMap, new BeanPropertyRowMapper(Ptdept.class));
@@ -156,7 +156,7 @@ public class PlatformService {
 
     //获取某操作人员所拥有的菜单
     public List<Ptmenu> selectMenuList(String operId) {
-        Map<String, Object> paramMap = new HashMap<>();
+        Map<String, Object> paramMap = new HashMap<String,Object>();
         paramMap.put("operId", operId);
 
         String sql = "select menu.* from (select t1.*, t2.resname\n" +

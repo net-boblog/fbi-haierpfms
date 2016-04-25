@@ -78,7 +78,7 @@ public class EnumMgmtView implements Serializable  {
         try {
             enumId = selectedNode.getData().toString();
             enumId = enumId.substring(enumId.lastIndexOf("(")+1,enumId.lastIndexOf(")"));
-            Map<String,Object> paramMap = new HashMap<>();
+            Map<String,Object> paramMap = new HashMap<String,Object>();
             paramMap.put("enutype",enumId);
             sql = "SELECT * from PTENUDETAIL t WHERE t.enutype =:enutype ORDER BY t.dispno ASC ";
             enudetailList = skylineJdbc.query(sql,paramMap, new BeanPropertyRowMapper<Ptenudetail>(Ptenudetail.class));
@@ -111,7 +111,7 @@ public class EnumMgmtView implements Serializable  {
                     addMessage("枚举类型代码已存在，请查证后再操作...");
                     return;
                 }
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("enuType", ptenumainAdd.getEnutype());
                 paramMap.put("enuName", ptenumainAdd.getEnuname());
                 sql = "INSERT INTO ptenumain  (enutype, enuname)" +
@@ -121,14 +121,14 @@ public class EnumMgmtView implements Serializable  {
                 RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('wVDlgViewForTreeAdd').hide();");
             }else if("treeUpd".equals(addFlag)){
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("enuType", ptenumainUpd.getEnutype());
                 paramMap.put("enuName", ptenumainUpd.getEnuname());
                 sql = "UPDATE ptenumain  SET enuname =:enuName WHERE enutype =:enuType";
                 skylineJdbc.update(sql, paramMap);
                 successMessage("修改成功!...");
             }else if("treeDel".equals(addFlag)){
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("enuType", ptenumainDel.getEnutype());
 //                删除枚举元素
                 sqlD = "DELETE ptenudetail  WHERE enutype =:enuType";
@@ -173,7 +173,7 @@ public class EnumMgmtView implements Serializable  {
                     addMessage("该枚举元素已存在，请查证后再操作...");
                     return;
                 }
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("enuType", ptenudetailAdd.getEnutype());
                 paramMap.put("enuItemValue", ptenudetailAdd.getEnuitemvalue());
                 paramMap.put("enuItemLabel", ptenudetailAdd.getEnuitemlabel());
@@ -187,7 +187,7 @@ public class EnumMgmtView implements Serializable  {
                 context.execute("PF('wVDlgRecordForAdd').hide();");
                 //修改
             } else if("enuItemUpd".equals(strSubmitType)){
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("enuType", ptenudetailUpd.getEnutype());
                 paramMap.put("enuItemValue", ptenudetailUpd.getEnuitemvalue());
                 paramMap.put("enuItemLabel", ptenudetailUpd.getEnuitemlabel());
@@ -198,7 +198,7 @@ public class EnumMgmtView implements Serializable  {
                 successMessage("修改成功!...");
                 //删除枚举元素
             } else if ("enuItemDel".equals(strSubmitType)){
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("enuType", ptenudetailDel.getEnutype());
                 paramMap.put("enuItemValue", ptenudetailDel.getEnuitemvalue());
                 sql = "DELETE ptenudetail WHERE enutype =:enuType and enuitemvalue =:enuItemValue ";

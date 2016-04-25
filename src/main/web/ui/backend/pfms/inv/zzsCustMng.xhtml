@@ -1,0 +1,160 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="../../templates/ui.xhtml">
+
+    <ui:define name="head">
+    </ui:define>
+     <ui:define name="content">
+        <h:form id="form">
+            <p:messages id="msgs" showDetail="false" life="1500"/>
+              <div class="layout-portlets-box">
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <div style="margin:5px;">
+                            <div id="header">
+                                <p:panel id="queryForm" style="width: 100%;">
+                                    <h:panelGrid>
+                                        <h:panelGrid columns="6" cellspacing="5">
+                                            <h:outputLabel value="客户代码:"/>
+                                            <p:inputText  value="#{invZzsCustAction.khdm}"/>
+                                            <h:outputLabel value="客户名称:"/>
+                                            <p:inputText  value="#{invZzsCustAction.khmc}"/>
+                                            <p:commandButton id="addbtn" value="查询"
+                                                             style="width:120px;"
+                                                             process="form:queryForm"
+                                                             styleClass="GreenButton Fright"
+                                                             action="#{invZzsCustAction.onQry}"
+                                                             update="form:pdt,form:msgs">
+                                            </p:commandButton>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layout-portlets-box">
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <p:dataTable id="pdt" style="width:100%;margin-top: 10px;margin-bottom: 10px"
+                                     value="#{invZzsCustAction.invZzsCustList}" var="record"
+                                     rowKey="#{record.khdm}"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+                                     currentPageReportTemplate="共#{fn:length(invZzsCustAction.invZzsCustList)}笔明细"
+                                     paginator="true" rows="5"
+                                     paginatorPosition="bottom"
+                                     rowsPerPageTemplate="100,50,30,15,5"
+                                     emptyMessage="数据记录为空...">
+                            <p:column headerText=" 操作 " style="width:80px;text-align: center; min-width: 70px">
+                                <h:panelGrid columns="8">
+                                    <p:commandLink  styleClass="ui-icon ui-icon-pencil"
+                                                    style="height:18px; width:18px"
+                                                    title="编辑"
+                                                    process=":form:pdt"
+                                                    action="#{invZzsCustAction.selectRecordAction(record)}"
+                                                    update=":form:wVDlgViewForAlterId,:form:msgs"
+                                                    oncomplete="PF('wVDlgViewForAlter').show()" >
+                                    </p:commandLink>
+                                    <p:commandLink  styleClass="ui-icon ui-icon-trash"
+                                                    title="删除"
+                                                    style="height:18px;width:18px"
+                                                    action="#{invZzsCustAction.onDelete(record.khdm)}"
+                                                    update="pdt,:form:msgs" >
+                                    </p:commandLink>
+                                </h:panelGrid>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    客户代码
+                                </f:facet>
+                                <h:outputText value="#{record.khdm}"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    客户税号
+                                </f:facet>
+                                <h:outputText value="#{record.khswdjh}" style="float:left"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    客户名称
+                                </f:facet>
+                                <h:outputText value="#{record.khmc}" style="float:left"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    客户手机号
+                                </f:facet>
+                                <h:outputText value="#{record.khsj}" style="float:left"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    客户地址
+                                </f:facet>
+                                <h:outputText value="#{record.khdz}" style="float:left"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    开户银行
+                                </f:facet>
+                                <h:outputText value="#{record.khyh}" style="float:left"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:dialog id="wVDlgViewForAlterId" header="更新信息" widgetVar="wVDlgViewForAlter"
+                                  resizable="false" modal="true" focus="khswdjh"
+                                  showEffect="clip" hideEffect="fold">
+                            <p:messages id="msgsDialog1" showDetail="false"/>
+                            <h:panelGrid id="pgViewForRecordUpd">
+                                <h:panelGrid columns="4" cellpadding="2" >
+                                    <p:outputLabel value="客户代码:"/>
+                                    <p:inputText value="#{invZzsCustAction.invZzsCustUpd.khdm}"
+                                                 readonly="true"
+                                                 style="background-color:gainsboro;width:220px;" />
+                                    <p:outputLabel value="客户税号:"/>
+                                    <p:inputText id="khswdjh" value="#{invZzsCustAction.invZzsCustUpd.khswdjh}"
+                                                 required="true" maxlength="20"
+                                                 requiredMessage="客户税号不能为空。" style="width:220px;"/>
+                                    <p:outputLabel value="客户名称:"/>
+                                    <p:inputText value="#{invZzsCustAction.invZzsCustUpd.khmc}"
+                                                 required="true" maxlength="200"
+                                                 requiredMessage="客户名称不能为空。" style="width:220px;"/>
+                                    <p:outputLabel value="客户手机号:"/>
+                                    <p:inputText value="#{invZzsCustAction.invZzsCustUpd.khsj}"
+                                                 maxlength="200" style="width:220px;"/>
+                                    <p:outputLabel value="客户地址:"/>
+                                    <p:inputText value="#{invZzsCustAction.invZzsCustUpd.khdz}"
+                                                 required="true"
+                                                 requiredMessage="客户地址不能为空。"
+                                                 maxlength="200" style="width:220px;"/>
+                                    <p:outputLabel value="开户银行:"/>
+                                    <p:inputText value="#{invZzsCustAction.invZzsCustUpd.khyh}"
+                                                 required="true"
+                                                 requiredMessage="开户银行不能为空。"
+                                                 maxlength="200" style="width:220px;"/>
+                                </h:panelGrid>
+                                <p:separator/>
+                                <h:panelGrid columns="2" >
+                                    <p:commandButton id="submitBtnForRecordUpd"
+                                                     value="提交"
+                                                     action="#{invZzsCustAction.onUpd()}"
+                                                     process=":form:pgViewForRecordUpd"
+                                                     update=":form:pgViewForRecordUpd,msgsDialog1,:form:pdt" >
+                                    </p:commandButton>
+                                    <p:commandButton id="resetBtnForRecordUpd" value="取消"
+                                                     oncomplete=" PF('wVDlgViewForAlter').hide()" >
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:dialog>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

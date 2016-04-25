@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SequenceManager {
     private static final Logger logger = LoggerFactory.getLogger(SequenceManager.class);
-    private static ConcurrentHashMap<String, Sequence> sequences = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, Sequence> sequences = new ConcurrentHashMap<String, Sequence>();
     private static SequenceManager sequenceManager = null;
     private NamedParameterJdbcTemplate skylineJdbc;
 

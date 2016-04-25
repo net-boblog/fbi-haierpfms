@@ -4,30 +4,35 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <classPathEntry location="C:\WorkSpace\git-cmbc-pfms\lib\ojdbc6.jar"/>
+    <classPathEntry location="D:\GitHub\lib_pfms\ojdbc6.jar"/>
 
     <!--信息-->
     <context id="AllInfo" targetRuntime="MyBatis3">
-        <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+        <!--<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
                         connectionURL="jdbc:oracle:thin:@localhost:1521:orcl"
                         userId="pfms"
                         password="pfms">
+        </jdbcConnection>-->
+        <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+                        connectionURL="jdbc:oracle:thin:@10.135.7.63:1521:rwkj"
+                        userId="SAP"
+                        password="SAP">
         </jdbcConnection>
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="pfms.repository.model" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="pfms.repository.model" targetProject="java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="pfms.repository.mapper" targetProject="src/main/java">
+        <sqlMapGenerator targetPackage="pfms.repository.mapper" targetProject="java">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="pfms.repository.dao" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="pfms.repository.dao" targetProject="java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
@@ -74,14 +79,18 @@
             <generatedKey column="pkid" sqlStatement="select sys_guid() from dual" identity="false"/>
         </table>
         -->
-        <table tableName="TM_TEAM">
-            <property name="ignoreQualifiersAtRuntime" value="true" />
-            <generatedKey column="pkid" sqlStatement="select sys_guid() from dual" identity="false"/>
-        </table>
-        <table tableName="TM_MEMBER">
-            <property name="ignoreQualifiersAtRuntime" value="true" />
-            <generatedKey column="pkid" sqlStatement="select sys_guid() from dual" identity="false"/>
-        </table>
+        <!--<table tableName="INV_ZZS_CUST"/>
+        <table tableName="INV_ZZS_SRC"/>
+        <table tableName="INV_ZZS_HEAD"/>
+        <table tableName="INV_ZZS_ITEM"/>
+        <table tableName="INV_ZZS_KPHX"/>
+        <table tableName="INV_ZZS_ZF"/>
+        <table tableName="INV_ZZS_ZFHX"/>-->
+        <table schema="rwkj" tableName="XWSQ_ZZS_HEAD" />
+        <table schema="rwkj" tableName="XWSQ_ZZS_ITEM" />
+        <table schema="rwkj" tableName="XWSQ_ZZS_KPHX" />
+        <table schema="rwkj" tableName="XWSQ_ZZS_ZF" />
+        <table schema="rwkj" tableName="XWSQ_ZZS_ZFHX" />
     </context>
 
 </generatorConfiguration>

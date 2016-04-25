@@ -25,10 +25,10 @@ import java.util.stream.Collectors;
 public class UiTemplateView extends AbstractBacking {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private List<Ptmenu> topLevelMenuList = new ArrayList<>();
-    private Map<String, List<Ptmenu>> secondLevelMenuMap = new HashMap<>();
+    private List<Ptmenu> topLevelMenuList = new ArrayList<Ptmenu>();
+    private Map<String, List<Ptmenu>> secondLevelMenuMap = new HashMap<String, List<Ptmenu>>();
 
-    private List<String> breadCrumbs = new ArrayList<>();
+    private List<String> breadCrumbs = new ArrayList<String>();
 
     private String operId;
     private String operName;
@@ -65,7 +65,7 @@ public class UiTemplateView extends AbstractBacking {
     public void onClickMenuItem(Ptmenu menu) {
         try {
             //根据当前选择的菜单处理breadcrumb
-            List<Ptmenu> menus = new ArrayList<>();
+            List<Ptmenu> menus = new ArrayList<Ptmenu>();
             makeMenuBreadCrumbs(menus, menu);
             Collections.reverse(menus);
             initBreadCrumbs();
@@ -93,7 +93,7 @@ public class UiTemplateView extends AbstractBacking {
 
 
     private void initBreadCrumbs() {
-        this.breadCrumbs = new ArrayList<>();
+        this.breadCrumbs = new ArrayList<String>();
         this.breadCrumbs.add("工作台");
 //        this.breadCrumbs.add(ptmodule.getModuleLabel());
     }

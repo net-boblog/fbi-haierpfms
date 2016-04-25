@@ -77,7 +77,7 @@ public class RoleMgmtView implements Serializable {
         try {
             roleId = selectedNode.getData().toString();
             roleId = roleId.substring(roleId.lastIndexOf("(")+1,roleId.lastIndexOf(")"));
-            Map<String,Object> paramMap = new HashMap<>();
+            Map<String,Object> paramMap = new HashMap<String,Object>();
             paramMap.put("roleId", roleId);
             sql = "SELECT M.* FROM PTROLERES R, PTMENU M WHERE R.RESID = 'm'||M.MENUID AND R.ROLEID =:roleId ORDER BY R.RESID ";
             ptmenuResList = skylineJdbc.query(sql,paramMap, new BeanPropertyRowMapper<Ptmenu>(Ptmenu.class));
@@ -151,20 +151,20 @@ public class RoleMgmtView implements Serializable {
     public void submitThisRecordAction(TreeNode[] nodes){
         try {
             if ("Del".equals(strRecordSubmitType)) {
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("roleId", roleId);
                 paramMap.put("resId", ptmenuResDel.getMenuid());
                 sqlD = "delete PTROLERES j WHERE j.roleid =:roleId and j.resid = 'm'||:resId";
                 skylineJdbc.update(sqlD, paramMap);
                 successMessage("删除成功!...");
             } else if("Add".equals(strRecordSubmitType)){
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("roleId", roleId);
                 sqlD = "delete PTROLERES j WHERE j.roleid =:roleId ";
                 skylineJdbc.update(sqlD, paramMap);
                 if(nodes != null && nodes.length > 0) {
                     for (TreeNode node : nodes) {
-                        Map<String,Object> paramMapT = new HashMap<>();
+                        Map<String,Object> paramMapT = new HashMap<String,Object>();
                         int subP = node.getData().toString().indexOf("_");
                         paramMapT.put("roleId",roleId);
                         paramMapT.put("resId",node.getData().toString().substring(0,subP));
@@ -211,7 +211,7 @@ public class RoleMgmtView implements Serializable {
                     addMessage("角色描述已存在，请确认后再次更新...");
                     return;
                 }
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("roleId", ptroleUpd.getRoleid());
                 paramMap.put("roleDesc", ptroleUpd.getRoledesc());
                 sqlD = "UPDATE ptrole j SET j.roledesc =:roleDesc WHERE j.roleid =:roleId";
@@ -220,7 +220,7 @@ public class RoleMgmtView implements Serializable {
                 RequestContext context = RequestContext.getCurrentInstance();
                 context.execute("PF('wVDlgViewForUpd').hide();");
             }else if ("Del".equals(strTreeSubmitType)){
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("roleId", ptroleDel.getRoleid());
 //                删除角色授权
                 sqlT = "delete PTROLERES j  WHERE j.roleid =:roleId";
@@ -238,7 +238,7 @@ public class RoleMgmtView implements Serializable {
                     addMessage("新增角色ID或角色描述已存在，请确认后再次添加...");
                     return;
                 }
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("roleId", ptroleAdd.getRoleid());
                 paramMap.put("roleDesc", ptroleAdd.getRoledesc());
                 sqlD = "insert into ptrole j (j.roleid,j.roledesc,j.status) values (:roleId,:roleDesc,'1')";

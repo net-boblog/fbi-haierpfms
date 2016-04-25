@@ -57,7 +57,7 @@ public class PtoplogAction implements Serializable {
 
         this.startDate = new DateTime().dayOfMonth().withMinimumValue().toString("yyyy-MM-dd");
         this.endDate = new DateTime().toString("yyyy-MM-dd");
-        detlList = new ArrayList<>();
+        detlList = new ArrayList<Ptoplog>();
     }
 
     public String onQuery() {
@@ -72,7 +72,7 @@ public class PtoplogAction implements Serializable {
             oplog.setOpLog("本次操作流水号:" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + StringUtils.leftPad("" + sn, 12, "0"));
             platformService.insertNewOperationLog(oplog);
 
-            Map<String,Object> paramMap = new HashMap<>();
+            Map<String,Object> paramMap = new HashMap<String,Object>();
             List<String> branchStrList = platformService.selectBranchLevelList(branchId);
             paramMap.put("branchStrList", branchStrList);
             paramMap.put("startDate", this.startDate);

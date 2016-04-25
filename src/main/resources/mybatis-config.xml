@@ -23,13 +23,17 @@
             <transactionManager type="JDBC" />
             <dataSource type="UNPOOLED">
                 <property name="driver" value="oracle.jdbc.driver.OracleDriver" />
-                <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
-                <property name="username" value="cbs" />
-                <property name="password" value="cbs" />
+                <property name="url" value="jdbc:oracle:thin:@10.135.7.63:1521:rwkj" />
+                <property name="username" value="SAP" />
+                <property name="password" value="SAP" />
             </dataSource>
         </environment>
     </environments>
     <mappers>
-        <mapper resource="skyline/repository/mapper/PtmenuMapper.xml" />
+        <mapper resource="pfms/repository/mapper/rwkj/XwsqZzsHeadMapper.xml" />
+        <mapper resource="pfms/repository/mapper/rwkj/XwsqZzsItemMapper.xml" />
+        <mapper resource="pfms/repository/mapper/rwkj/XwsqZzsKphxMapper.xml" />
+        <mapper resource="pfms/repository/mapper/rwkj/XwsqZzsZfhxMapper.xml" />
+        <mapper resource="pfms/repository/mapper/rwkj/XwsqZzsZfMapper.xml" />
     </mappers>
 </configuration>

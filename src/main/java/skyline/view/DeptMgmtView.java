@@ -62,7 +62,7 @@ public class DeptMgmtView {
             MessageUtil.addWarn("查询数据时出现错误。" + e.getMessage());
         }
         root1 = new DefaultTreeNode("Root", null);
-        deptQrys = new ArrayList<>();
+        deptQrys = new ArrayList<SelectItem>();
         for(Ptdept ptdept:deptList){
             if("0".equals(ptdept.getParentdeptid())){
                 deptQrys.add(new SelectItem(ptdept.getDeptid(), ptdept.getDeptname()+"("+ptdept.getDeptid()+")"));
@@ -111,7 +111,7 @@ public class DeptMgmtView {
                 addMessage("新增机构代码或机构名称不能为空，请确认后再次添加...");
                 return;
             }
-            Map<String, Object> paramMap = new HashMap<>();
+            Map<String, Object> paramMap = new HashMap<String,Object>();
             paramMap.put("parentdeptid", ptdeptAdd.getParentdeptid());
             paramMap.put("deptname", ptdeptAdd.getDeptname());
             paramMap.put("deptid", ptdeptAdd.getDeptid());
@@ -134,7 +134,7 @@ public class DeptMgmtView {
                 addMessage("机构名称不能为空，请确认后再次添加...");
                 return;
             }
-            Map<String, Object> paramMap = new HashMap<>();
+            Map<String, Object> paramMap = new HashMap<String,Object>();
             paramMap.put("parentdeptid", ptdeptAdd.getParentdeptid());
             paramMap.put("deptname", ptdeptAdd.getDeptname());
             paramMap.put("deptid", ptdeptAdd.getDeptid());
@@ -156,7 +156,7 @@ public class DeptMgmtView {
     //    用户列表查询
     public void onQuery(){
         try {
-            Map<String,Object> paramMap = new HashMap<>();
+            Map<String,Object> paramMap = new HashMap<String,Object>();
             paramMap.put("parentdeptid",ptdeptQry.getParentdeptid());
             paramMap.put("deptid",ptdeptQry.getDeptid());
             sql = "SELECT T.* FROM PTDEPT t WHERE 1=1 ";

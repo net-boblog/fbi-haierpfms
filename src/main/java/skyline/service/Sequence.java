@@ -69,7 +69,7 @@ public class Sequence {
             return;
         }
 
-        Map<String, Object> paramMap = new HashMap<>();
+        Map<String, Object> paramMap = new HashMap<String,Object>();
         paramMap.put("seqName", seqName);
         Ptsequence ptsequence = (Ptsequence) skylineJdbc.queryForObject("SELECT * FROM ptsequence WHERE seqName=:seqName", paramMap, new BeanPropertyRowMapper<Ptsequence>(Ptsequence.class));
 
@@ -110,7 +110,7 @@ public class Sequence {
         long currentId = 1L;
         long newId = currentId + cache;
 
-        Map<String, Object> paramMap = new HashMap<>();
+        Map<String, Object> paramMap = new HashMap<String,Object>();
         paramMap.put("seqName", seqName);
 
         paramMap.put("year", newYear);

@@ -1,0 +1,140 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="../../templates/ui.xhtml">
+
+    <ui:define name="head">
+        <style>
+            .fixed-size {
+                word-break: break-all;
+            }
+        </style>
+    </ui:define>
+     <ui:define name="content">
+        <h:form id="form">
+            <p:messages id="msgs" showDetail="false" life="1500"/>
+              <div class="layout-portlets-box">
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <div style="margin:5px;">
+                            <div id="header">
+                                <p:panel id="queryForm" style="width: 100%;">
+                                    <h:panelGrid>
+                                        <h:panelGrid columns="8" cellspacing="5">
+                                            <h:outputLabel value="单据日期："/>
+                                            <p:inputText value="#{invZzsHeadAction.kprq}"
+                                                         onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+                                            <h:outputLabel value="发票类别:" style="float:right;"/>
+                                            <h:selectOneMenu value="#{invZzsHeadAction.fpzl}" >
+                                                <f:selectItems value="#{invZzsHeadAction.zzsFpzlList}"/>
+                                            </h:selectOneMenu>
+                                            <h:outputLabel value="流水号:"/>
+                                            <p:inputText  value="#{invZzsHeadAction.fbtidx}"/>
+                                            <h:outputLabel value="数据来源:"/>
+                                            <h:selectOneMenu value="#{invZzsHeadAction.datasrc}" >
+                                                <f:selectItems value="#{invZzsHeadAction.zzsSrcList}"/>
+                                            </h:selectOneMenu>
+                                            <h:outputLabel value="客户名称:"/>
+                                            <p:inputText  value="#{invZzsHeadAction.khmc}"/>
+                                            <p:commandButton value="查询"
+                                                             style="width:120px;"
+                                                             process="form:queryForm"
+                                                             styleClass="GreenButton Fright"
+                                                             action="#{invZzsHeadAction.onQryPrint}"
+                                                             update="form:pdt,form:msgs,form:queryForm">
+                                            </p:commandButton>
+                                        </h:panelGrid>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layout-portlets-box">
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <p:dataTable id="pdt" style="width:100%;margin-top: 10px;margin-bottom: 10px"
+                                     value="#{invZzsHeadAction.customInvZzsHeadList}" var="record"
+                                     rowKey="#{record.xsddm} #{record.dmgs}"
+                                     scrollable="true"
+                                     styleClass="fixed-size"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+                                     currentPageReportTemplate="共#{fn:length(invZzsHeadAction.customInvZzsHeadList)}笔明细"
+                                     paginator="true" rows="5"
+                                     paginatorPosition="bottom"
+                                     rowsPerPageTemplate="100,50,30,15,5"
+                                     emptyMessage="数据记录为空...">
+                            <p:column headerText=" 操作 " style="width:40px;text-align: center; min-width: 40px">
+                                <h:panelGrid columns="1">
+                                    <p:commandLink  styleClass="ui-icon ui-icon-trash"
+                                                    style="height:18px; width:18px"
+                                                    title="作废"
+                                                    process=":form:pdt"
+                                                    action="#{invZzsHeadAction.onZuoFui(record)}"
+                                                    update=":form:pdt,:form:msgs">
+                                        <p:confirm header="确认信息" message="您确定要作废发票吗?" icon="ui-icon-alert" />
+                                    </p:commandLink>
+                                </h:panelGrid>
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="确定" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    <p:commandButton value="取消" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </p:confirmDialog>
+                            </p:column>
+                            <p:column headerText="单据日期" style="text-align:center;" width="100">
+                                <h:outputText value="#{record.kprq}">
+                                    <f:convertDateTime pattern="yyyy-MM-dd" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="发票类别" style="text-align:center" width="100">
+                                <h:outputText value="#{invZzsHeadAction.enuZzsFpzl.valueOfAlias(record.fpzl).title}"/>
+                            </p:column>
+                            <p:column headerText="发票号码" style="text-align:center" width="100">
+                                <h:outputText value="#{record.fphm}"/>
+                            </p:column>
+                            <p:column headerText="税控开票日期" style="text-align:center" width="100">
+                                <h:outputText value="#{record.skrq}">
+                                    <f:convertDateTime pattern="yyyy-MM-dd" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="流水号" style="text-align:center" width="120">
+                                <h:outputText value="#{record.fbtidx}"/>
+                            </p:column>
+                            <p:column headerText="数据来源" style="text-align:center" width="80">
+                                <h:outputText value="#{invZzsHeadAction.enuZzsSrc.valueOfAlias(record.datasrc).title}"/>
+                            </p:column>
+                            <p:column headerText="客户代码" style="text-align:center" width="100">
+                                <h:outputText value="#{record.khdm}"/>
+                            </p:column>
+                            <p:column headerText="客户名称" style="text-align:center" width="140">
+                                <h:outputText value="#{record.khmc}" style="float:left"/>
+                            </p:column>
+                            <p:column headerText="含税单价" style="text-align:center" width="90">
+                                <h:outputText value="#{record.hsdj}" style="float:right"/>
+                            </p:column>
+                            <p:column headerText="含税金额" style="text-align:center" width="90">
+                                <h:outputText value="#{record.hsje}" style="float:right"/>
+                            </p:column>
+                            <p:column headerText="不含税单价" style="text-align:center" width="90">
+                                <h:outputText value="#{record.xxdj}" style="float:right"/>
+                            </p:column>
+                            <p:column headerText="不含税金额" style="text-align:center" width="90">
+                                <h:outputText value="#{record.bhsje}" style="float:right"/>
+                            </p:column>
+                            <p:column headerText="税额" style="text-align:center" width="90">
+                                <h:outputText value="#{record.se}" style="float:right"/>
+                            </p:column>
+                            <p:column headerText="税率" style="text-align:center" width="90">
+                                <h:outputText value="#{record.sl}" style="float:right"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

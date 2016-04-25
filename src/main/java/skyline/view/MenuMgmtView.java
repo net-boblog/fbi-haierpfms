@@ -109,7 +109,7 @@ public class MenuMgmtView implements Serializable {
     //≤È—Ø
     public String onQuery(){
         try {
-            Map<String,Object> paramMap = new HashMap<>();
+            Map<String,Object> paramMap = new HashMap<String,Object>();
             menuId = selectedNode.getData().toString();
             menuId = menuId.substring(menuId.lastIndexOf("(")+1,menuId.lastIndexOf(")"));
             paramMap.put("menuId", menuId);
@@ -160,7 +160,7 @@ public class MenuMgmtView implements Serializable {
     public void submitThisRecordAction(){
         if ("menuDel".equals(strSubmitType)) {
             try {
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("menuID", ptmenuDel.getMenuid());
                 sql = "delete FROM PTMENU WHERE menuID =:menuID ";
                 skylineJdbc.update(sql, paramMap);
@@ -172,7 +172,7 @@ public class MenuMgmtView implements Serializable {
             }
         } else if ("menuUpd".equals(strSubmitType)){
             try {
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("menuID", ptmenuUpd.getMenuid());
                 paramMap.put("parentmenuid", ptmenuUpd.getParentmenuid());
                 paramMap.put("menulabel", ptmenuUpd.getMenulabel());
@@ -197,7 +197,7 @@ public class MenuMgmtView implements Serializable {
             }
         } else if("menuAdd".equals(strSubmitType)){
             try {
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("parentmenuid", ptmenuAdd.getParentmenuid());
                 paramMap.put("menuid", getMaxIdOfMenu().get(0));
                 paramMap.put("menulabel", ptmenuAdd.getMenulabel());
@@ -260,7 +260,7 @@ public class MenuMgmtView implements Serializable {
     public void addTreeMenuAction (String addFlag) {
         if ("treeUpd".equals(addFlag)) {
             try {
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("menuID", pttreeMenuUpd.getMenuid());
                 paramMap.put("parentmenuid", pttreeMenuUpd.getParentmenuid());
                 paramMap.put("menulabel", pttreeMenuUpd.getMenulabel());
@@ -285,7 +285,7 @@ public class MenuMgmtView implements Serializable {
 
         } else if ("treeAdd".equals(addFlag)){
             try {
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("parentmenuid", pttreeMenuAdd.getParentmenuid());
                 paramMap.put("menuid", getMaxIdOfMenu().get(0));
                 paramMap.put("menulabel", pttreeMenuAdd.getMenulabel());
@@ -316,7 +316,7 @@ public class MenuMgmtView implements Serializable {
                 return;
             }
             try {
-                Map<String, Object> paramMap = new HashMap<>();
+                Map<String, Object> paramMap = new HashMap<String,Object>();
                 paramMap.put("menuID", menuId);
                 sql = "delete FROM PTMENU WHERE menuID =:menuID ";
                 skylineJdbc.update(sql, paramMap);
@@ -346,7 +346,7 @@ public class MenuMgmtView implements Serializable {
         return childFlag;
     }
     public List<String> getMaxIdOfMenu() {
-        Map<String, Object> paramMap = new HashMap<>();
+        Map<String, Object> paramMap = new HashMap<String,Object>();
         String sql = "SELECT LPAD(NVL(MAX(TO_NUMBER(MENUID)), 0) + 1, 4, 0) FROM PTMENU ";
         return skylineJdbc.queryForList(sql, paramMap, String.class);
     }
