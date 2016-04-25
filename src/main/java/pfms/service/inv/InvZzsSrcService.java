@@ -22,6 +22,7 @@ import pfms.repository.model.InvZzsItem;
 import pfms.repository.model.InvZzsSrc;
 import pfms.repository.model.InvZzsSrcExample;
 import pfms.repository.model.custom.CustomInvZzsSrc;
+import pfms.repository.model.custom.ResGuojie;
 import pfms.repository.model.rwkj.XwsqZzsHead;
 import pfms.repository.model.rwkj.XwsqZzsItem;
 import pfms.util.ToolUtil;
@@ -57,64 +58,132 @@ public class InvZzsSrcService {
     private PlatformService platformService;
 
     @Transactional
-    public void insert(String txnDate, List<T467.Bean> dataList) {
+    public void insertBySbs(String txnDate, List<T467.Bean> dataList) {
         InvZzsSrc invZzsSrc;
         String sysdate = ToolUtil.getDateDash();
         for (T467.Bean bean : dataList) {
             // 验证主键（流水号、数据来源）是否重复
-            InvZzsSrcExample example = new InvZzsSrcExample();
-            InvZzsSrcExample.Criteria criteria = example.createCriteria();
-            criteria.andFbtidxEqualTo(bean.getFBTIDX());
-            criteria.andDatasrcEqualTo(EnuZzsSrc.SRC_00.getCode());
-            int count = invZzsSrcMapper.countByExample(example);
-            if (count > 0) {
-                logger.error("主键（流水号、数据来源）重复！流水号：" + bean.getFBTIDX() +
-                        " 数据来源：" + EnuZzsSrc.SRC_00.getCode());
+            if (isExist(bean.getFBTIDX(), EnuZzsSrc.SRC_00.getCode())) {
                 continue;
             }
 
             invZzsSrc = new InvZzsSrc();
-            invZzsSrc.setFbtidx(bean.getFBTIDX());                     // 流水号
-            invZzsSrc.setDatasrc(EnuZzsSrc.SRC_00.getCode());          // 数据来源
-            invZzsSrc.setKhdm(bean.getCUSIDT());                       // 客户代码
-            invZzsSrc.setCpdm(bean.getPRDCDE());                       // 产品代码
-            invZzsSrc.setCpmc(bean.getPRDNAM());                       // 产品名称
-            invZzsSrc.setXh(bean.getPRDTYP());                         // 型号
-            invZzsSrc.setCpdw(bean.getPRDUNT());                       // 产品单位
+            invZzsSrc.setFbtidx(bean.getFBTIDX());                       // 流水号
+            invZzsSrc.setDatasrc(EnuZzsSrc.SRC_00.getCode());            // 数据来源
+            invZzsSrc.setKhdm(bean.getCUSIDT());                         // 客户代码
+            invZzsSrc.setCpdm(bean.getPRDCDE());                         // 产品代码
+            invZzsSrc.setCpmc(bean.getPRDNAM());                         // 产品名称
+            invZzsSrc.setXh(bean.getPRDTYP());                           // 型号
+            invZzsSrc.setCpdw(bean.getPRDUNT());                         // 产品单位
             if (StringUtils.isNotEmpty(bean.getPRDCNT())) {
-                invZzsSrc.setCpsl(new BigDecimal(bean.getPRDCNT()));   // 数量
+                invZzsSrc.setCpsl(new BigDecimal(bean.getPRDCNT()));     // 数量
             }
             if (StringUtils.isNotEmpty(bean.getTOTPRI())) {
-                invZzsSrc.setHsdj(new BigDecimal(bean.getTOTPRI()));   // 含税单价
+                invZzsSrc.setHsdj(new BigDecimal(bean.getTOTPRI()));     // 含税单价
             }
             if (StringUtils.isNotEmpty(bean.getTOTAMT())) {
-                invZzsSrc.setHsje(new BigDecimal(bean.getTOTAMT()));   // 含税金额
+                invZzsSrc.setHsje(new BigDecimal(bean.getTOTAMT()));     // 含税金额
             }
             if (StringUtils.isNotEmpty(bean.getCLNPRI())) {
-                invZzsSrc.setXxdj(new BigDecimal(bean.getCLNPRI()));   // 不含税单价
+                invZzsSrc.setXxdj(new BigDecimal(bean.getCLNPRI()));     // 不含税单价
             }
             if (StringUtils.isNotEmpty(bean.getCLNAMT())) {
-                invZzsSrc.setBhsje(new BigDecimal(bean.getCLNAMT()));  // 不含税金额
+                invZzsSrc.setBhsje(new BigDecimal(bean.getCLNAMT()));    // 不含税金额
             }
             if (StringUtils.isNotEmpty(bean.getTAXAMT())) {
-                invZzsSrc.setSe(new BigDecimal(bean.getTAXAMT()));     // 税额
+                invZzsSrc.setSe(new BigDecimal(bean.getTAXAMT()));       // 税额
             }
             if (StringUtils.isNotEmpty(bean.getTAXRAT())) {
-                invZzsSrc.setSl(new BigDecimal(bean.getTAXRAT()));     // 税率
+                invZzsSrc.setSl(new BigDecimal(bean.getTAXRAT()));       // 税率
             }
             if (StringUtils.isNotEmpty(bean.getOFCAMT())) {
-                invZzsSrc.setZbhsje(new BigDecimal(bean.getOFCAMT())); // 折扣不含税金额
+                invZzsSrc.setZbhsje(new BigDecimal(bean.getOFCAMT()));   // 折扣不含税金额
             }
             if (StringUtils.isNotEmpty(bean.getOFCTAX())) {
-                invZzsSrc.setZse(new BigDecimal(bean.getOFCTAX()));    // 折扣税额
+                invZzsSrc.setZse(new BigDecimal(bean.getOFCTAX()));      // 折扣税额
             }
-            invZzsSrc.setCrtDate(sysdate);                             // 创建日期YYYY-MM-DD
-            invZzsSrc.setCrtTime(ToolUtil.getTimeColon());             // 创建时间HH:mm:ss
-            invZzsSrc.setCrtOperId("sbs");                             // 创建者ID
+            invZzsSrc.setCrtDate(sysdate);                               // 创建日期YYYY-MM-DD
+            invZzsSrc.setCrtTime(ToolUtil.getTimeColon());               // 创建时间HH:mm:ss
+            invZzsSrc.setCrtOperId("sbs");                               // 创建者ID
             invZzsSrc.setProcFlag(EnuZzsProcFlag.PROC_FLAG_0.getCode()); // 处理标志
-            invZzsSrc.setTxnDate(txnDate);                              // 交易日期
+            invZzsSrc.setTxnDate(txnDate);                               // 交易日期
             invZzsSrcMapper.insertSelective(invZzsSrc);
         }
+    }
+
+    @Transactional
+    public void insertByGuojie(String txnDate, List<ResGuojie.Bean> dataList) {
+        InvZzsSrc invZzsSrc;
+        String sysdate = ToolUtil.getDateDash();
+        for (ResGuojie.Bean bean : dataList) {
+            // 验证主键（流水号、数据来源）是否重复
+            if (isExist(bean.getIBMSNO(), EnuZzsSrc.SRC_01.getCode())) {
+                continue;
+            }
+
+            invZzsSrc = new InvZzsSrc();
+            invZzsSrc.setFbtidx(bean.getIBMSNO());                             // 流水号
+            invZzsSrc.setDatasrc(EnuZzsSrc.SRC_01.getCode());                  // 数据来源
+            invZzsSrc.setKhdm(bean.getCUS_NO());                               // 客户代码
+            invZzsSrc.setCpdm(bean.getUPC_CODE());                             // 产品代码
+            invZzsSrc.setCpmc(bean.getUPC_NAME());                             // 产品名称
+            invZzsSrc.setXh(bean.getMODEL());                                  // 型号
+            invZzsSrc.setCpdw(bean.getPRODUCT_UNIT());                         // 产品单位
+            if (StringUtils.isNotEmpty(bean.getQTY())) {
+                invZzsSrc.setCpsl(new BigDecimal(bean.getQTY()));              // 数量
+            }
+            if (StringUtils.isNotEmpty(bean.getUNIT_PRICE())) {
+                invZzsSrc.setHsdj(new BigDecimal(bean.getUNIT_PRICE()));       // 含税单价
+            }
+            if (StringUtils.isNotEmpty(bean.getAMOUNT())) {
+                invZzsSrc.setHsje(new BigDecimal(bean.getAMOUNT()));           // 含税金额
+            }
+            if (StringUtils.isNotEmpty(bean.getNOUNIT_PRICE())) {
+                invZzsSrc.setXxdj(new BigDecimal(bean.getNOUNIT_PRICE()));     // 不含税单价
+            }
+            if (StringUtils.isNotEmpty(bean.getNOTAX_AMOUNT())) {
+                invZzsSrc.setBhsje(new BigDecimal(bean.getNOTAX_AMOUNT()));    // 不含税金额
+            }
+            if (StringUtils.isNotEmpty(bean.getTAX_AMOUNT())) {
+                invZzsSrc.setSe(new BigDecimal(bean.getTAX_AMOUNT()));         // 税额
+            }
+            if (StringUtils.isNotEmpty(bean.getTAX_RATE())) {
+                invZzsSrc.setSl(new BigDecimal(bean.getTAX_RATE()));           // 税率
+            }
+            if (StringUtils.isNotEmpty(bean.getDISCOUNT_NOTAX())) {
+                invZzsSrc.setZbhsje(new BigDecimal(bean.getDISCOUNT_NOTAX())); // 折扣不含税金额
+            }
+            if (StringUtils.isNotEmpty(bean.getDISCOUNT_TAX())) {
+                invZzsSrc.setZse(new BigDecimal(bean.getDISCOUNT_TAX()));      // 折扣税额
+            }
+            invZzsSrc.setCrtDate(sysdate);                                     // 创建日期YYYY-MM-DD
+            invZzsSrc.setCrtTime(ToolUtil.getTimeColon());                     // 创建时间HH:mm:ss
+            invZzsSrc.setCrtOperId("sbs");                                     // 创建者ID
+            invZzsSrc.setProcFlag(EnuZzsProcFlag.PROC_FLAG_0.getCode());       // 处理标志
+            invZzsSrc.setTxnDate(txnDate);                                     // 交易日期
+            invZzsSrcMapper.insertSelective(invZzsSrc);
+        }
+    }
+
+    /**
+     * 验证INV_ZZS_SRC表主键（流水号、数据来源）是否重复
+     *
+     * @param fbtidx  流水号
+     * @param datasrc 数据来源
+     * @return
+     */
+    private boolean isExist(String fbtidx, String datasrc) {
+        InvZzsSrcExample example = new InvZzsSrcExample();
+        InvZzsSrcExample.Criteria criteria = example.createCriteria();
+        criteria.andFbtidxEqualTo(fbtidx);
+        criteria.andDatasrcEqualTo(datasrc);
+        int count = invZzsSrcMapper.countByExample(example);
+        if (count > 0) {
+            logger.error("主键（流水号、数据来源）重复！流水号：" + fbtidx +
+                    " 数据来源：" + datasrc);
+            return true;
+        }
+        return false;
     }
 
     /**

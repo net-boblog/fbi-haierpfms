@@ -1,35 +1,146 @@
 package pfms.repository.model.custom;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
+
+import java.util.List;
+
 /**
- * 国结增值税数据
+ * 国结响应报文
  */
-public class InvZzsGuojie {
-    private String RESULT;     // 结果
-    private String TOTALCOUNT; // 总记录数
-    private String DETAIL;     // 详细信息
+@XStreamAlias("pifcs")
+public class ResGuojie {
+    @XStreamAlias("Head")
+    private ResHeader resHeader;
 
-    public String getRESULT() {
-        return RESULT;
+    @XStreamAlias("Body")
+    private ResBody resBody;
+
+    public ResHeader getResHeader() {
+        return resHeader;
     }
 
-    public void setRESULT(String RESULT) {
-        this.RESULT = RESULT;
+    public void setResHeader(ResHeader resHeader) {
+        this.resHeader = resHeader;
     }
 
-    public String getTOTALCOUNT() {
-        return TOTALCOUNT;
+    public ResBody getResBody() {
+        return resBody;
     }
 
-    public void setTOTALCOUNT(String TOTALCOUNT) {
-        this.TOTALCOUNT = TOTALCOUNT;
+    public void setResBody(ResBody resBody) {
+        this.resBody = resBody;
     }
 
-    public String getDETAIL() {
-        return DETAIL;
+    public static class ResHeader {
+        private String branch_no;    // 机构号
+        private String ret_code;     // 响应码
+        private String tx_code;      // 交易码
+        private String teller_no;    // 柜员号
+        private String ret_explain;  // 响应码说明
+        private String channel_flag; // 渠道标识
+
+        public String getBranch_no() {
+            return branch_no;
+        }
+
+        public void setBranch_no(String branch_no) {
+            this.branch_no = branch_no;
+        }
+
+        public String getRet_code() {
+            return ret_code;
+        }
+
+        public void setRet_code(String ret_code) {
+            this.ret_code = ret_code;
+        }
+
+        public String getTx_code() {
+            return tx_code;
+        }
+
+        public void setTx_code(String tx_code) {
+            this.tx_code = tx_code;
+        }
+
+        public String getTeller_no() {
+            return teller_no;
+        }
+
+        public void setTeller_no(String teller_no) {
+            this.teller_no = teller_no;
+        }
+
+        public String getRet_explain() {
+            return ret_explain;
+        }
+
+        public void setRet_explain(String ret_explain) {
+            this.ret_explain = ret_explain;
+        }
+
+        public String getChannel_flag() {
+            return channel_flag;
+        }
+
+        public void setChannel_flag(String channel_flag) {
+            this.channel_flag = channel_flag;
+        }
     }
 
-    public void setDETAIL(String DETAIL) {
-        this.DETAIL = DETAIL;
+    public static class ResBody {
+        private String TOTALCOUNT; // 总记录数
+        private String RESULT;     // 结果
+        private String DETAIL;     // 详细信息
+
+        @XStreamAlias("list")
+        private ResContent resContent;
+
+        public String getRESULT() {
+            return RESULT;
+        }
+
+        public void setRESULT(String RESULT) {
+            this.RESULT = RESULT;
+        }
+
+        public String getTOTALCOUNT() {
+            return TOTALCOUNT;
+        }
+
+        public void setTOTALCOUNT(String TOTALCOUNT) {
+            this.TOTALCOUNT = TOTALCOUNT;
+        }
+
+        public String getDETAIL() {
+            return DETAIL;
+        }
+
+        public void setDETAIL(String DETAIL) {
+            this.DETAIL = DETAIL;
+        }
+
+        public ResContent getResContent() {
+            return resContent;
+        }
+
+        public void setResContent(ResContent resContent) {
+            this.resContent = resContent;
+        }
+    }
+
+    public static class ResContent {
+        @XStreamImplicit(itemFieldName="row")
+        private List<Bean> beanList; // 循环记录
+
+        public List<Bean> getBeanList() {
+            return beanList;
+        }
+
+        public void setBeanList(List<Bean> beanList) {
+            this.beanList = beanList;
+        }
     }
 
     public static class Bean {

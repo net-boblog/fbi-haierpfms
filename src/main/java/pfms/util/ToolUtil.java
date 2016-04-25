@@ -1,10 +1,16 @@
 package pfms.util;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.core.util.QuickWriter;
+import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import com.thoughtworks.xstream.io.xml.CompactWriter;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
+import com.thoughtworks.xstream.io.xml.XppDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,6 +19,51 @@ import java.util.Date;
  */
 public class ToolUtil {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public static final String RET_CODE_SUCCESS = "0000"; // 响应码（0000：成功）
+
+    private static XStream xstream = new XStream(new XppDriver() {
+        public HierarchicalStreamWriter createWriter(Writer out) {
+            return new CompactWriter(out, new XmlFriendlyNameCoder("__", "_")) {
+                // 对所有xml节点的转换都增加CDATA标记
+                boolean cdata = true;
+
+                @SuppressWarnings("unchecked")
+                public void startNode(String name, Class clazz) {
+                    super.startNode(name, clazz);
+                }
+
+                protected void writeText(QuickWriter writer, String text) {
+                    if (cdata) {
+                        writer.write("<![CDATA[");
+                        writer.write(text);
+                        writer.write("]]>");
+                    } else {
+                        writer.write(text);
+                    }
+                }
+            };
+        }
+    });
+
+    /**
+     * java对象转化成xml字符串
+     *
+     * @param obj java对象实例
+     * @return String xml字符串
+     */
+    public static String beanToXml(Object obj) {
+        //指定编码解析器,直接用jaxp dom来解释
+        //XStream xstream = new XStream(new DomDriver("utf-8"));
+        //如果没有这句，xml中的根元素会是<包.类名>
+        //或者说：注解根本就没生效，所以的元素名就是类的属性
+        xstream.processAnnotations(obj.getClass());
+        StringBuffer xmlstrbuf = new StringBuffer();
+        xmlstrbuf.append("<?xml version=\"1.0\" encoding=\"GBK\"?>");
+        //xmlstrbuf.append("\r\n");
+        xmlstrbuf.append(xstream.toXML(obj));
+        return xmlstrbuf.toString();
+    }
 
     /**
      * 将传入xml字符串转化为java对象

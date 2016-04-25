@@ -33,12 +33,14 @@ public class ZzsSbsTask {
 
     public void runTask() throws JobExecutionException {
         try {
+            logger.info("----------[从SBS取得增值税数据]开始：" + ToolUtil.getDateTimeDashColon() + "----------");
             String txnDate = new DateTime().plusDays(-1).toString("yyyy-MM-dd");
             txnDate = "2016-04-20";
             List<T467.Bean> dataList = getZzsFromSbs(txnDate.replace("-", ""));
             if (dataList != null && dataList.size() > 0) {
-                invZzsSrcService.insert(txnDate, dataList);
+                invZzsSrcService.insertBySbs(txnDate, dataList);
             }
+            logger.info("----------[从SBS取得增值税数据]结束：" + ToolUtil.getDateTimeDashColon() + "----------");
         } catch (Exception e) {
             logger.error("从SBS取得增值税数据失败！", e);
             throw new JobExecutionException("从SBS取得增值税数据失败！" + e == null ? "" : e.getMessage(), e);
