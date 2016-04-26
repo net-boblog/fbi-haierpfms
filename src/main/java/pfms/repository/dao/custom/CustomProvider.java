@@ -41,10 +41,10 @@ public class CustomProvider {
         sql.append("    T1.PROC_FLAG = '" + EnuZzsProcFlag.PROC_FLAG_0.getCode() + "' ");
 
         if (StringUtils.isNotEmpty(customInvZzsSrc.getKhmc())) {
-            sql.append("    AND T2.KHMC like %'" + customInvZzsSrc.getKhmc() + "'% ");
+            sql.append("    AND T2.KHMC like '%" + customInvZzsSrc.getKhmc() + "%' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsSrc.getFbtidx())) {
-            sql.append("    AND T1.FBTIDX like %'" + customInvZzsSrc.getFbtidx() + "'% ");
+            sql.append("    AND T1.FBTIDX like '%" + customInvZzsSrc.getFbtidx() + "%' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsSrc.getDatasrc())) {
             sql.append("    AND T1.DATASRC = '" + customInvZzsSrc.getDatasrc() + "' ");
@@ -79,10 +79,10 @@ public class CustomProvider {
         sql.append("    T1.XSDDM = T2.XSDDM ");
         sql.append("    AND T1.DMGS = T2.DMGS ");
         if (StringUtils.isNotEmpty(customInvZzsHead.getKhmc())) {
-            sql.append("    AND T1.KHMC like %'" + customInvZzsHead.getKhmc() + "'% ");
+            sql.append("    AND T1.KHMC like '%" + customInvZzsHead.getKhmc() + "%' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsHead.getFbtidx())) {
-            sql.append("    AND T1.FBTIDX like %'" + customInvZzsHead.getFbtidx() + "'% ");
+            sql.append("    AND T1.FBTIDX like '%" + customInvZzsHead.getFbtidx() + "%' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsHead.getDatasrc())) {
             sql.append("    AND T1.DATASRC = '" + customInvZzsHead.getDatasrc() + "' ");
@@ -122,10 +122,10 @@ public class CustomProvider {
                     new DateTime(customInvZzsHead.getKprq()).toString("yyyyMMdd") + "' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsHead.getKhmc())) {
-            sql.append("    AND T1.KHMC like %'" + customInvZzsHead.getKhmc() + "'% ");
+            sql.append("    AND T1.KHMC like '%" + customInvZzsHead.getKhmc() + "%' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsHead.getFbtidx())) {
-            sql.append("    AND T1.FBTIDX like %'" + customInvZzsHead.getFbtidx() + "'% ");
+            sql.append("    AND T1.FBTIDX like '%" + customInvZzsHead.getFbtidx() + "%' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsHead.getDatasrc())) {
             sql.append("    AND T1.DATASRC = '" + customInvZzsHead.getDatasrc() + "' ");
@@ -161,10 +161,10 @@ public class CustomProvider {
         sql.append("    T1.XSDDM = T2.XSDDM ");
         sql.append("    AND T1.DMGS = T2.DMGS ");
         if (StringUtils.isNotEmpty(customInvZzsHead.getKhmc())) {
-            sql.append("    AND T1.KHMC like %'" + customInvZzsHead.getKhmc() + "'% ");
+            sql.append("    AND T1.KHMC like '%" + customInvZzsHead.getKhmc() + "%' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsHead.getFbtidx())) {
-            sql.append("    AND T1.FBTIDX like %'" + customInvZzsHead.getFbtidx() + "'% ");
+            sql.append("    AND T1.FBTIDX like '%" + customInvZzsHead.getFbtidx() + "%' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsHead.getDatasrc())) {
             sql.append("    AND T1.DATASRC = '" + customInvZzsHead.getDatasrc() + "' ");
@@ -204,10 +204,10 @@ public class CustomProvider {
                     new DateTime(customInvZzsHead.getKprq()).toString("yyyyMMdd") + "' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsHead.getKhmc())) {
-            sql.append("    AND T1.KHMC like %'" + customInvZzsHead.getKhmc() + "'% ");
+            sql.append("    AND T1.KHMC like '%" + customInvZzsHead.getKhmc() + "%' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsHead.getFbtidx())) {
-            sql.append("    AND T1.FBTIDX like %'" + customInvZzsHead.getFbtidx() + "'% ");
+            sql.append("    AND T1.FBTIDX like '%" + customInvZzsHead.getFbtidx() + "%' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsHead.getDatasrc())) {
             sql.append("    AND T1.DATASRC = '" + customInvZzsHead.getDatasrc() + "' ");

@@ -29,15 +29,15 @@
                                             <p:inputText value="#{invZzsHeadAction.kprq}"
                                                          onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
                                             <h:outputLabel value="发票类别:" style="float:right;"/>
-                                            <h:selectOneMenu value="#{invZzsHeadAction.fpzl}" >
+                                            <p:selectOneMenu value="#{invZzsHeadAction.fpzl}" >
                                                 <f:selectItems value="#{invZzsHeadAction.zzsFpzlList}"/>
-                                            </h:selectOneMenu>
+                                            </p:selectOneMenu>
                                             <h:outputLabel value="流水号:"/>
                                             <p:inputText  value="#{invZzsHeadAction.fbtidx}"/>
                                             <h:outputLabel value="数据来源:"/>
-                                            <h:selectOneMenu value="#{invZzsHeadAction.datasrc}" >
+                                            <p:selectOneMenu value="#{invZzsHeadAction.datasrc}" >
                                                 <f:selectItems value="#{invZzsHeadAction.zzsSrcList}"/>
-                                            </h:selectOneMenu>
+                                            </p:selectOneMenu>
                                             <h:outputLabel value="客户名称:"/>
                                             <p:inputText  value="#{invZzsHeadAction.khmc}"/>
                                             <p:commandButton value="查询"

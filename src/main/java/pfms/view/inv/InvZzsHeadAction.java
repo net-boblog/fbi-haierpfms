@@ -71,6 +71,9 @@ public class InvZzsHeadAction {
             if (StringUtils.isNotEmpty(datasrc)) {
                 customInvZzsHead.setDatasrc(datasrc);
             }
+            if (StringUtils.isNotEmpty(fpzl)) {
+                customInvZzsHead.setFpzl(fpzl);
+            }
             customInvZzsHeadList = invZzsHeadService.selectUnPrint(customInvZzsHead);
         } catch (Exception e) {
             logger.error("≤È—Ø ß∞‹£°", e);
@@ -96,6 +99,9 @@ public class InvZzsHeadAction {
             if (StringUtils.isNotEmpty(kprq)) {
                 customInvZzsHead.setKprq(new DateTime(kprq).toDate());
             }
+            if (StringUtils.isNotEmpty(fpzl)) {
+                customInvZzsHead.setFpzl(fpzl);
+            }
             customInvZzsHeadList = invZzsHeadService.selectPrint(customInvZzsHead);
         } catch (Exception e) {
             logger.error("≤È—Ø ß∞‹£°", e);
@@ -117,6 +123,9 @@ public class InvZzsHeadAction {
             }
             if (StringUtils.isNotEmpty(datasrc)) {
                 customInvZzsHead.setDatasrc(datasrc);
+            }
+            if (StringUtils.isNotEmpty(fpzl)) {
+                customInvZzsHead.setFpzl(fpzl);
             }
             customInvZzsHeadList = invZzsHeadService.selectUnZuoFei(customInvZzsHead);
         } catch (Exception e) {
@@ -157,6 +166,9 @@ public class InvZzsHeadAction {
             }
             if (StringUtils.isNotEmpty(kprq)) {
                 customInvZzsHead.setKprq(new DateTime(kprq).toDate());
+            }
+            if (StringUtils.isNotEmpty(fpzl)) {
+                customInvZzsHead.setFpzl(fpzl);
             }
             customInvZzsHeadList = invZzsHeadService.selectZuoFei(customInvZzsHead);
         } catch (Exception e) {

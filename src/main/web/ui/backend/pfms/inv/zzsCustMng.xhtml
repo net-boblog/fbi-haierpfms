@@ -64,8 +64,9 @@
                                     <p:commandLink  styleClass="ui-icon ui-icon-trash"
                                                     title="删除"
                                                     style="height:18px;width:18px"
+                                                    process=":form:pdt"
                                                     action="#{invZzsCustAction.onDelete(record.khdm)}"
-                                                    update="pdt,:form:msgs" >
+                                                    update=":form:pdt,:form:msgs" >
                                     </p:commandLink>
                                 </h:panelGrid>
                             </p:column>

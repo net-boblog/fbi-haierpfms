@@ -32,9 +32,9 @@
                                             <h:outputLabel value="流水号:"/>
                                             <p:inputText  value="#{invZzsSrcAction.fbtidx}"/>
                                             <h:outputLabel value="数据来源:"/>
-                                            <h:selectOneMenu value="#{invZzsSrcAction.datasrc}" >
+                                            <p:selectOneMenu value="#{invZzsSrcAction.datasrc}" >
                                                 <f:selectItems value="#{invZzsSrcAction.zzsSrcList}"/>
-                                            </h:selectOneMenu>
+                                            </p:selectOneMenu>
                                             <h:outputLabel value="客户名称:"/>
                                             <p:inputText  value="#{invZzsSrcAction.khmc}"/>
                                             <p:commandButton value="查询"
@@ -47,9 +47,9 @@
                                         </h:panelGrid>
                                         <h:panelGrid columns="4" cellspacing="5">
                                             <h:outputLabel value="发票类别:"/>
-                                            <h:selectOneMenu value="#{invZzsSrcAction.fpzl}" >
+                                            <p:selectOneMenu value="#{invZzsSrcAction.fpzl}" >
                                                 <f:selectItems value="#{invZzsSrcAction.zzsFpzlList}"/>
-                                            </h:selectOneMenu>
+                                            </p:selectOneMenu>
                                             <p:commandButton style="width:120px;" value="打印发票"
                                                              styleClass="OrangeButton"
                                                              action="#{invZzsSrcAction.onPrintFp}"
