@@ -17,13 +17,11 @@ import pfms.repository.dao.InvZzsSrcMapper;
 import pfms.repository.dao.custom.CustomMapper;
 import pfms.repository.dao.rwkj.XwsqZzsHeadMapper;
 import pfms.repository.dao.rwkj.XwsqZzsItemMapper;
-import pfms.repository.model.InvZzsHead;
-import pfms.repository.model.InvZzsItem;
-import pfms.repository.model.InvZzsSrc;
-import pfms.repository.model.InvZzsSrcExample;
+import pfms.repository.model.*;
 import pfms.repository.model.custom.CustomInvZzsSrc;
 import pfms.repository.model.custom.ResGuojie;
 import pfms.repository.model.rwkj.XwsqZzsHead;
+import pfms.repository.model.rwkj.XwsqZzsHeadExample;
 import pfms.repository.model.rwkj.XwsqZzsItem;
 import pfms.util.ToolUtil;
 import skyline.common.MybatisFactory;
@@ -33,7 +31,9 @@ import skyline.service.PlatformService;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 增值税原始数据维护
@@ -204,7 +204,11 @@ public class InvZzsSrcService {
      * @param operId
      */
     @Transactional
-    public void printFp(CustomInvZzsSrc[] selectedRecords, String fpzl, String operId) throws Exception {
+    public Map<String, Integer> printFp(CustomInvZzsSrc[] selectedRecords, String fpzl, String operId) throws Exception {
+        Map<String, Integer> rtn = new HashMap<String, Integer>();
+        int totalCnt = 0;    // 总笔数
+        int successCnt = 0;  // 成功笔数
+        int errorCnt = 0;    // 失败笔数
         String sysdate = ToolUtil.getDateDash();
         InvZzsHead invZzsHead = null;
         InvZzsItem invZzsItem = null;
@@ -217,13 +221,41 @@ public class InvZzsSrcService {
         XwsqZzsHeadMapper xwsqZzsHeadMapper = session.getMapper(XwsqZzsHeadMapper.class);
         XwsqZzsItemMapper xwsqZzsItemMapper = session.getMapper(XwsqZzsItemMapper.class);
         try {
+            totalCnt = selectedRecords.length;
             for (CustomInvZzsSrc record : selectedRecords) {
-                long xsddm = platformService.obtainSeqNo("xsddm");
+                String xsddm = String.valueOf(platformService.obtainSeqNo("xsddm"));
+
+                // 验证本地销售发票头是否重复
+                InvZzsHeadExample example = new InvZzsHeadExample();
+                InvZzsHeadExample.Criteria criteria = example.createCriteria();
+                criteria.andXsddmEqualTo(xsddm);
+                criteria.andDmgsEqualTo(dmgs);
+                int count = invZzsHeadMapper.countByExample(example);
+                if (count > 0) {
+                    errorCnt++;
+                    logger.error("INV_ZZS_HEAD表主键（单据号码、单据公司）重复！单据号码：" + xsddm +
+                            " 单据公司：" + dmgs);
+                    continue;
+                }
+
+                // 验证远程销售发票头是否重复
+                XwsqZzsHeadExample xwsqExample = new XwsqZzsHeadExample();
+                XwsqZzsHeadExample.Criteria xwsqCriteria = xwsqExample.createCriteria();
+                xwsqCriteria.andXsddmEqualTo(xsddm);
+                xwsqCriteria.andDmgsEqualTo(dmgs);
+                count = xwsqZzsHeadMapper.countByExample(xwsqExample);
+                if (count > 0) {
+                    errorCnt++;
+                    logger.error("XWSQ_ZZS_HEAD表主键（单据号码、单据公司）重复！单据号码：" + xsddm +
+                            " 单据公司：" + dmgs);
+                    continue;
+                }
+
                 // 插入本地销售发票头
                 invZzsHead = new InvZzsHead();
                 invZzsHead.setFbtidx(record.getFbtidx());   // 流水号
                 invZzsHead.setDatasrc(record.getDatasrc()); // 数据来源
-                invZzsHead.setXsddm(String.valueOf(xsddm)); // 单据号码
+                invZzsHead.setXsddm(xsddm);                 // 单据号码
                 invZzsHead.setDmgs(dmgs);                   // 单据公司
                 invZzsHead.setKhdm(record.getKhdm());       // 客户代码
                 invZzsHead.setKhswdjh(record.getKhswdjh()); // 客户税号
@@ -239,7 +271,7 @@ public class InvZzsSrcService {
 
                 // 插入本地销售发票明细
                 invZzsItem = new InvZzsItem();
-                invZzsItem.setXsddm(String.valueOf(xsddm)); // 单据号码
+                invZzsItem.setXsddm(xsddm);                 // 单据号码
                 invZzsItem.setDmgs(dmgs);                   // 单据公司
                 invZzsItem.setMxxh(mxxh);                   // 记录行号
                 invZzsItem.setCpdm(record.getCpdm());       // 产品代码
@@ -259,7 +291,7 @@ public class InvZzsSrcService {
 
                 // 插入远程销售发票头
                 xwsqZzsHead = new XwsqZzsHead();
-                xwsqZzsHead.setXsddm(String.valueOf(xsddm)); // 单据号码
+                xwsqZzsHead.setXsddm(xsddm);                 // 单据号码
                 xwsqZzsHead.setDmgs(dmgs);                   // 单据公司
                 xwsqZzsHead.setKhdm(record.getKhdm());       // 客户代码
                 xwsqZzsHead.setKhswdjh(record.getKhswdjh()); // 客户税号
@@ -272,10 +304,9 @@ public class InvZzsSrcService {
                 xwsqZzsHead.setXrrq(new Date());             // 写入时间
                 xwsqZzsHeadMapper.insert(xwsqZzsHead);
 
-
                 // 插入远程销售发票明细
                 xwsqZzsItem = new XwsqZzsItem();
-                xwsqZzsItem.setXsddm(String.valueOf(xsddm)); // 单据号码
+                xwsqZzsItem.setXsddm(xsddm);                 // 单据号码
                 xwsqZzsItem.setDmgs(dmgs);                   // 单据公司
                 xwsqZzsItem.setMxxh(mxxh);                   // 记录行号
                 xwsqZzsItem.setCpdm(record.getCpdm());       // 产品代码
@@ -302,6 +333,7 @@ public class InvZzsSrcService {
                 invZzsSrc.setUpdOperId(operId);                              // 修改者ID
                 invZzsSrc.setProcFlag(EnuZzsProcFlag.PROC_FLAG_1.getCode()); // 处理标志
                 invZzsSrcMapper.updateByPrimaryKeySelective(invZzsSrc);
+                successCnt++;
             }
             session.commit();
         } catch (Exception e) {
@@ -310,5 +342,9 @@ public class InvZzsSrcService {
         } finally {
             session.close();
         }
+        rtn.put("totalCnt", totalCnt);
+        rtn.put("successCnt", successCnt);
+        rtn.put("errorCnt", errorCnt);
+        return rtn;
     }
 }

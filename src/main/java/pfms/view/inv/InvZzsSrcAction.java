@@ -19,6 +19,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 原始数据表
@@ -105,10 +106,21 @@ public class InvZzsSrcAction {
                 return;
             }
 
-            invZzsSrcService.printFp(selectedRecords, fpzl, operInfo.getOperId());
+            Map<String, Integer> result = invZzsSrcService.printFp(selectedRecords, fpzl, operInfo.getOperId());
+            Integer totalCnt = result.get("totalCnt");     // 总笔数
+            Integer successCnt = result.get("successCnt"); // 成功笔数
+            Integer errorCnt = result.get("errorCnt");     // 失败笔数
             onQryUnProc();
             fpzl = "";
-            MessageUtil.addInfo("打印发票成功。");
+            if (totalCnt != null && totalCnt > 0) {
+                MessageUtil.addInfo("总共" + totalCnt + " 笔。");
+            }
+            if (successCnt != null && successCnt > 0) {
+                MessageUtil.addInfo("成功" + successCnt + " 笔。");
+            }
+            if (errorCnt != null && errorCnt > 0) {
+                MessageUtil.addInfo("失败" + errorCnt + " 笔。");
+            }
         } catch (Exception e) {
             logger.error("打印发票失败！", e);
             MessageUtil.addError("打印发票失败！" + e == null ? "" : e.getMessage());

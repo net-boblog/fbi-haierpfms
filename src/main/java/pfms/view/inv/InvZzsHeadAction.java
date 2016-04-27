@@ -140,6 +140,10 @@ public class InvZzsHeadAction {
      */
     public void onZuoFui(CustomInvZzsHead customInvZzsHead) {
         try {
+            if(StringUtils.isEmpty(customInvZzsHead.getFphm())) {
+                MessageUtil.addError("没有发票号码不能作废。");
+                return;
+            }
             invZzsHeadService.zuoFei(customInvZzsHead, operInfo.getOperId());
             onQryPrint();
             MessageUtil.addInfo("作废发票成功。");
