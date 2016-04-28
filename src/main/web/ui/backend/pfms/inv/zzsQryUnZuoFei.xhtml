@@ -26,13 +26,13 @@
                                     <h:panelGrid>
                                         <h:panelGrid columns="9" cellspacing="5">
                                             <h:outputLabel value="发票类别:"/>
-                                            <p:selectOneMenu value="#{invZzsHeadAction.fpzl}" >
+                                            <p:selectOneMenu value="#{invZzsHeadAction.fpzl}" style="width:120px;">
                                                 <f:selectItems value="#{invZzsHeadAction.zzsFpzlList}"/>
                                             </p:selectOneMenu>
                                             <h:outputLabel value="流水号:"/>
                                             <p:inputText  value="#{invZzsHeadAction.fbtidx}"/>
                                             <h:outputLabel value="数据来源:"/>
-                                            <p:selectOneMenu value="#{invZzsHeadAction.datasrc}" >
+                                            <p:selectOneMenu value="#{invZzsHeadAction.datasrc}" style="width:62px;" >
                                                 <f:selectItems value="#{invZzsHeadAction.zzsSrcList}"/>
                                             </p:selectOneMenu>
                                             <h:outputLabel value="客户名称:"/>
