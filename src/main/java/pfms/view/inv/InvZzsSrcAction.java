@@ -105,7 +105,7 @@ public class InvZzsSrcAction {
             }
 
             for (CustomInvZzsSrc customInvZzsSrc : selectedRecords) {
-                if (StringUtils.isEmpty(customInvZzsSrc.getKhmc())) {
+                if (StringUtils.isEmpty(customInvZzsSrc.getKhswdjh())) {
                     MessageUtil.addError("选择记录中含有未录入客户信息的数据，请先录入客户信息。");
                     return;
                 }

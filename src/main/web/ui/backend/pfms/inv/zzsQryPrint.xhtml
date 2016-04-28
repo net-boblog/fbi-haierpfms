@@ -85,7 +85,7 @@
                                     <p:commandButton value="取消" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                                 </p:confirmDialog>
                             </p:column>
-                            <p:column headerText="单据日期" style="text-align:center;" width="100">
+                            <p:column headerText="单据日期" style="text-align:center;" width="80">
                                 <h:outputText value="#{record.kprq}">
                                     <f:convertDateTime pattern="yyyy-MM-dd" />
                                 </h:outputText>
@@ -101,10 +101,10 @@
                                     <f:convertDateTime pattern="yyyy-MM-dd" />
                                 </h:outputText>
                             </p:column>
-                            <p:column headerText="流水号" style="text-align:center" width="120">
+                            <p:column headerText="流水号" style="text-align:center" width="125">
                                 <h:outputText value="#{record.fbtidx}"/>
                             </p:column>
-                            <p:column headerText="数据来源" style="text-align:center" width="80">
+                            <p:column headerText="数据来源" style="text-align:center" width="65">
                                 <h:outputText value="#{invZzsHeadAction.enuZzsSrc.valueOfAlias(record.datasrc).title}"/>
                             </p:column>
                             <p:column headerText="客户代码" style="text-align:center" width="100">

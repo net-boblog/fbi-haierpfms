@@ -146,6 +146,7 @@ public class ResGuojie {
     public static class Bean {
         private String IBMSNO;         // 流水号
         private String CUS_NO;         // 付款客户号
+        private String PAYER_NAME;     // 付款人名称
         private String CURRENCYTYPE;   // 付款币别
         private String UPC_CODE;       // 产品代码
         private String UPC_NAME;       // 产品名称
@@ -175,6 +176,14 @@ public class ResGuojie {
 
         public void setCUS_NO(String CUS_NO) {
             this.CUS_NO = CUS_NO;
+        }
+
+        public String getPAYER_NAME() {
+            return PAYER_NAME;
+        }
+
+        public void setPAYER_NAME(String PAYER_NAME) {
+            this.PAYER_NAME = PAYER_NAME;
         }
 
         public String getCURRENCYTYPE() {

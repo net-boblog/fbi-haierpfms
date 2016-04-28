@@ -30,13 +30,14 @@ public class CustomProvider {
         sql.append("SELECT");
         sql.append("    T1.FBTIDX, T1.DATASRC, T1.KHDM, T1.CPDM, T1.CPMC, T1.XH,");
         sql.append("    T1.CPDW, T1.CPSL, T1.HSDJ, T1.HSJE, T1.XXDJ, T1.BHSJE, T1.SE,");
-        sql.append("    T1.SL, T1.ZBHSJE, T1.ZSE, T1.HSJE, T1.XXDJ, T1.BHSJE, T1.SE,");
+        sql.append("    T1.SL, T1.ZBHSJE, T1.ZSE, T1.HSJE,");
         sql.append("    T1.CRT_DATE crtDate,T1.CRT_TIME crtTime,T1.CRT_OPER_ID crtOperId,");
         sql.append("    T1.UPD_DATE updDate,T1.UPD_TIME updTime,T1.UPD_OPER_ID updOperId,");
         sql.append("    T1.PRINT_FLAG printFlag,T1.PROC_FLAG procFlag,T1.TXN_DATE txnDate,");
-        sql.append("    T2.KHSWDJH,T2.KHMC,T2.KHSJ,T2.KHDZ,T2.KHYH ");
+        sql.append("    DECODE(T1.DATASRC,'01',T1.PAYER_NAME,T2.KHMC) KHMC,");
+        sql.append("    T2.KHSWDJH,T2.KHSJ,T2.KHDZ,T2.KHYH,T2.YHZH ");
         sql.append("FROM");
-        sql.append("    INV_ZZS_SRC T1 LEFT JOIN INV_ZZS_CUST T2 ON T1.KHDM = T2.KHDM ");
+        sql.append("    INV_ZZS_SRC T1 LEFT JOIN INV_ZZS_CUST T2 ON T1.KHDM = T2.KHDM OR T1.PAYER_NAME = T2.KHMC ");
         sql.append("WHERE");
         sql.append("    T1.PROC_FLAG = '" + EnuZzsProcFlag.PROC_FLAG_0.getCode() + "' ");
         if (StringUtils.isNotEmpty(customInvZzsSrc.getTxnDateStart())) {

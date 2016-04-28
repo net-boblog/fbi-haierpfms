@@ -161,11 +161,11 @@ public class InvZzsCustAction {
     /**
      * É¾³ý
      *
-     * @param khdm
+     * @param pkid
      */
-    public void onDelete(String khdm) {
+    public void onDelete(String pkid) {
         try {
-            boolean isSuccess = invZzsCustService.deleteByPrimaryKey(khdm);
+            boolean isSuccess = invZzsCustService.deleteByPrimaryKey(pkid);
             if (isSuccess) {
                 MessageUtil.addInfo("É¾³ý³É¹¦£¡");
             }

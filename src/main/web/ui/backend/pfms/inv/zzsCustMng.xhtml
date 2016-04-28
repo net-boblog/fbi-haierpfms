@@ -44,7 +44,7 @@
                     <div class="ContainerIndent">
                         <p:dataTable id="pdt" style="width:100%;margin-top: 10px;margin-bottom: 10px"
                                      value="#{invZzsCustAction.invZzsCustList}" var="record"
-                                     rowKey="#{record.khdm}"
+                                     rowKey="#{record.pkid}"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
                                      currentPageReportTemplate="共#{fn:length(invZzsCustAction.invZzsCustList)}笔明细"
                                      paginator="true" rows="5"
@@ -65,7 +65,7 @@
                                                     title="删除"
                                                     style="height:18px;width:18px"
                                                     process=":form:pdt"
-                                                    action="#{invZzsCustAction.onDelete(record.khdm)}"
+                                                    action="#{invZzsCustAction.onDelete(record.pkid)}"
                                                     update=":form:pdt,:form:msgs" >
                                     </p:commandLink>
                                 </h:panelGrid>

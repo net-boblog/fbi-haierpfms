@@ -156,9 +156,10 @@ public class InvZzsSrcService {
             if (StringUtils.isNotEmpty(bean.getDISCOUNT_TAX())) {
                 invZzsSrc.setZse(new BigDecimal(bean.getDISCOUNT_TAX()));      // 折扣税额
             }
+            invZzsSrc.setPayerName(bean.getPAYER_NAME());                      // 付款人名称（国结用）
             invZzsSrc.setCrtDate(sysdate);                                     // 创建日期YYYY-MM-DD
             invZzsSrc.setCrtTime(ToolUtil.getTimeColon());                     // 创建时间HH:mm:ss
-            invZzsSrc.setCrtOperId("sbs");                                     // 创建者ID
+            invZzsSrc.setCrtOperId("guojie");                                 // 创建者ID
             invZzsSrc.setProcFlag(EnuZzsProcFlag.PROC_FLAG_0.getCode());       // 处理标志
             invZzsSrc.setTxnDate(txnDate);                                     // 交易日期
             invZzsSrcMapper.insertSelective(invZzsSrc);
