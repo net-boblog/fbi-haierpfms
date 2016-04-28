@@ -25,14 +25,19 @@
                             <div id="header">
                                 <p:panel id="queryForm" style="width: 100%;">
                                     <h:panelGrid>
-                                        <h:panelGrid columns="9" cellspacing="5">
+                                        <h:panelGrid columns="11" cellspacing="5">
                                             <h:outputLabel value="交易日期："/>
-                                            <p:inputText value="#{invZzsSrcAction.txnDate}"
+                                            <p:inputText value="#{invZzsSrcAction.txnDateStart}"
+                                                         style="width:80px;"
+                                                         onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+                                            <h:outputLabel value="-"/>
+                                            <p:inputText value="#{invZzsSrcAction.txnDateEnd}"
+                                                         style="width:80px;"
                                                          onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
                                             <h:outputLabel value="流水号:"/>
                                             <p:inputText  value="#{invZzsSrcAction.fbtidx}"/>
                                             <h:outputLabel value="数据来源:"/>
-                                            <p:selectOneMenu value="#{invZzsSrcAction.datasrc}" >
+                                            <p:selectOneMenu value="#{invZzsSrcAction.datasrc}" style="width:62px;" >
                                                 <f:selectItems value="#{invZzsSrcAction.zzsSrcList}"/>
                                             </p:selectOneMenu>
                                             <h:outputLabel value="客户名称:"/>
@@ -47,7 +52,7 @@
                                         </h:panelGrid>
                                         <h:panelGrid columns="4" cellspacing="5">
                                             <h:outputLabel value="发票类别:"/>
-                                            <p:selectOneMenu value="#{invZzsSrcAction.fpzl}" >
+                                            <p:selectOneMenu value="#{invZzsSrcAction.fpzl}" style="width:120px;" >
                                                 <f:selectItems value="#{invZzsSrcAction.zzsFpzlList}"/>
                                             </p:selectOneMenu>
                                             <p:commandButton style="width:120px;" value="打印发票"

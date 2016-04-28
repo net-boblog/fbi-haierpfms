@@ -78,21 +78,15 @@
                             </p:column>
                             <p:column style="text-align:center">
                                 <f:facet name="header">
-                                    客户税号
-                                </f:facet>
-                                <h:outputText value="#{record.khswdjh}" style="float:left"/>
-                            </p:column>
-                            <p:column style="text-align:center">
-                                <f:facet name="header">
                                     客户名称
                                 </f:facet>
                                 <h:outputText value="#{record.khmc}" style="float:left"/>
                             </p:column>
                             <p:column style="text-align:center">
                                 <f:facet name="header">
-                                    客户手机号
+                                    客户税号
                                 </f:facet>
-                                <h:outputText value="#{record.khsj}" style="float:left"/>
+                                <h:outputText value="#{record.khswdjh}" style="float:left"/>
                             </p:column>
                             <p:column style="text-align:center">
                                 <f:facet name="header">
@@ -102,9 +96,33 @@
                             </p:column>
                             <p:column style="text-align:center">
                                 <f:facet name="header">
+                                    客户电话
+                                </f:facet>
+                                <h:outputText value="#{record.khsj}" style="float:left"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
                                     开户银行
                                 </f:facet>
                                 <h:outputText value="#{record.khyh}" style="float:left"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    银行账号
+                                </f:facet>
+                                <h:outputText value="#{record.yhzh}" style="float:left"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    一般纳税人
+                                </f:facet>
+                                <h:outputText value="#{invZzsCustAction.enuZzsYbnsrFlag.valueOfAlias(record.ybnsr).title}"/>
+                            </p:column>
+                            <p:column style="text-align:center">
+                                <f:facet name="header">
+                                    备注
+                                </f:facet>
+                                <h:outputText value="#{record.bz}" style="float:left"/>
                             </p:column>
                         </p:dataTable>
                         <p:dialog id="wVDlgViewForAlterId" header="更新信息" widgetVar="wVDlgViewForAlter"
@@ -115,28 +133,41 @@
                                 <h:panelGrid columns="4" cellpadding="2" >
                                     <p:outputLabel value="客户代码:"/>
                                     <p:inputText value="#{invZzsCustAction.invZzsCustUpd.khdm}"
-                                                 readonly="true"
-                                                 style="background-color:gainsboro;width:220px;" />
-                                    <p:outputLabel value="客户税号:"/>
-                                    <p:inputText id="khswdjh" value="#{invZzsCustAction.invZzsCustUpd.khswdjh}"
-                                                 required="true" maxlength="20"
-                                                 requiredMessage="客户税号不能为空。" style="width:220px;"/>
+                                                 required="true" maxlength="50"
+                                                 requiredMessage="客户代码不能为空。"
+                                                 style="width:220px;" />
                                     <p:outputLabel value="客户名称:"/>
                                     <p:inputText value="#{invZzsCustAction.invZzsCustUpd.khmc}"
                                                  required="true" maxlength="200"
                                                  requiredMessage="客户名称不能为空。" style="width:220px;"/>
-                                    <p:outputLabel value="客户手机号:"/>
-                                    <p:inputText value="#{invZzsCustAction.invZzsCustUpd.khsj}"
-                                                 maxlength="200" style="width:220px;"/>
+                                    <p:outputLabel value="客户税号:"/>
+                                    <p:inputText id="khswdjh" value="#{invZzsCustAction.invZzsCustUpd.khswdjh}"
+                                                 required="true" maxlength="20"
+                                                 requiredMessage="客户税号不能为空。" style="width:220px;"/>
                                     <p:outputLabel value="客户地址:"/>
                                     <p:inputText value="#{invZzsCustAction.invZzsCustUpd.khdz}"
                                                  required="true"
                                                  requiredMessage="客户地址不能为空。"
                                                  maxlength="200" style="width:220px;"/>
+                                    <p:outputLabel value="客户电话:"/>
+                                    <p:inputText value="#{invZzsCustAction.invZzsCustUpd.khsj}"
+                                                 maxlength="200" style="width:220px;"/>
                                     <p:outputLabel value="开户银行:"/>
                                     <p:inputText value="#{invZzsCustAction.invZzsCustUpd.khyh}"
                                                  required="true"
                                                  requiredMessage="开户银行不能为空。"
+                                                 maxlength="200" style="width:220px;"/>
+                                    <p:outputLabel value="银行账号:"/>
+                                    <p:inputText value="#{invZzsCustAction.invZzsCustUpd.yhzh}"
+                                                 required="true"
+                                                 requiredMessage="银行账号不能为空。"
+                                                 maxlength="40" style="width:220px;"/>
+                                    <h:outputLabel value="一般纳税人:"/>
+                                    <p:selectOneMenu value="#{invZzsCustAction.invZzsCustUpd.ybnsr}" >
+                                        <f:selectItems value="#{invZzsCustAction.zzsYbnsrList}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value="备注:"/>
+                                    <p:inputText value="#{invZzsCustAction.invZzsCustUpd.bz}"
                                                  maxlength="200" style="width:220px;"/>
                                 </h:panelGrid>
                                 <p:separator/>

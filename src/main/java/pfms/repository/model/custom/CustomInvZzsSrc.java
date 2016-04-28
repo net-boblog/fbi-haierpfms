@@ -6,11 +6,30 @@ import pfms.repository.model.InvZzsSrc;
  * InvZzsSrc与InvZzsCust的关联
  */
 public class CustomInvZzsSrc extends InvZzsSrc {
+    private String txnDateStart;
+    private String txnDateEnd;
     private String khswdjh;
     private String khmc;
     private String khsj;
     private String khdz;
     private String khyh;
+    private String yhzh;
+
+    public String getTxnDateStart() {
+        return txnDateStart;
+    }
+
+    public void setTxnDateStart(String txnDateStart) {
+        this.txnDateStart = txnDateStart;
+    }
+
+    public String getTxnDateEnd() {
+        return txnDateEnd;
+    }
+
+    public void setTxnDateEnd(String txnDateEnd) {
+        this.txnDateEnd = txnDateEnd;
+    }
 
     public String getKhswdjh() {
         return khswdjh;
@@ -50,5 +69,13 @@ public class CustomInvZzsSrc extends InvZzsSrc {
 
     public void setKhyh(String khyh) {
         this.khyh = khyh;
+    }
+
+    public String getYhzh() {
+        return yhzh;
+    }
+
+    public void setYhzh(String yhzh) {
+        this.yhzh = yhzh;
     }
 }

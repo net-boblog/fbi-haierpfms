@@ -2,6 +2,7 @@ package pfms.util;
 
 import pfms.enums.EnuZzsFpzl;
 import pfms.enums.EnuZzsSrc;
+import pfms.enums.EnuZzsYbnsrFlag;
 
 import javax.faces.model.SelectItem;
 import java.util.ArrayList;
@@ -37,5 +38,19 @@ public class EnumUtil {
             zzsFpzlList.add(new SelectItem(zzsFpzl.getCode(), zzsFpzl.getTitle()));
         }
         return zzsFpzlList;
+    }
+
+    /**
+     * 取得一般纳税人下拉列表
+     *
+     * @return
+     */
+    public static List<SelectItem> getYbnsrList() {
+        List<SelectItem> zzsYbnsrList = new ArrayList<SelectItem>();
+        zzsYbnsrList.add(new SelectItem("", "请选择"));
+        for (EnuZzsYbnsrFlag zzsYbnsrFlag : EnuZzsYbnsrFlag.values()) {
+            zzsYbnsrList.add(new SelectItem(zzsYbnsrFlag.getCode(), zzsYbnsrFlag.getTitle()));
+        }
+        return zzsYbnsrList;
     }
 }

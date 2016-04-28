@@ -261,8 +261,12 @@ public class InvZzsSrcService {
                 invZzsHead.setKhswdjh(record.getKhswdjh()); // 客户税号
                 invZzsHead.setKhmc(record.getKhmc());       // 客户名称
                 invZzsHead.setKhsj(record.getKhsj());       // 客户手机号
-                invZzsHead.setKhdz(record.getKhdz());       // 客户地址
-                invZzsHead.setKhyh(record.getKhyh());       // 开户银行
+                if (StringUtils.isEmpty(record.getKhsj())) {
+                    invZzsHead.setKhdz(record.getKhdz());   // 客户地址
+                } else {
+                    invZzsHead.setKhdz(record.getKhdz() + record.getKhsj());
+                }
+                invZzsHead.setKhyh(record.getKhyh() + record.getYhzh()); // 开户银行
                 invZzsHead.setKprq(new Date());             // 单据日期
                 invZzsHead.setFpzl(fpzl);                   // 发票类别
                 invZzsHead.setXrrq(new Date());             // 写入时间

@@ -3,8 +3,8 @@ package pfms.util;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-import com.thoughtworks.xstream.io.xml.CompactWriter;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyNameCoder;
 import com.thoughtworks.xstream.io.xml.XppDriver;
 import org.slf4j.Logger;
@@ -20,11 +20,13 @@ import java.util.Date;
 public class ToolUtil {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    /* 从国结取得增值税数据接口响应报文 */
     public static final String RET_CODE_SUCCESS = "0000"; // 响应码（0000：成功）
+    public static final String RESULT_SUCCESS = "B001";   // 结果（B001：成功）
 
     private static XStream xstream = new XStream(new XppDriver() {
         public HierarchicalStreamWriter createWriter(Writer out) {
-            return new CompactWriter(out, new XmlFriendlyNameCoder("__", "_")) {
+            return new PrettyPrintWriter(out, new XmlFriendlyNameCoder("__", "_")) {
                 // 对所有xml节点的转换都增加CDATA标记
                 boolean cdata = true;
 

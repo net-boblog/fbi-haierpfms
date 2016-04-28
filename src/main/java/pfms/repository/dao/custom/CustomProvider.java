@@ -39,7 +39,12 @@ public class CustomProvider {
         sql.append("    INV_ZZS_SRC T1 LEFT JOIN INV_ZZS_CUST T2 ON T1.KHDM = T2.KHDM ");
         sql.append("WHERE");
         sql.append("    T1.PROC_FLAG = '" + EnuZzsProcFlag.PROC_FLAG_0.getCode() + "' ");
-
+        if (StringUtils.isNotEmpty(customInvZzsSrc.getTxnDateStart())) {
+            sql.append("    AND T1.TXN_DATE >= '" + customInvZzsSrc.getTxnDateStart() + "' ");
+        }
+        if (StringUtils.isNotEmpty(customInvZzsSrc.getTxnDateEnd())) {
+            sql.append("    AND T1.TXN_DATE <= '" + customInvZzsSrc.getTxnDateEnd() + "' ");
+        }
         if (StringUtils.isNotEmpty(customInvZzsSrc.getKhmc())) {
             sql.append("    AND T2.KHMC like '%" + customInvZzsSrc.getKhmc() + "%' ");
         }
@@ -52,11 +57,8 @@ public class CustomProvider {
         if (StringUtils.isNotEmpty(customInvZzsSrc.getPrintFlag())) {
             sql.append("    AND T1.PRINT_FLAG = '" + customInvZzsSrc.getPrintFlag() + "' ");
         }
-        if (StringUtils.isNotEmpty(customInvZzsSrc.getTxnDate())) {
-            sql.append("    AND T1.TXN_DATE = '" + customInvZzsSrc.getTxnDate() + "' ");
-        }
         sql.append("ORDER BY");
-        sql.append("    DATASRC, FBTIDX");
+        sql.append("    TXN_DATE DESC, DATASRC");
 
         logger.info(sql.toString());
         return sql.toString();
@@ -133,8 +135,7 @@ public class CustomProvider {
         if (StringUtils.isNotEmpty(customInvZzsHead.getFpzl())) {
             sql.append("    AND T1.FPZL = '" + customInvZzsHead.getFpzl() + "' ");
         }
-        sql.append("    AND (T1.KP_FLAG = '" + EnuZzsKpFlag.KP_FLAG_1.getCode() + "' OR ");
-        sql.append("         T1.KP_FLAG = '" + EnuZzsKpFlag.KP_FLAG_2.getCode() + "') ");
+        sql.append("    AND T1.KP_FLAG = '" + customInvZzsHead.getKpFlag() + "' ");
         sql.append("    AND T1.ZF_FLAG IS NULL ");
         sql.append("    AND T1.CH_FLAG IS NULL ");
         sql.append("ORDER BY");

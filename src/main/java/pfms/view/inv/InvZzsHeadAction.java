@@ -82,7 +82,7 @@ public class InvZzsHeadAction {
     }
 
     /**
-     * 查询已开票数据
+     * 查询已开票成功数据
      */
     public void onQryPrint() {
         try {
@@ -102,6 +102,36 @@ public class InvZzsHeadAction {
             if (StringUtils.isNotEmpty(fpzl)) {
                 customInvZzsHead.setFpzl(fpzl);
             }
+            customInvZzsHead.setKpFlag(EnuZzsKpFlag.KP_FLAG_1.getCode());
+            customInvZzsHeadList = invZzsHeadService.selectPrint(customInvZzsHead);
+        } catch (Exception e) {
+            logger.error("查询失败！", e);
+            MessageUtil.addError("查询失败！" + e == null ? "" : e.getMessage());
+        }
+    }
+
+    /**
+     * 查询已开票失败数据
+     */
+    public void onQryPrintFail() {
+        try {
+            CustomInvZzsHead customInvZzsHead = new CustomInvZzsHead();
+            if (StringUtils.isNotEmpty(fbtidx)) {
+                customInvZzsHead.setFbtidx(fbtidx);
+            }
+            if (StringUtils.isNotEmpty(khmc)) {
+                customInvZzsHead.setKhmc(khmc);
+            }
+            if (StringUtils.isNotEmpty(datasrc)) {
+                customInvZzsHead.setDatasrc(datasrc);
+            }
+            if (StringUtils.isNotEmpty(kprq)) {
+                customInvZzsHead.setKprq(new DateTime(kprq).toDate());
+            }
+            if (StringUtils.isNotEmpty(fpzl)) {
+                customInvZzsHead.setFpzl(fpzl);
+            }
+            customInvZzsHead.setKpFlag(EnuZzsKpFlag.KP_FLAG_2.getCode());
             customInvZzsHeadList = invZzsHeadService.selectPrint(customInvZzsHead);
         } catch (Exception e) {
             logger.error("查询失败！", e);

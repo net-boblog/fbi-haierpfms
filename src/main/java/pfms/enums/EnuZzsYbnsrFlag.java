@@ -3,17 +3,17 @@ package pfms.enums;
 import java.util.Hashtable;
 
 /**
- * 增值税原始数据表中的数据来源
+ * 是否是一般纳税人（0：否；1：是）
  */
-public enum EnuZzsSrc {
-    SRC_00("00","SBS"),
-    SRC_01("01","国结");
+public enum EnuZzsYbnsrFlag {
+    YBNSR_FLAG_0("0", "否"),
+    YBNSR_FLAG_1("1", "是");
 
     private String code = null;
     private String title = null;
-    private static Hashtable<String, EnuZzsSrc> aliasEnums;
+    private static Hashtable<String, EnuZzsYbnsrFlag> aliasEnums;
 
-    EnuZzsSrc(String code, String title) {
+    EnuZzsYbnsrFlag(String code, String title) {
         this.init(code, title);
     }
 
@@ -30,7 +30,7 @@ public enum EnuZzsSrc {
         aliasEnums.put(title, this);
     }
 
-    public static EnuZzsSrc valueOfAlias(String alias) {
+    public static EnuZzsYbnsrFlag valueOfAlias(String alias) {
         return aliasEnums.get(alias);
     }
 

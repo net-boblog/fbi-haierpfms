@@ -39,18 +39,20 @@ public class InvZzsSrcAction {
     private EnuZzsSrc enuZzsSrc = EnuZzsSrc.SRC_00;
     private EnuZzsFpzl enuZzsFpzl = EnuZzsFpzl.FPZL_0;
     private List<CustomInvZzsSrc> customInvZzsSrcList;
-    private List<SelectItem> zzsSrcList; // 数据来源下拉列表
-    private List<SelectItem> zzsFpzlList; // 发票类别下拉列表
-    private String fbtidx; // 流水号
-    private String khmc;   // 客户名称
-    private String datasrc; // 数据来源
-    private String txnDate; // 交易日期
-    private String fpzl;    // 发票类别
+    private List<SelectItem> zzsSrcList;       // 数据来源下拉列表
+    private List<SelectItem> zzsFpzlList;      // 发票类别下拉列表
+    private String fbtidx;                     // 流水号
+    private String khmc;                       // 客户名称
+    private String datasrc;                    // 数据来源
+    private String txnDateStart;               // 交易日期开始
+    private String txnDateEnd;                 // 交易日期结束
+    private String fpzl;                       // 发票类别
     private CustomInvZzsSrc[] selectedRecords; // 选择数据
 
     @PostConstruct
     public void init() {
-        txnDate = new DateTime().plusDays(-1).toString("yyyy-MM-dd");
+        txnDateStart = new DateTime().plusDays(-1).toString("yyyy-MM-dd");
+        txnDateEnd = txnDateStart;
         zzsSrcList = EnumUtil.getSrcList();
         zzsFpzlList = EnumUtil.getFpzlList();
         operInfo = operManager.getOperInfo();
@@ -73,8 +75,11 @@ public class InvZzsSrcAction {
             if (StringUtils.isNotEmpty(datasrc)) {
                 customInvZzsSrc.setDatasrc(datasrc);
             }
-            if (StringUtils.isNotEmpty(txnDate)) {
-                customInvZzsSrc.setTxnDate(txnDate);
+            if (StringUtils.isNotEmpty(txnDateStart)) {
+                customInvZzsSrc.setTxnDateStart(txnDateStart);
+            }
+            if (StringUtils.isNotEmpty(txnDateEnd)) {
+                customInvZzsSrc.setTxnDateEnd(txnDateEnd);
             }
 
             customInvZzsSrcList = invZzsSrcService.selectUnProc(customInvZzsSrc);
@@ -94,16 +99,16 @@ public class InvZzsSrcAction {
                 return;
             }
 
-            for (CustomInvZzsSrc customInvZzsSrc : selectedRecords) {
-                if (StringUtils.isEmpty(customInvZzsSrc.getKhmc())) {
-                    MessageUtil.addError("选择记录中含有未录入客户信息的数据。");
-                    return;
-                }
-            }
-
             if (StringUtils.isEmpty(fpzl)) {
                 MessageUtil.addError("请选择发票类别。");
                 return;
+            }
+
+            for (CustomInvZzsSrc customInvZzsSrc : selectedRecords) {
+                if (StringUtils.isEmpty(customInvZzsSrc.getKhmc())) {
+                    MessageUtil.addError("选择记录中含有未录入客户信息的数据，请先录入客户信息。");
+                    return;
+                }
             }
 
             Map<String, Integer> result = invZzsSrcService.printFp(selectedRecords, fpzl, operInfo.getOperId());
@@ -216,12 +221,20 @@ public class InvZzsSrcAction {
         this.datasrc = datasrc;
     }
 
-    public String getTxnDate() {
-        return txnDate;
+    public String getTxnDateStart() {
+        return txnDateStart;
     }
 
-    public void setTxnDate(String txnDate) {
-        this.txnDate = txnDate;
+    public void setTxnDateStart(String txnDateStart) {
+        this.txnDateStart = txnDateStart;
+    }
+
+    public String getTxnDateEnd() {
+        return txnDateEnd;
+    }
+
+    public void setTxnDateEnd(String txnDateEnd) {
+        this.txnDateEnd = txnDateEnd;
     }
 
     public String getFpzl() {

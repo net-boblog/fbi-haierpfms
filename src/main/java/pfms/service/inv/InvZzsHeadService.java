@@ -6,14 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pfms.enums.EnuZzsKpFlag;
-import pfms.enums.EnuZzsZfClbz;
-import pfms.enums.EnuZzsZfFlag;
-import pfms.enums.EnuZzsZfType;
-import pfms.repository.dao.InvZzsHeadMapper;
-import pfms.repository.dao.InvZzsKphxMapper;
-import pfms.repository.dao.InvZzsZfMapper;
-import pfms.repository.dao.InvZzsZfhxMapper;
+import pfms.enums.*;
+import pfms.repository.dao.*;
 import pfms.repository.dao.custom.CustomMapper;
 import pfms.repository.dao.rwkj.XwsqZzsHeadMapper;
 import pfms.repository.dao.rwkj.XwsqZzsKphxMapper;
@@ -49,6 +43,9 @@ public class InvZzsHeadService {
 
     @Resource
     private InvZzsZfhxMapper invZzsZfhxMapper;
+
+    @Resource
+    private InvZzsSrcMapper invZzsSrcMapper;
 
     @Resource
     private CustomMapper customMapper;
@@ -199,6 +196,9 @@ public class InvZzsHeadService {
                 kphxCriteria.andFlagIn(flagList);      // 标识  0 未开票 1 已开票 2 开票失败
                 List<XwsqZzsKphx> xwsqZzsKphxList = xwsqZzsKphxMapper.selectByExample(kphxExample);
                 InvZzsKphx invZzsKphx = null;
+                InvZzsHeadKey invZzsHeadKey = null;
+                InvZzsHead invZzsHeadSrc = null;
+                InvZzsSrc invZzsSrc = null;
                 for (XwsqZzsKphx xwsqZzsKphx : xwsqZzsKphxList) {
                     // 插入本地INV_ZZS_KPHX
                     invZzsKphx = new InvZzsKphx();
@@ -226,6 +226,19 @@ public class InvZzsHeadService {
                         invZzsHead.setDmgs(xwsqZzsKphx.getDmgs());           // 单据公司
                         invZzsHead.setKpFlag(EnuZzsKpFlag.KP_FLAG_2.getCode()); // 开票标志
                         invZzsHeadMapper.updateByPrimaryKeySelective(invZzsHead);
+
+                        // 更新原始数据表处理标志为未处理，使用户可以再次打印发票
+                        // 首先需要根据单据号码、单据公司从【INV_ZZS_HEAD】表取得流水号、数据来源
+                        // 然后根据流水号、数据来源更新【INV_ZZS_SRC】表的处理标志为【未处理】
+                        invZzsHeadKey = new InvZzsHeadKey();
+                        invZzsHeadKey.setXsddm(xwsqZzsKphx.getXsddm());
+                        invZzsHeadKey.setDmgs(xwsqZzsKphx.getDmgs());
+                        invZzsHeadSrc = invZzsHeadMapper.selectByPrimaryKey(invZzsHeadKey);
+                        invZzsSrc = new InvZzsSrc();
+                        invZzsSrc.setFbtidx(invZzsHeadSrc.getFbtidx());
+                        invZzsSrc.setDatasrc(invZzsHeadSrc.getDatasrc());
+                        invZzsSrc.setProcFlag(EnuZzsProcFlag.PROC_FLAG_0.getCode()); // 处理标志
+                        invZzsSrcMapper.updateByPrimaryKeySelective(invZzsSrc);
                     }
                 }
             }

@@ -3,9 +3,11 @@ package pfms.view.inv;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pfms.enums.EnuZzsYbnsrFlag;
 import pfms.repository.model.InvZzsCust;
 import pfms.repository.model.InvZzsCustExample;
 import pfms.service.inv.InvZzsCustService;
+import pfms.util.EnumUtil;
 import pfms.util.ToolUtil;
 import skyline.common.primefaces.MessageUtil;
 import skyline.security.OperManager;
@@ -15,6 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +36,8 @@ public class InvZzsCustAction {
     private InvZzsCustService invZzsCustService;
 
     private OperInfo operInfo;
-
+    private EnuZzsYbnsrFlag enuZzsYbnsrFlag = EnuZzsYbnsrFlag.YBNSR_FLAG_0;
+    private List<SelectItem> zzsYbnsrList; // 一般纳税人下拉列表
     private List<InvZzsCust> invZzsCustList = new ArrayList<InvZzsCust>();
     private InvZzsCust invZzsCustAdd = new InvZzsCust();
     private InvZzsCust invZzsCustUpd = new InvZzsCust();
@@ -42,6 +46,7 @@ public class InvZzsCustAction {
 
     @PostConstruct
     public void init() {
+        zzsYbnsrList = EnumUtil.getYbnsrList();
         operInfo = operManager.getOperInfo();
     }
 
@@ -129,6 +134,17 @@ public class InvZzsCustAction {
      */
     public void onUpd() {
         try {
+            // 验证客户代码是否重复
+            InvZzsCustExample example = new InvZzsCustExample();
+            InvZzsCustExample.Criteria criteria = example.createCriteria();
+            criteria.andPkidNotEqualTo(invZzsCustUpd.getPkid());
+            criteria.andKhdmEqualTo(invZzsCustUpd.getKhdm());
+            int count = invZzsCustService.countByExample(example);
+            if(count > 0) {
+                MessageUtil.addError("客户代码已存在！");
+                return;
+            }
+
             invZzsCustUpd.setUpdOperId(operInfo.getOperId()); // 修改者ID
             boolean isSuccess = invZzsCustService.update(invZzsCustUpd);
             if (isSuccess) {
@@ -175,6 +191,22 @@ public class InvZzsCustAction {
 
     public void setInvZzsCustService(InvZzsCustService invZzsCustService) {
         this.invZzsCustService = invZzsCustService;
+    }
+
+    public EnuZzsYbnsrFlag getEnuZzsYbnsrFlag() {
+        return enuZzsYbnsrFlag;
+    }
+
+    public void setEnuZzsYbnsrFlag(EnuZzsYbnsrFlag enuZzsYbnsrFlag) {
+        this.enuZzsYbnsrFlag = enuZzsYbnsrFlag;
+    }
+
+    public List<SelectItem> getZzsYbnsrList() {
+        return zzsYbnsrList;
+    }
+
+    public void setZzsYbnsrList(List<SelectItem> zzsYbnsrList) {
+        this.zzsYbnsrList = zzsYbnsrList;
     }
 
     public List<InvZzsCust> getInvZzsCustList() {
