@@ -306,8 +306,12 @@ public class InvZzsSrcService {
                 xwsqZzsHead.setKhswdjh(record.getKhswdjh()); // 客户税号
                 xwsqZzsHead.setKhmc(record.getKhmc());       // 客户名称
                 xwsqZzsHead.setKhsj(record.getKhsj());       // 客户手机号
-                xwsqZzsHead.setKhdz(record.getKhdz());       // 客户地址
-                xwsqZzsHead.setKhyh(record.getKhyh());       // 开户银行
+                if (StringUtils.isEmpty(record.getKhsj())) {
+                    xwsqZzsHead.setKhdz(record.getKhdz());   // 客户地址
+                } else {
+                    xwsqZzsHead.setKhdz(record.getKhdz() + record.getKhsj());
+                }
+                xwsqZzsHead.setKhyh(record.getKhyh() + record.getYhzh()); // 开户银行
                 xwsqZzsHead.setKprq(new Date());             // 单据日期
                 xwsqZzsHead.setFpzl(fpzl);                   // 发票类别
                 xwsqZzsHead.setXrrq(new Date());             // 写入时间
