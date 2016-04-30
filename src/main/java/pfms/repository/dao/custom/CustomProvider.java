@@ -113,6 +113,51 @@ public class CustomProvider {
         CustomInvZzsHead customInvZzsHead = (CustomInvZzsHead) parametersMap.get("customInvZzsHead");
         StringBuffer sql = new StringBuffer();
         sql.append("SELECT");
+        sql.append("    T1.*, T2.*, T3.INVOICECODE, T3.KPRQ KPHXRQ ");
+        sql.append("FROM");
+        sql.append("    INV_ZZS_HEAD T1, INV_ZZS_ITEM T2, INV_ZZS_KPHX T3 ");
+        sql.append("WHERE");
+        sql.append("    T1.XSDDM = T2.XSDDM ");
+        sql.append("    AND T1.DMGS = T2.DMGS ");
+        sql.append("    AND T1.XSDDM = T3.XSDDM ");
+        sql.append("    AND T1.DMGS = T3.DMGS ");
+
+        if (customInvZzsHead.getKprq() != null) {
+            sql.append("    AND TO_CHAR(T1.KPRQ, 'yyyyMMdd') = '" +
+                    new DateTime(customInvZzsHead.getKprq()).toString("yyyyMMdd") + "' ");
+        }
+        if (StringUtils.isNotEmpty(customInvZzsHead.getKhmc())) {
+            sql.append("    AND T1.KHMC like '%" + customInvZzsHead.getKhmc() + "%' ");
+        }
+        if (StringUtils.isNotEmpty(customInvZzsHead.getFbtidx())) {
+            sql.append("    AND T1.FBTIDX like '%" + customInvZzsHead.getFbtidx() + "%' ");
+        }
+        if (StringUtils.isNotEmpty(customInvZzsHead.getDatasrc())) {
+            sql.append("    AND T1.DATASRC = '" + customInvZzsHead.getDatasrc() + "' ");
+        }
+        if (StringUtils.isNotEmpty(customInvZzsHead.getFpzl())) {
+            sql.append("    AND T1.FPZL = '" + customInvZzsHead.getFpzl() + "' ");
+        }
+        sql.append("    AND T1.KP_FLAG = '" + EnuZzsKpFlag.KP_FLAG_1.getCode() + "' ");
+        sql.append("    AND T1.ZF_FLAG IS NULL ");
+        sql.append("    AND T1.CH_FLAG IS NULL ");
+        sql.append("ORDER BY");
+        sql.append("    T1.KPRQ desc");
+
+        logger.info(sql.toString());
+        return sql.toString();
+    }
+
+    /**
+     * 查询已开票失败数据
+     *
+     * @param parametersMap
+     * @return
+     */
+    public String selectPrintFail(Map<String, Object> parametersMap) {
+        CustomInvZzsHead customInvZzsHead = (CustomInvZzsHead) parametersMap.get("customInvZzsHead");
+        StringBuffer sql = new StringBuffer();
+        sql.append("SELECT");
         sql.append("    T1.*, T2.* ");
         sql.append("FROM");
         sql.append("    INV_ZZS_HEAD T1, INV_ZZS_ITEM T2 ");
@@ -136,11 +181,11 @@ public class CustomProvider {
         if (StringUtils.isNotEmpty(customInvZzsHead.getFpzl())) {
             sql.append("    AND T1.FPZL = '" + customInvZzsHead.getFpzl() + "' ");
         }
-        sql.append("    AND T1.KP_FLAG = '" + customInvZzsHead.getKpFlag() + "' ");
+        sql.append("    AND T1.KP_FLAG = '" + EnuZzsKpFlag.KP_FLAG_2.getCode() + "' ");
         sql.append("    AND T1.ZF_FLAG IS NULL ");
         sql.append("    AND T1.CH_FLAG IS NULL ");
         sql.append("ORDER BY");
-        sql.append("    KPRQ desc");
+        sql.append("    T1.KPRQ desc");
 
         logger.info(sql.toString());
         return sql.toString();
@@ -156,12 +201,14 @@ public class CustomProvider {
         CustomInvZzsHead customInvZzsHead = (CustomInvZzsHead) parametersMap.get("customInvZzsHead");
         StringBuffer sql = new StringBuffer();
         sql.append("SELECT");
-        sql.append("    T1.*, T2.* ");
+        sql.append("    T1.*, T2.*, T3.INVOICECODE, T3.KPRQ KPHXRQ ");
         sql.append("FROM");
-        sql.append("    INV_ZZS_HEAD T1, INV_ZZS_ITEM T2 ");
+        sql.append("    INV_ZZS_HEAD T1, INV_ZZS_ITEM T2, INV_ZZS_KPHX T3 ");
         sql.append("WHERE");
         sql.append("    T1.XSDDM = T2.XSDDM ");
         sql.append("    AND T1.DMGS = T2.DMGS ");
+        sql.append("    AND T1.XSDDM = T3.XSDDM ");
+        sql.append("    AND T1.DMGS = T3.DMGS ");
         if (StringUtils.isNotEmpty(customInvZzsHead.getKhmc())) {
             sql.append("    AND T1.KHMC like '%" + customInvZzsHead.getKhmc() + "%' ");
         }
@@ -178,7 +225,7 @@ public class CustomProvider {
         sql.append("    AND T1.ZF_FLAG = '" + EnuZzsZfFlag.ZF_FLAG_0.getCode() + "' ");
         sql.append("    AND T1.CH_FLAG IS NULL ");
         sql.append("ORDER BY");
-        sql.append("    KPRQ desc");
+        sql.append("    T1.KPRQ desc");
 
         logger.info(sql.toString());
         return sql.toString();
@@ -194,12 +241,14 @@ public class CustomProvider {
         CustomInvZzsHead customInvZzsHead = (CustomInvZzsHead) parametersMap.get("customInvZzsHead");
         StringBuffer sql = new StringBuffer();
         sql.append("SELECT");
-        sql.append("    T1.*, T2.* ");
+        sql.append("    T1.*, T2.*, T3.INVOICECODE, T3.KPRQ KPHXRQ ");
         sql.append("FROM");
-        sql.append("    INV_ZZS_HEAD T1, INV_ZZS_ITEM T2 ");
+        sql.append("    INV_ZZS_HEAD T1, INV_ZZS_ITEM T2, INV_ZZS_KPHX T3 ");
         sql.append("WHERE");
         sql.append("    T1.XSDDM = T2.XSDDM ");
         sql.append("    AND T1.DMGS = T2.DMGS ");
+        sql.append("    AND T1.XSDDM = T3.XSDDM ");
+        sql.append("    AND T1.DMGS = T3.DMGS ");
 
         if (customInvZzsHead.getKprq() != null) {
             sql.append("    AND TO_CHAR(T1.KPRQ, 'yyyyMMdd') = '" +
@@ -222,7 +271,7 @@ public class CustomProvider {
         sql.append("         T1.ZF_FLAG = '" + EnuZzsZfFlag.ZF_FLAG_2.getCode() + "') ");
         sql.append("    AND T1.CH_FLAG IS NULL ");
         sql.append("ORDER BY");
-        sql.append("    KPRQ desc");
+        sql.append("    T1.KPRQ desc");
 
         logger.info(sql.toString());
         return sql.toString();

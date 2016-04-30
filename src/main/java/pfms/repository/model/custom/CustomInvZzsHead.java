@@ -22,6 +22,8 @@ public class CustomInvZzsHead extends InvZzsHead {
     private BigDecimal sl;
     private BigDecimal zbhsje;
     private BigDecimal zse;
+    private String invoicecode;
+    private String kphxrq;
 
     public Short getMxxh() {
         return mxxh;
@@ -133,5 +135,21 @@ public class CustomInvZzsHead extends InvZzsHead {
 
     public void setZse(BigDecimal zse) {
         this.zse = zse;
+    }
+
+    public String getInvoicecode() {
+        return invoicecode;
+    }
+
+    public void setInvoicecode(String invoicecode) {
+        this.invoicecode = invoicecode;
+    }
+
+    public String getKphxrq() {
+        return kphxrq;
+    }
+
+    public void setKphxrq(String kphxrq) {
+        this.kphxrq = kphxrq;
     }
 }

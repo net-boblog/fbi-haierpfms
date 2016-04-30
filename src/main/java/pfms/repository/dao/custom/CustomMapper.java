@@ -41,6 +41,15 @@ public interface CustomMapper {
     List<CustomInvZzsHead> selectPrint(@Param("customInvZzsHead") CustomInvZzsHead customInvZzsHead);
 
     /**
+     * 查询已开票失败数据
+     *
+     * @param customInvZzsHead
+     * @return
+     */
+    @SelectProvider(type = CustomProvider.class, method = "selectPrintFail")
+    List<CustomInvZzsHead> selectPrintFail(@Param("customInvZzsHead") CustomInvZzsHead customInvZzsHead);
+
+    /**
      * 查询待作废数据
      *
      * @param customInvZzsHead

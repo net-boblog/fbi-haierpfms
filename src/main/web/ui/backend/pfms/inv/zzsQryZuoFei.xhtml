@@ -78,10 +78,10 @@
                                 <h:outputText value="#{invZzsHeadAction.enuZzsFpzl.valueOfAlias(record.fpzl).title}"/>
                             </p:column>
                             <p:column headerText="发票号码" style="text-align:center" width="100">
-                                <h:outputText value="#{record.fphm}"/>
+                                <h:outputText value="#{record.invoicecode}"/>
                             </p:column>
-                            <p:column headerText="税控开票日期" style="text-align:center" width="100">
-                                <h:outputText value="#{record.skrq}">
+                            <p:column headerText="开票日期" style="text-align:center" width="100">
+                                <h:outputText value="#{record.kphxrq}">
                                     <f:convertDateTime pattern="yyyy-MM-dd" />
                                 </h:outputText>
                             </p:column>

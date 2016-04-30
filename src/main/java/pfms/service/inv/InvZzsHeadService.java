@@ -71,6 +71,16 @@ public class InvZzsHeadService {
     }
 
     /**
+     * 查询已开票失败数据
+     *
+     * @param customInvZzsHead
+     * @return
+     */
+    public List<CustomInvZzsHead> selectPrintFail(CustomInvZzsHead customInvZzsHead) {
+        return customMapper.selectPrintFail(customInvZzsHead);
+    }
+
+    /**
      * 作废
      *
      * @param customInvZzsHead
@@ -94,16 +104,16 @@ public class InvZzsHeadService {
 
             // 插入本地作废、冲红发票
             InvZzsZf invZzsZf = new InvZzsZf();
-            invZzsZf.setInvoicecode(customInvZzsHead.getFphm()); // 正向发票号
-            invZzsZf.setType(EnuZzsZfType.ZF_TYPE_1.getCode()); // 类型 1：作废  2 冲红
-            invZzsZf.setXrrq(new Date());                        // 写入时间
+            invZzsZf.setInvoicecode(customInvZzsHead.getInvoicecode()); // 正向发票号
+            invZzsZf.setType(EnuZzsZfType.ZF_TYPE_1.getCode());         // 类型 1：作废  2 冲红
+            invZzsZf.setXrrq(new Date());                               // 写入时间
             invZzsZfMapper.insertSelective(invZzsZf);
 
             // 插入远程作废、冲红发票
             XwsqZzsZf xwsqZzsZf = new XwsqZzsZf();
-            xwsqZzsZf.setInvoicecode(customInvZzsHead.getFphm()); // 正向发票号
-            xwsqZzsZf.setType(EnuZzsZfType.ZF_TYPE_1.getCode()); // 类型 1：作废  2 冲红
-            xwsqZzsZf.setXrrq(new Date());                        // 写入时间
+            xwsqZzsZf.setInvoicecode(customInvZzsHead.getInvoicecode()); // 正向发票号
+            xwsqZzsZf.setType(EnuZzsZfType.ZF_TYPE_1.getCode());         // 类型 1：作废  2 冲红
+            xwsqZzsZf.setXrrq(new Date());                               // 写入时间
             xwsqZzsZfMapper.insertSelective(xwsqZzsZf);
 
             session.commit();
@@ -222,8 +232,8 @@ public class InvZzsHeadService {
                     if (EnuZzsKpFlag.KP_FLAG_2.getCode().equals(xwsqZzsKphx.getFlag())) {
                         // 更新本地销售发票头开票标志为开票失败
                         invZzsHead = new InvZzsHead();
-                        invZzsHead.setXsddm(xwsqZzsKphx.getXsddm());         // 单据号码
-                        invZzsHead.setDmgs(xwsqZzsKphx.getDmgs());           // 单据公司
+                        invZzsHead.setXsddm(xwsqZzsKphx.getXsddm());            // 单据号码
+                        invZzsHead.setDmgs(xwsqZzsKphx.getDmgs());              // 单据公司
                         invZzsHead.setKpFlag(EnuZzsKpFlag.KP_FLAG_2.getCode()); // 开票标志
                         invZzsHeadMapper.updateByPrimaryKeySelective(invZzsHead);
 
@@ -239,6 +249,13 @@ public class InvZzsHeadService {
                         invZzsSrc.setDatasrc(invZzsHeadSrc.getDatasrc());
                         invZzsSrc.setProcFlag(EnuZzsProcFlag.PROC_FLAG_0.getCode()); // 处理标志
                         invZzsSrcMapper.updateByPrimaryKeySelective(invZzsSrc);
+                    } else if (EnuZzsKpFlag.KP_FLAG_1.getCode().equals(xwsqZzsKphx.getFlag())) { // 开票成功的处理
+                        // 更新本地销售发票头开票标志为开票成功
+                        invZzsHead = new InvZzsHead();
+                        invZzsHead.setXsddm(xwsqZzsKphx.getXsddm());            // 单据号码
+                        invZzsHead.setDmgs(xwsqZzsKphx.getDmgs());              // 单据公司
+                        invZzsHead.setKpFlag(EnuZzsKpFlag.KP_FLAG_1.getCode()); // 开票标志
+                        invZzsHeadMapper.updateByPrimaryKeySelective(invZzsHead);
                     }
                 }
             }

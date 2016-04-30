@@ -5,9 +5,7 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pfms.enums.EnuZzsFpzl;
-import pfms.enums.EnuZzsKpFlag;
 import pfms.enums.EnuZzsSrc;
-import pfms.enums.EnuZzsZfFlag;
 import pfms.repository.model.custom.CustomInvZzsHead;
 import pfms.service.inv.InvZzsHeadService;
 import pfms.util.EnumUtil;
@@ -102,7 +100,6 @@ public class InvZzsHeadAction {
             if (StringUtils.isNotEmpty(fpzl)) {
                 customInvZzsHead.setFpzl(fpzl);
             }
-            customInvZzsHead.setKpFlag(EnuZzsKpFlag.KP_FLAG_1.getCode());
             customInvZzsHeadList = invZzsHeadService.selectPrint(customInvZzsHead);
         } catch (Exception e) {
             logger.error("查询失败！", e);
@@ -131,8 +128,7 @@ public class InvZzsHeadAction {
             if (StringUtils.isNotEmpty(fpzl)) {
                 customInvZzsHead.setFpzl(fpzl);
             }
-            customInvZzsHead.setKpFlag(EnuZzsKpFlag.KP_FLAG_2.getCode());
-            customInvZzsHeadList = invZzsHeadService.selectPrint(customInvZzsHead);
+            customInvZzsHeadList = invZzsHeadService.selectPrintFail(customInvZzsHead);
         } catch (Exception e) {
             logger.error("查询失败！", e);
             MessageUtil.addError("查询失败！" + e == null ? "" : e.getMessage());
@@ -166,11 +162,12 @@ public class InvZzsHeadAction {
 
     /**
      * 作废
+     *
      * @param customInvZzsHead
      */
     public void onZuoFui(CustomInvZzsHead customInvZzsHead) {
         try {
-            if(StringUtils.isEmpty(customInvZzsHead.getFphm())) {
+            if (StringUtils.isEmpty(customInvZzsHead.getInvoicecode())) {
                 MessageUtil.addError("没有发票号码不能作废。");
                 return;
             }

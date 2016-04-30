@@ -223,6 +223,7 @@ public class InvZzsSrcService {
         XwsqZzsItemMapper xwsqZzsItemMapper = session.getMapper(XwsqZzsItemMapper.class);
         try {
             totalCnt = selectedRecords.length;
+            String crtDate = ToolUtil.getDateDash();
             for (CustomInvZzsSrc record : selectedRecords) {
                 String xsddm = ToolUtil.getDateTimeMsec() + String.valueOf(platformService.obtainSeqNo("xsddm"));
 
@@ -272,6 +273,9 @@ public class InvZzsSrcService {
                 invZzsHead.setFpzl(fpzl);                   // 发票类别
                 invZzsHead.setXrrq(new Date());             // 写入时间
                 invZzsHead.setKpFlag(EnuZzsKpFlag.KP_FLAG_0.getCode()); // 开票标志
+                invZzsHead.setCrtDate(crtDate);                 // 创建日期YYYY-MM-DD
+                invZzsHead.setCrtTime(ToolUtil.getTimeColon()); // 创建时间HH:mm:ss
+                invZzsHead.setCrtOperId(operId);                // 创建者ID
                 invZzsHeadMapper.insert(invZzsHead);
 
                 // 插入本地销售发票明细

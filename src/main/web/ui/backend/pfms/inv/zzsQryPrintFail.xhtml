@@ -77,14 +77,6 @@
                             <p:column headerText="发票类别" style="text-align:center" width="100">
                                 <h:outputText value="#{invZzsHeadAction.enuZzsFpzl.valueOfAlias(record.fpzl).title}"/>
                             </p:column>
-                            <p:column headerText="发票号码" style="text-align:center" width="100">
-                                <h:outputText value="#{record.fphm}"/>
-                            </p:column>
-                            <p:column headerText="税控开票日期" style="text-align:center" width="100">
-                                <h:outputText value="#{record.skrq}">
-                                    <f:convertDateTime pattern="yyyy-MM-dd" />
-                                </h:outputText>
-                            </p:column>
                             <p:column headerText="流水号" style="text-align:center" width="125">
                                 <h:outputText value="#{record.fbtidx}"/>
                             </p:column>
