@@ -52,7 +52,7 @@ public class InvZzsSrcAction {
     @PostConstruct
     public void init() {
         txnDateStart = new DateTime().plusDays(-1).toString("yyyy-MM-dd");
-        txnDateEnd = txnDateStart;
+        txnDateEnd = new DateTime().toString("yyyy-MM-dd");
         zzsSrcList = EnumUtil.getSrcList();
         zzsFpzlList = EnumUtil.getFpzlList();
         operInfo = operManager.getOperInfo();
