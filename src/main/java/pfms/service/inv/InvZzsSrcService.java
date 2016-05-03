@@ -225,7 +225,8 @@ public class InvZzsSrcService {
             totalCnt = selectedRecords.length;
             String crtDate = ToolUtil.getDateDash();
             for (CustomInvZzsSrc record : selectedRecords) {
-                String xsddm = ToolUtil.getDateTimeMsec() + String.valueOf(platformService.obtainSeqNo("xsddm"));
+                String xsddm = ToolUtil.getDateTimeMsec() +
+                        StringUtils.leftPad(String.valueOf(platformService.obtainSeqNo("xsddm")), 7, "0");
 
                 // 验证本地销售发票头是否重复
                 InvZzsHeadExample example = new InvZzsHeadExample();
