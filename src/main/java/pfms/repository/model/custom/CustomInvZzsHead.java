@@ -8,6 +8,8 @@ import java.math.BigDecimal;
  * InvZzsHead”ÎInvZzsItemπÿ¡™
  */
 public class CustomInvZzsHead extends InvZzsHead {
+    private String kprqStart;
+    private String kprqEnd;
     private Short mxxh;
     private String cpdm;
     private String cpmc;
@@ -24,6 +26,22 @@ public class CustomInvZzsHead extends InvZzsHead {
     private BigDecimal zse;
     private String invoicecode;
     private String kphxrq;
+
+    public String getKprqStart() {
+        return kprqStart;
+    }
+
+    public void setKprqStart(String kprqStart) {
+        this.kprqStart = kprqStart;
+    }
+
+    public String getKprqEnd() {
+        return kprqEnd;
+    }
+
+    public void setKprqEnd(String kprqEnd) {
+        this.kprqEnd = kprqEnd;
+    }
 
     public Short getMxxh() {
         return mxxh;

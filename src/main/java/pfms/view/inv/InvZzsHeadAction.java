@@ -37,18 +37,20 @@ public class InvZzsHeadAction {
     private EnuZzsSrc enuZzsSrc = EnuZzsSrc.SRC_00;
     private EnuZzsFpzl enuZzsFpzl = EnuZzsFpzl.FPZL_0;
     private List<CustomInvZzsHead> customInvZzsHeadList;
-    private List<SelectItem> zzsSrcList; // 数据来源下拉列表
+    private List<SelectItem> zzsSrcList;  // 数据来源下拉列表
     private List<SelectItem> zzsFpzlList; // 发票类别下拉列表
-    private String fbtidx; // 流水号
-    private String khmc;   // 客户名称
-    private String datasrc; // 数据来源
-    private String kprq; // 交易日期
-    private String fpzl;    // 发票类别
+    private String fbtidx;                // 流水号
+    private String khmc;                  // 客户名称
+    private String datasrc;               // 数据来源
+    private String kprqStart;             // 单据日期开始
+    private String kprqEnd;               // 单据日期结束
+    private String fpzl;                  // 发票类别
     private OperInfo operInfo;
 
     @PostConstruct
     public void init() {
-        kprq = new DateTime().toString("yyyy-MM-dd");
+        kprqStart = new DateTime().plusDays(-1).toString("yyyy-MM-dd");
+        kprqEnd = new DateTime().toString("yyyy-MM-dd");
         zzsSrcList = EnumUtil.getSrcList();
         zzsFpzlList = EnumUtil.getFpzlList();
         operInfo = operManager.getOperInfo();
@@ -94,8 +96,11 @@ public class InvZzsHeadAction {
             if (StringUtils.isNotEmpty(datasrc)) {
                 customInvZzsHead.setDatasrc(datasrc);
             }
-            if (StringUtils.isNotEmpty(kprq)) {
-                customInvZzsHead.setKprq(new DateTime(kprq).toDate());
+            if (StringUtils.isNotEmpty(kprqStart)) {
+                customInvZzsHead.setKprqStart(kprqStart);
+            }
+            if (StringUtils.isNotEmpty(kprqEnd)) {
+                customInvZzsHead.setKprqEnd(kprqEnd);
             }
             if (StringUtils.isNotEmpty(fpzl)) {
                 customInvZzsHead.setFpzl(fpzl);
@@ -122,8 +127,11 @@ public class InvZzsHeadAction {
             if (StringUtils.isNotEmpty(datasrc)) {
                 customInvZzsHead.setDatasrc(datasrc);
             }
-            if (StringUtils.isNotEmpty(kprq)) {
-                customInvZzsHead.setKprq(new DateTime(kprq).toDate());
+            if (StringUtils.isNotEmpty(kprqStart)) {
+                customInvZzsHead.setKprqStart(kprqStart);
+            }
+            if (StringUtils.isNotEmpty(kprqEnd)) {
+                customInvZzsHead.setKprqEnd(kprqEnd);
             }
             if (StringUtils.isNotEmpty(fpzl)) {
                 customInvZzsHead.setFpzl(fpzl);
@@ -195,8 +203,11 @@ public class InvZzsHeadAction {
             if (StringUtils.isNotEmpty(datasrc)) {
                 customInvZzsHead.setDatasrc(datasrc);
             }
-            if (StringUtils.isNotEmpty(kprq)) {
-                customInvZzsHead.setKprq(new DateTime(kprq).toDate());
+            if (StringUtils.isNotEmpty(kprqStart)) {
+                customInvZzsHead.setKprqStart(kprqStart);
+            }
+            if (StringUtils.isNotEmpty(kprqEnd)) {
+                customInvZzsHead.setKprqEnd(kprqEnd);
             }
             if (StringUtils.isNotEmpty(fpzl)) {
                 customInvZzsHead.setFpzl(fpzl);
@@ -289,12 +300,20 @@ public class InvZzsHeadAction {
         this.datasrc = datasrc;
     }
 
-    public String getKprq() {
-        return kprq;
+    public String getKprqStart() {
+        return kprqStart;
     }
 
-    public void setKprq(String kprq) {
-        this.kprq = kprq;
+    public void setKprqStart(String kprqStart) {
+        this.kprqStart = kprqStart;
+    }
+
+    public String getKprqEnd() {
+        return kprqEnd;
+    }
+
+    public void setKprqEnd(String kprqEnd) {
+        this.kprqEnd = kprqEnd;
     }
 
     public String getFpzl() {

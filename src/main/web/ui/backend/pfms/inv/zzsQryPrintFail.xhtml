@@ -24,14 +24,15 @@
                             <div id="header">
                                 <p:panel id="queryForm" style="width: 100%;">
                                     <h:panelGrid>
-                                        <h:panelGrid columns="8" cellspacing="5">
-                                            <h:outputLabel value="单据日期："/>
-                                            <p:inputText value="#{invZzsHeadAction.kprq}"
+                                        <h:panelGrid columns="10" cellspacing="5">
+                                            <h:outputLabel value="单据日期:"/>
+                                            <p:inputText value="#{invZzsHeadAction.kprqStart}"
+                                                         style="width:80px;"
                                                          onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
-                                            <h:outputLabel value="发票类别:" style="float:right;"/>
-                                            <p:selectOneMenu value="#{invZzsHeadAction.fpzl}" style="width:120px;">
-                                                <f:selectItems value="#{invZzsHeadAction.zzsFpzlList}"/>
-                                            </p:selectOneMenu>
+                                            <h:outputLabel value="-"/>
+                                            <p:inputText value="#{invZzsHeadAction.kprqEnd}"
+                                                         style="width:80px;"
+                                                         onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
                                             <h:outputLabel value="流水号:"/>
                                             <p:inputText  value="#{invZzsHeadAction.fbtidx}"/>
                                             <h:outputLabel value="数据来源:"/>
@@ -40,6 +41,12 @@
                                             </p:selectOneMenu>
                                             <h:outputLabel value="客户名称:"/>
                                             <p:inputText  value="#{invZzsHeadAction.khmc}"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="4" cellspacing="5">
+                                            <h:outputLabel value="发票类别:" style="float:right;"/>
+                                            <p:selectOneMenu value="#{invZzsHeadAction.fpzl}" style="width:120px;">
+                                                <f:selectItems value="#{invZzsHeadAction.zzsFpzlList}"/>
+                                            </p:selectOneMenu>
                                             <p:commandButton value="查询"
                                                              style="width:120px;"
                                                              process="form:queryForm"

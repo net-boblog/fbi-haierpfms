@@ -122,9 +122,11 @@ public class CustomProvider {
         sql.append("    AND T1.XSDDM = T3.XSDDM ");
         sql.append("    AND T1.DMGS = T3.DMGS ");
 
-        if (customInvZzsHead.getKprq() != null) {
-            sql.append("    AND TO_CHAR(T1.KPRQ, 'yyyyMMdd') = '" +
-                    new DateTime(customInvZzsHead.getKprq()).toString("yyyyMMdd") + "' ");
+        if (StringUtils.isNotEmpty(customInvZzsHead.getKprqStart())) {
+            sql.append("    AND TO_CHAR(T1.KPRQ, 'yyyy-MM-dd') >= '" + customInvZzsHead.getKprqStart() + "' ");
+        }
+        if (StringUtils.isNotEmpty(customInvZzsHead.getKprqEnd())) {
+            sql.append("    AND TO_CHAR(T1.KPRQ, 'yyyy-MM-dd') <= '" + customInvZzsHead.getKprqEnd() + "' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsHead.getKhmc())) {
             sql.append("    AND T1.KHMC like '%" + customInvZzsHead.getKhmc() + "%' ");
@@ -165,9 +167,11 @@ public class CustomProvider {
         sql.append("    T1.XSDDM = T2.XSDDM ");
         sql.append("    AND T1.DMGS = T2.DMGS ");
 
-        if (customInvZzsHead.getKprq() != null) {
-            sql.append("    AND TO_CHAR(T1.KPRQ, 'yyyyMMdd') = '" +
-                    new DateTime(customInvZzsHead.getKprq()).toString("yyyyMMdd") + "' ");
+        if (StringUtils.isNotEmpty(customInvZzsHead.getKprqStart())) {
+            sql.append("    AND TO_CHAR(T1.KPRQ, 'yyyy-MM-dd') >= '" + customInvZzsHead.getKprqStart() + "' ");
+        }
+        if (StringUtils.isNotEmpty(customInvZzsHead.getKprqEnd())) {
+            sql.append("    AND TO_CHAR(T1.KPRQ, 'yyyy-MM-dd') <= '" + customInvZzsHead.getKprqEnd() + "' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsHead.getKhmc())) {
             sql.append("    AND T1.KHMC like '%" + customInvZzsHead.getKhmc() + "%' ");
@@ -250,9 +254,11 @@ public class CustomProvider {
         sql.append("    AND T1.XSDDM = T3.XSDDM ");
         sql.append("    AND T1.DMGS = T3.DMGS ");
 
-        if (customInvZzsHead.getKprq() != null) {
-            sql.append("    AND TO_CHAR(T1.KPRQ, 'yyyyMMdd') = '" +
-                    new DateTime(customInvZzsHead.getKprq()).toString("yyyyMMdd") + "' ");
+        if (StringUtils.isNotEmpty(customInvZzsHead.getKprqStart())) {
+            sql.append("    AND TO_CHAR(T1.KPRQ, 'yyyy-MM-dd') >= '" + customInvZzsHead.getKprqStart() + "' ");
+        }
+        if (StringUtils.isNotEmpty(customInvZzsHead.getKprqEnd())) {
+            sql.append("    AND TO_CHAR(T1.KPRQ, 'yyyy-MM-dd') <= '" + customInvZzsHead.getKprqEnd() + "' ");
         }
         if (StringUtils.isNotEmpty(customInvZzsHead.getKhmc())) {
             sql.append("    AND T1.KHMC like '%" + customInvZzsHead.getKhmc() + "%' ");
