@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
         <meta name="apple-mobile-web-app-capable" content="yes"/>
     </f:facet>
-    <title>发票管理系统</title>
+    <title>价税分离管理平台</title>
     <h:outputScript name="js/layout.js" library="spark-layout"/>
 
     <h:outputText value="&lt;!--[if gte IE 9]&gt;" escape="false"/>
@@ -37,7 +37,7 @@
             margin-top: -200px;
 
             background-image: url("#{resource['project-layout:images/login-left-02.svg']}");
-            background-image: url("#{resource['project-layout:images/login-left-02.png']}");
+            background-image: url("#{resource['project-layout:images/login-left-02.png']}")\9;
             background-position: center center;
             background-repeat: no-repeat;
             background-size: 100%;
@@ -135,7 +135,7 @@
                     <div class="EmptyBox50"></div>
                 </div>
             </h:form>
-        </div>
+    </div>
     </div>
 
     <h:outputStylesheet name="css/core-layout.css" library="spark-layout"/>
