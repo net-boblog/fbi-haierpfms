@@ -102,6 +102,9 @@ public class InvZzsSrcService {
             if (StringUtils.isNotEmpty(bean.getOFCTAX())) {
                 invZzsSrc.setZse(new BigDecimal(bean.getOFCTAX()));      // 折扣税额
             }
+            if (StringUtils.isNotEmpty(bean.getRETAUX())) {
+                invZzsSrc.setRemarks(bean.getRETAUX());                  // 备注
+            }
             invZzsSrc.setCrtDate(sysdate);                               // 创建日期YYYY-MM-DD
             invZzsSrc.setCrtTime(ToolUtil.getTimeColon());               // 创建时间HH:mm:ss
             invZzsSrc.setCrtOperId("sbs");                               // 创建者ID
@@ -155,6 +158,9 @@ public class InvZzsSrcService {
             }
             if (StringUtils.isNotEmpty(bean.getDISCOUNT_TAX())) {
                 invZzsSrc.setZse(new BigDecimal(bean.getDISCOUNT_TAX()));      // 折扣税额
+            }
+            if (StringUtils.isNotEmpty(bean.getREMARKS())) {
+                invZzsSrc.setRemarks(bean.getREMARKS());                       // 备注
             }
             invZzsSrc.setPayerName(bean.getPAYER_NAME());                      // 付款人名称（国结用）
             invZzsSrc.setCrtDate(sysdate);                                     // 创建日期YYYY-MM-DD
@@ -270,6 +276,7 @@ public class InvZzsSrcService {
                     invZzsHead.setKhdz(record.getKhdz() + record.getKhsj());
                 }
                 invZzsHead.setKhyh(record.getKhyh() + record.getYhzh()); // 开户银行
+                invZzsHead.setBz(record.getRemarks());      // 发票备注
                 invZzsHead.setKprq(new Date());             // 单据日期
                 invZzsHead.setFpzl(fpzl);                   // 发票类别
                 invZzsHead.setXrrq(new Date());             // 写入时间
@@ -313,6 +320,7 @@ public class InvZzsSrcService {
                     xwsqZzsHead.setKhdz(record.getKhdz() + record.getKhsj());
                 }
                 xwsqZzsHead.setKhyh(record.getKhyh() + record.getYhzh()); // 开户银行
+                xwsqZzsHead.setBz(record.getRemarks());      // 发票备注
                 xwsqZzsHead.setKprq(new Date());             // 单据日期
                 xwsqZzsHead.setFpzl(fpzl);                   // 发票类别
                 xwsqZzsHead.setXrrq(new Date());             // 写入时间

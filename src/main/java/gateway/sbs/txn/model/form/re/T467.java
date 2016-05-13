@@ -26,7 +26,7 @@ public class T467 extends SOFFormBody {
         curcnt = new String(curcntBytes);
 
         int index = offset + 12;
-        int beanLength = 250;
+        int beanLength = 330;
         do {
             Bean bean = new Bean();
             bean.assembleFields(index, buffer);
@@ -57,8 +57,8 @@ public class T467 extends SOFFormBody {
 
     public class Bean extends AssembleModel {
         {
-            fieldTypes = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-            fieldLengths = new int[]{18, 7, 3, 4, 40, 4, 40, 6, 17, 17, 17, 17, 17, 9, 17, 17};
+            fieldTypes = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+            fieldLengths = new int[]{18, 7, 3, 4, 40, 4, 40, 6, 17, 17, 17, 17, 17, 9, 17, 17, 80};
         }
 
         private String FBTIDX; // 流水号
@@ -77,6 +77,7 @@ public class T467 extends SOFFormBody {
         private String TAXRAT; // 税率
         private String OFCAMT; // 折扣不含税金额
         private String OFCTAX; // 折扣税额
+        private String RETAUX; // 备注
 
         public String getFBTIDX() {
             return FBTIDX;
@@ -204,6 +205,14 @@ public class T467 extends SOFFormBody {
 
         public void setOFCTAX(String OFCTAX) {
             this.OFCTAX = OFCTAX;
+        }
+
+        public String getRETAUX() {
+            return RETAUX;
+        }
+
+        public void setRETAUX(String RETAUX) {
+            this.RETAUX = RETAUX;
         }
     }
 }

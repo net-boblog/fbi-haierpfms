@@ -30,7 +30,7 @@ public class CustomProvider {
         sql.append("SELECT");
         sql.append("    T1.FBTIDX, T1.DATASRC, T1.KHDM, T1.CPDM, T1.CPMC, T1.XH,");
         sql.append("    T1.CPDW, T1.CPSL, T1.HSDJ, T1.HSJE, T1.XXDJ, T1.BHSJE, T1.SE,");
-        sql.append("    T1.SL, T1.ZBHSJE, T1.ZSE, T1.HSJE,");
+        sql.append("    T1.SL, T1.ZBHSJE, T1.ZSE, T1.REMARKS,");
         sql.append("    T1.CRT_DATE crtDate,T1.CRT_TIME crtTime,T1.CRT_OPER_ID crtOperId,");
         sql.append("    T1.UPD_DATE updDate,T1.UPD_TIME updTime,T1.UPD_OPER_ID updOperId,");
         sql.append("    T1.PRINT_FLAG printFlag,T1.PROC_FLAG procFlag,T1.TXN_DATE txnDate,");

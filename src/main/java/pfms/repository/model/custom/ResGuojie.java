@@ -161,6 +161,7 @@ public class ResGuojie {
         private String TAX_RATE;       // 税率
         private String DISCOUNT_NOTAX; // 折扣不含税金额
         private String DISCOUNT_TAX;   // 折扣税额
+        private String REMARKS;        // 备注
 
         public String getIBMSNO() {
             return IBMSNO;
@@ -296,6 +297,14 @@ public class ResGuojie {
 
         public void setDISCOUNT_TAX(String DISCOUNT_TAX) {
             this.DISCOUNT_TAX = DISCOUNT_TAX;
+        }
+
+        public String getREMARKS() {
+            return REMARKS;
+        }
+
+        public void setREMARKS(String REMARKS) {
+            this.REMARKS = REMARKS;
         }
     }
 }
