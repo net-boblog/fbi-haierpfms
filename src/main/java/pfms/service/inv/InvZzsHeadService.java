@@ -228,6 +228,7 @@ public class InvZzsHeadService {
                         invZzsHead = new InvZzsHead();
                         invZzsHead.setXsddm(xwsqZzsHead.getXsddm());         // 单据号码
                         invZzsHead.setDmgs(xwsqZzsHead.getDmgs());           // 单据公司
+                        invZzsHead.setZx(xwsqZzsHead.getZx());               // 中心
                         invZzsHead.setFphm(xwsqZzsHead.getFphm());           // 发票号码
                         invZzsHead.setMsg(xwsqZzsHead.getMsg());             // 电子发票返回结果信息
                         invZzsHead.setUrl(xwsqZzsHead.getUrl());             // 电子发票返回的URL
@@ -244,6 +245,9 @@ public class InvZzsHeadService {
                         invZzsHead.setTzdh(xwsqZzsHead.getTzdh());
                         invZzsHead.setChfph(xwsqZzsHead.getChfph());
                         invZzsHead.setClcs(xwsqZzsHead.getClcs());
+                        invZzsHead.setQdr(xwsqZzsHead.getQdr());
+                        invZzsHead.setQdsj(xwsqZzsHead.getQdsj());
+                        invZzsHead.setQdbz(xwsqZzsHead.getQdbz());
                         invZzsHead.setKpFlag(EnuZzsKpFlag.KP_FLAG_1.getCode()); // 开票标志
                         invZzsHeadMapper.updateByPrimaryKeySelective(invZzsHead);
                     }
