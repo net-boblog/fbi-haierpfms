@@ -45,24 +45,14 @@
                                                              style="width:120px;"
                                                              process="form:queryForm"
                                                              styleClass="GreenButton Fright"
-                                                             action="#{invZzsSrcAction.onQryUnProc}"
+                                                             action="#{invZzsSrcAction.onQryNoPrintFp}"
                                                              update="form:pdt,form:msgs,form:queryForm">
                                             </p:commandButton>
                                         </h:panelGrid>
                                         <h:panelGrid columns="5" cellspacing="5">
-                                            <h:outputLabel value="发票类别:"/>
-                                            <p:selectOneMenu value="#{invZzsSrcAction.fpzl}" style="width:120px;" >
-                                                <f:selectItems value="#{invZzsSrcAction.zzsFpzlList}"/>
-                                            </p:selectOneMenu>
-                                            <p:commandButton style="width:120px;" value="打印发票"
+                                            <p:commandButton style="width:120px;" value="开发票"
                                                              styleClass="OrangeButton"
-                                                             action="#{invZzsSrcAction.onPrintFp}"
-                                                             update="pdt,msgs,queryForm">
-                                            </p:commandButton>
-                                            <p:spacer width="10"/>
-                                            <p:commandButton style="width:120px;" value="不开发票"
-                                                             styleClass="RedButton"
-                                                             action="#{invZzsSrcAction.onNoPrintFp}"
+                                                             action="#{invZzsSrcAction.onYesPrintFp}"
                                                              update="pdt,msgs,queryForm,pdt">
                                             </p:commandButton>
                                         </h:panelGrid>

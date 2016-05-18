@@ -23,6 +23,15 @@ public interface CustomMapper {
     List<CustomInvZzsSrc> selectUnProc(@Param("customInvZzsSrc") CustomInvZzsSrc customInvZzsSrc);
 
     /**
+     * 查询不开票的数据
+     *
+     * @param customInvZzsSrc
+     * @return
+     */
+    @SelectProvider(type = CustomProvider.class, method = "selectNoPrint")
+    List<CustomInvZzsSrc> selectNoPrint(@Param("customInvZzsSrc") CustomInvZzsSrc customInvZzsSrc);
+
+    /**
      * 查询待开票数据
      *
      * @param customInvZzsHead

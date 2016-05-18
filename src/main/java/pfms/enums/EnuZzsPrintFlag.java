@@ -6,8 +6,8 @@ import java.util.Hashtable;
  * 增值税原始数据表中的打印发票标志
  */
 public enum EnuZzsPrintFlag {
-    PRINT_FLAG_0("0", "开发票"),
-    PRINT_FLAG_1("1", "不开发票");
+    PRINT_FLAG_0("0", "不开发票"),
+    PRINT_FLAG_1("1", "开发票");
 
     private String code = null;
     private String title = null;

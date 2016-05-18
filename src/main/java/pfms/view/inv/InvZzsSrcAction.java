@@ -132,6 +132,74 @@ public class InvZzsSrcAction {
         }
     }
 
+    /**
+     * 设置不开发票
+     */
+    public void onNoPrintFp() {
+        try {
+            if (selectedRecords == null || selectedRecords.length < 1) {
+                MessageUtil.addError("请至少选择一笔记录。");
+                return;
+            }
+
+            invZzsSrcService.noPrintFp(selectedRecords, operInfo.getOperId());
+            onQryUnProc();
+            MessageUtil.addInfo("设置不开发票成功。");
+        } catch (Exception e) {
+            logger.error("设置不开发票失败！", e);
+            MessageUtil.addError("设置不开发票失败！" + e == null ? "" : e.getMessage());
+        }
+    }
+
+    /**
+     * 查询不开发票的数据
+     */
+    public void onQryNoPrintFp() {
+        try {
+            selectedRecords = null;
+            CustomInvZzsSrc customInvZzsSrc = new CustomInvZzsSrc();
+            if (StringUtils.isNotEmpty(fbtidx)) {
+                customInvZzsSrc.setFbtidx(fbtidx);
+            }
+            if (StringUtils.isNotEmpty(khmc)) {
+                customInvZzsSrc.setKhmc(khmc);
+            }
+            if (StringUtils.isNotEmpty(datasrc)) {
+                customInvZzsSrc.setDatasrc(datasrc);
+            }
+            if (StringUtils.isNotEmpty(txnDateStart)) {
+                customInvZzsSrc.setTxnDateStart(txnDateStart);
+            }
+            if (StringUtils.isNotEmpty(txnDateEnd)) {
+                customInvZzsSrc.setTxnDateEnd(txnDateEnd);
+            }
+
+            customInvZzsSrcList = invZzsSrcService.selectNoPrint(customInvZzsSrc);
+        } catch (Exception e) {
+            logger.error("查询失败！", e);
+            MessageUtil.addError("查询失败！" + e == null ? "" : e.getMessage());
+        }
+    }
+
+    /**
+     * 设置开发票
+     */
+    public void onYesPrintFp() {
+        try {
+            if (selectedRecords == null || selectedRecords.length < 1) {
+                MessageUtil.addError("请至少选择一笔记录。");
+                return;
+            }
+
+            invZzsSrcService.yesPrintFp(selectedRecords, operInfo.getOperId());
+            onQryNoPrintFp();
+            MessageUtil.addInfo("设置开发票成功。");
+        } catch (Exception e) {
+            logger.error("设置开发票失败！", e);
+            MessageUtil.addError("设置开发票失败！" + e == null ? "" : e.getMessage());
+        }
+    }
+
     //==============================================get set=====================================================
     public OperManager getOperManager() {
         return operManager;

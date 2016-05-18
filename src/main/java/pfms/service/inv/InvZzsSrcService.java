@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pfms.enums.EnuZzsKpFlag;
+import pfms.enums.EnuZzsPrintFlag;
 import pfms.enums.EnuZzsProcFlag;
 import pfms.enums.EnuZzsSrc;
 import pfms.repository.dao.InvZzsHeadMapper;
@@ -368,5 +369,63 @@ public class InvZzsSrcService {
         rtn.put("successCnt", successCnt);
         rtn.put("errorCnt", errorCnt);
         return rtn;
+    }
+
+    /**
+     * 设置不开发票
+     *
+     * @param selectedRecords
+     * @param operId
+     * @throws Exception
+     */
+    @Transactional
+    public void noPrintFp(CustomInvZzsSrc[] selectedRecords, String operId) throws Exception {
+        String sysdate = ToolUtil.getDateDash();
+        for (CustomInvZzsSrc record : selectedRecords) {
+            // 更新原始数据表处理标志
+            InvZzsSrc invZzsSrc = new InvZzsSrc();
+            invZzsSrc.setFbtidx(record.getFbtidx());                     // 流水号
+            invZzsSrc.setDatasrc(record.getDatasrc());                   // 数据来源
+            invZzsSrc.setUpdDate(sysdate);                               // 修改日期YYYY-MM-DD
+            invZzsSrc.setUpdTime(ToolUtil.getTimeColon());               // 修改时间HH:mm:ss
+            invZzsSrc.setUpdOperId(operId);                              // 修改者ID
+            invZzsSrc.setProcFlag(EnuZzsProcFlag.PROC_FLAG_1.getCode()); // 处理标志
+            invZzsSrc.setPrintFlag(EnuZzsPrintFlag.PRINT_FLAG_0.getCode()); // 开票标志
+            invZzsSrcMapper.updateByPrimaryKeySelective(invZzsSrc);
+        }
+    }
+
+    /**
+     * 查询不开发票的数据
+     *
+     * @param customInvZzsSrc
+     * @return
+     */
+    public List<CustomInvZzsSrc> selectNoPrint(CustomInvZzsSrc customInvZzsSrc) {
+        return customMapper.selectNoPrint(customInvZzsSrc);
+    }
+
+    /**
+     * 设置开发票
+     *
+     * @param selectedRecords
+     * @param operId
+     * @throws Exception
+     */
+    @Transactional
+    public void yesPrintFp(CustomInvZzsSrc[] selectedRecords, String operId) throws Exception {
+        String sysdate = ToolUtil.getDateDash();
+        for (CustomInvZzsSrc record : selectedRecords) {
+            // 更新原始数据表处理标志
+            InvZzsSrc invZzsSrc = new InvZzsSrc();
+            invZzsSrc.setFbtidx(record.getFbtidx());                     // 流水号
+            invZzsSrc.setDatasrc(record.getDatasrc());                   // 数据来源
+            invZzsSrc.setUpdDate(sysdate);                               // 修改日期YYYY-MM-DD
+            invZzsSrc.setUpdTime(ToolUtil.getTimeColon());               // 修改时间HH:mm:ss
+            invZzsSrc.setUpdOperId(operId);                              // 修改者ID
+            invZzsSrc.setProcFlag(EnuZzsProcFlag.PROC_FLAG_0.getCode()); // 处理标志
+            invZzsSrc.setPrintFlag(EnuZzsPrintFlag.PRINT_FLAG_1.getCode()); // 开票标志
+            invZzsSrcMapper.updateByPrimaryKeySelective(invZzsSrc);
+        }
     }
 }

@@ -160,40 +160,6 @@ public class InvZzsHeadService {
             String dmgs = PropertyManager.getProperty("DMGS");
             // 根据待开票数据的单据号码查询远程【XWSQ_ZZS_HEAD、XWSQ_ZZS_KPHX】表的数据
             if (unPrintXsddm.size() > 0) {
-                // 查询远程XWSQ_ZZS_HEAD表数据
-                XwsqZzsHeadMapper xwsqZzsHeadMapper = session.getMapper(XwsqZzsHeadMapper.class);
-                XwsqZzsHeadExample example = new XwsqZzsHeadExample();
-                XwsqZzsHeadExample.Criteria criteria = example.createCriteria();
-                criteria.andXsddmIn(unPrintXsddm); // 单据号码
-                criteria.andDmgsEqualTo(dmgs);     // 单据公司
-                criteria.andFphmIsNotNull();       // 发票号码
-                List<XwsqZzsHead> xwsqZzsHeadList = xwsqZzsHeadMapper.selectByExample(example);
-                InvZzsHead invZzsHead = null;
-                for (XwsqZzsHead xwsqZzsHead : xwsqZzsHeadList) {
-                    // 更新本地销售发票头
-                    invZzsHead = new InvZzsHead();
-                    invZzsHead.setXsddm(xwsqZzsHead.getXsddm());         // 单据号码
-                    invZzsHead.setDmgs(xwsqZzsHead.getDmgs());           // 单据公司
-                    invZzsHead.setFphm(xwsqZzsHead.getFphm());           // 发票号码
-                    invZzsHead.setMsg(xwsqZzsHead.getMsg());             // 电子发票返回结果信息
-                    invZzsHead.setUrl(xwsqZzsHead.getUrl());             // 电子发票返回的URL
-                    invZzsHead.setSkrq(xwsqZzsHead.getSkrq());           // 税控开票日期
-                    invZzsHead.setXrrq(xwsqZzsHead.getXrrq());           // 写入时间
-                    invZzsHead.setPzrq(xwsqZzsHead.getPzrq());
-                    invZzsHead.setPzxx(xwsqZzsHead.getPzxx());
-                    invZzsHead.setKpbz(xwsqZzsHead.getKpbz());
-                    invZzsHead.setXrsj(xwsqZzsHead.getXrsj());
-                    invZzsHead.setPzhxcs(xwsqZzsHead.getPzhxcs());
-                    invZzsHead.setPzh(xwsqZzsHead.getPzh());
-                    invZzsHead.setPzmessage(xwsqZzsHead.getPzmessage()); // 凭证返回信息
-                    invZzsHead.setPzclbz(xwsqZzsHead.getPzclbz());       // 凭证处理标志
-                    invZzsHead.setTzdh(xwsqZzsHead.getTzdh());
-                    invZzsHead.setChfph(xwsqZzsHead.getChfph());
-                    invZzsHead.setClcs(xwsqZzsHead.getClcs());
-                    invZzsHead.setKpFlag(EnuZzsKpFlag.KP_FLAG_1.getCode()); // 开票标志
-                    invZzsHeadMapper.updateByPrimaryKeySelective(invZzsHead);
-                }
-
                 // 查询远程XWSQ_ZZS_KPHX表数据
                 List<String> flagList = new ArrayList<String>();
                 flagList.add(EnuZzsKpFlag.KP_FLAG_1.getCode());
@@ -209,6 +175,7 @@ public class InvZzsHeadService {
                 InvZzsHeadKey invZzsHeadKey = null;
                 InvZzsHead invZzsHeadSrc = null;
                 InvZzsSrc invZzsSrc = null;
+                InvZzsHead invZzsHead = null;
                 for (XwsqZzsKphx xwsqZzsKphx : xwsqZzsKphxList) {
                     // 插入本地INV_ZZS_KPHX
                     invZzsKphx = new InvZzsKphx();
@@ -250,10 +217,33 @@ public class InvZzsHeadService {
                         invZzsSrc.setProcFlag(EnuZzsProcFlag.PROC_FLAG_0.getCode()); // 处理标志
                         invZzsSrcMapper.updateByPrimaryKeySelective(invZzsSrc);
                     } else if (EnuZzsKpFlag.KP_FLAG_1.getCode().equals(xwsqZzsKphx.getFlag())) { // 开票成功的处理
-                        // 更新本地销售发票头开票标志为开票成功
+                        // 查询远程XWSQ_ZZS_HEAD表数据
+                        XwsqZzsHeadMapper xwsqZzsHeadMapper = session.getMapper(XwsqZzsHeadMapper.class);
+                        XwsqZzsHeadKey key = new XwsqZzsHeadKey();
+                        key.setXsddm(xwsqZzsKphx.getXsddm());   // 单据号码
+                        key.setDmgs(xwsqZzsKphx.getDmgs());     // 单据公司
+                        XwsqZzsHead xwsqZzsHead = xwsqZzsHeadMapper.selectByPrimaryKey(key);
+
+                        // 更新本地销售发票头及开票标志为开票成功
                         invZzsHead = new InvZzsHead();
-                        invZzsHead.setXsddm(xwsqZzsKphx.getXsddm());            // 单据号码
-                        invZzsHead.setDmgs(xwsqZzsKphx.getDmgs());              // 单据公司
+                        invZzsHead.setXsddm(xwsqZzsHead.getXsddm());         // 单据号码
+                        invZzsHead.setDmgs(xwsqZzsHead.getDmgs());           // 单据公司
+                        invZzsHead.setFphm(xwsqZzsHead.getFphm());           // 发票号码
+                        invZzsHead.setMsg(xwsqZzsHead.getMsg());             // 电子发票返回结果信息
+                        invZzsHead.setUrl(xwsqZzsHead.getUrl());             // 电子发票返回的URL
+                        invZzsHead.setSkrq(xwsqZzsHead.getSkrq());           // 税控开票日期
+                        invZzsHead.setXrrq(xwsqZzsHead.getXrrq());           // 写入时间
+                        invZzsHead.setPzrq(xwsqZzsHead.getPzrq());
+                        invZzsHead.setPzxx(xwsqZzsHead.getPzxx());
+                        invZzsHead.setKpbz(xwsqZzsHead.getKpbz());
+                        invZzsHead.setXrsj(xwsqZzsHead.getXrsj());
+                        invZzsHead.setPzhxcs(xwsqZzsHead.getPzhxcs());
+                        invZzsHead.setPzh(xwsqZzsHead.getPzh());
+                        invZzsHead.setPzmessage(xwsqZzsHead.getPzmessage()); // 凭证返回信息
+                        invZzsHead.setPzclbz(xwsqZzsHead.getPzclbz());       // 凭证处理标志
+                        invZzsHead.setTzdh(xwsqZzsHead.getTzdh());
+                        invZzsHead.setChfph(xwsqZzsHead.getChfph());
+                        invZzsHead.setClcs(xwsqZzsHead.getClcs());
                         invZzsHead.setKpFlag(EnuZzsKpFlag.KP_FLAG_1.getCode()); // 开票标志
                         invZzsHeadMapper.updateByPrimaryKeySelective(invZzsHead);
                     }
